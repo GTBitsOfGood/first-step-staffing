@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "PORT=3001 dotenv nodemon ./src/bin/www --watch src --ignore src/logs"
+    "dev": "PORT=3001 dotenv nodemon ./bin/www --watch src --ignore src/logs"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",

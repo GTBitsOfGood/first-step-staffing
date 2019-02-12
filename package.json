@@ -14,8 +14,8 @@
     "postinstall": "npm run install-client && npm run install-server && npm run build-client"
   },
   "engines": {
-    "npm": "THE VERSION OF NPM YOU ARE RUNNING",
-    "node": "THE VERSION OF NODE YOU ARE RUNNING"
+    "npm": "6.6.0",
+    "node": "10.10.0"
   },
   "devDependencies": {
     "eslint": "^5.3.0",

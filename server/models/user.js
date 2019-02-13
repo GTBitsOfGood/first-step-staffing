@@ -5,7 +5,7 @@ var userSchema = new mongoose.Schema({
     lastName: String,
     ssn: Number,
     birthday: Date
-}, { usePushEach: true })
+})
 
 let User = mongoose.model('User', userSchema)
 

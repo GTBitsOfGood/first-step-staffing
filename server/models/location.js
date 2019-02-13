@@ -1,7 +1,4 @@
-import {
-  Schema,
-  model
-} from 'mongoose'
+import { Schema, model } from 'mongoose'
 
 const LocationSchema = Schema({
   streetNumber: {

@@ -1,14 +1,8 @@
 import {} from 'dotenv/config'
 import './models/db'
 
-import express, {
-  json,
-  urlencoded,
-  static as ExpressStatic
-} from 'express'
-import {
-  join
-} from 'path'
+import express, { json, urlencoded, static as ExpressStatic } from 'express'
+import { join } from 'path'
 import cookieParser from 'cookie-parser'
 import logger from 'morgan'
 
@@ -19,17 +13,18 @@ const app = express()
 
 app.use(logger('dev'))
 app.use(json())
-app.use(urlencoded({
-  extended: false
-}))
+app.use(
+  urlencoded({
+    extended: false
+  })
+)
 app.use(cookieParser())
 app.use(ExpressStatic(join(__dirname, '../client/build/')))
-
 
 app.use('/', indexRouter)
 app.use('/locations', locationRouter)
 
-app.get("/*", (req, res) => {
+app.get('/*', (req, res) => {
   res.sendFile(join(__dirname, '../client/build/index.html'))
 })
 

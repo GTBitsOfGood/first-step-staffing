@@ -3,6 +3,7 @@
   "plugins": ["prettier"],
   "rules": {
     "semi": ["error", "never"],
+    "comma-dangle": ["error", "never"],
     "prettier/prettier": "error"
   }
 }

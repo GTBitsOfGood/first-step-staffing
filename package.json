@@ -2,7 +2,10 @@
   "name": "first-step-staffing",
   "description": "this is a description",
   "version": "1.0.0",
-  "cacheDirectories": ["client/node_modules", "server/node_modules"],
+  "cacheDirectories": [
+    "client/node_modules",
+    "server/node_modules"
+  ],
   "scripts": {
     "start": "cd server/ && npm start",
     "install-client": "npm install --prefix client",
@@ -11,7 +14,17 @@
     "postinstall": "npm run install-client && npm run install-server && npm run build-client"
   },
   "engines": {
-    "npm": "THE VERSION OF NPM YOU ARE RUNNING",
-    "node": "THE VERSION OF NODE YOU ARE RUNNING"
+    "npm": "6.6.0",
+    "node": "10.10.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "prettier": "^1.16.4"
   }
 }

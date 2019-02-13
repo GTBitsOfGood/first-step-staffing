@@ -1,24 +1,36 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+import {} from 'dotenv/config'
+import './models/db'
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+import express, {
+  json,
+  urlencoded,
+  static as ExpressStatic
+} from 'express'
+import {
+  join
+} from 'path'
+import cookieParser from 'cookie-parser'
+import logger from 'morgan'
 
-var app = express();
+import indexRouter from './routes/index'
+import locationRouter from './routes/locations'
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'public')));
+const app = express()
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use(express.static(path.join(__dirname, '../client/build/')));
+app.use(logger('dev'))
+app.use(json())
+app.use(urlencoded({
+  extended: false
+}))
+app.use(cookieParser())
+app.use(ExpressStatic(join(__dirname, '../client/build/')))
+
+
+app.use('/', indexRouter)
+app.use('/locations', locationRouter)
+
 app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'));
-});
+  res.sendFile(join(__dirname, '../client/build/index.html'))
+})
 
-module.exports = app;
+module.exports = app

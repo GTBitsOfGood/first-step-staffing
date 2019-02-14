@@ -1,10 +1,9 @@
 import { Router } from 'express'
+import { create, getAll } from '../controllers/users'
 
 const router = Router()
 
-/* GET users listing. */
-router.get('/', (req, res) => {
-  res.send('respond with a resource')
-})
+router.post('/user', create)
+router.get('/', getAll)
 
 export default router

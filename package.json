@@ -7,7 +7,7 @@
     "server/node_modules"
   ],
   "scripts": {
-    "start": "cd server/ && npm start",
+    "start": "cd server/ && npm run dev",
     "install-client": "npm install --prefix client",
     "install-server": "npm install --prefix server",
     "build-client": "cd client/ && npm build",
@@ -18,7 +18,6 @@
     "node": "10.10.0"
   },
   "devDependencies": {
-    "eslint": "^5.3.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^4.0.0",
     "eslint-plugin-import": "^2.16.0",

@@ -1,10 +1,7 @@
 const Location = require('mongoose').model('Location')
 
 export function create(req, res, next) {
-  if (req.body.streetNumber &&
-    req.body.streetName &&
-    req.body.city &&
-    req.body.state) {
+  if (req.body.streetNumber && req.body.streetName && req.body.city && req.body.state) {
     const location = {
       streetNumber: req.body.streetNumber,
       streetName: req.body.streetName,

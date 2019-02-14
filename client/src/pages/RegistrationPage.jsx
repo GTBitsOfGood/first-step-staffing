@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 
 class RegistrationPage extends Component {
-  render() {}
+  render() {
+    return <div> This is registration </div>
+  }
 }
 
 export default RegistrationPage

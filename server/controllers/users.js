@@ -29,3 +29,15 @@ export function getAll(_, res, next) {
     })
   })
 }
+
+export function getByLastName(req, res, next) {
+  if (req.query.first3.length == 3) {
+    const first3 = new RegExp(req.query.first3, 'i')
+    User.find({ lastName: { $regex: first3 }}, (err, users) => {
+      if (err) next(err)
+      else {
+        res.status(200).json({ users: users })
+      }
+    })
+  }
+}

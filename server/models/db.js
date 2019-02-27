@@ -6,7 +6,7 @@ import './user'
 connect(
   process.env.MONGO_URL,
   {
-    useNewUrlParser: true,
+    useNewUrlParser: true
   }
 )
 const db = connection

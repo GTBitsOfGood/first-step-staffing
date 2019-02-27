@@ -16,7 +16,7 @@ app.use(logger('dev'))
 app.use(json())
 app.use(
   urlencoded({
-    extended: false,
+    extended: false
   })
 )
 app.use(cookieParser())

@@ -41,12 +41,18 @@ class LoginPage extends React.Component {
     super()
     this.state = {
       lastname: '',
-      ssn: null,
+      ssn: '',
     }
   }
 
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.value })
+  changeLastName = event => {
+    this.setState({ lastname: event.target.value })
+  }
+
+  changeSSN = event => {
+    if (/^\d*$/.test(event.target.value)) {
+      this.setState({ ssn: event.target.value })
+    }
   }
 
   render() {
@@ -63,16 +69,18 @@ class LoginPage extends React.Component {
                 <Input
                   id="lastname"
                   value={this.state.lastname}
-                  onChange={this.handleChange('lastName')}
+                  onChange={this.changeLastName}
                 />
               </FormControl>
               <FormControl required={true} style={styles.input}>
                 <InputLabel htmlFor={'ssn'}>Last 4 digits of SSN</InputLabel>
                 <Input
                   id="ssn"
-                  type={'tel'}
-                  value={this.state.snn}
-                  onChange={this.handleChange('ssn')}
+                  inputProps={{
+                    maxLength: 4,
+                  }}
+                  value={this.state.ssn}
+                  onChange={this.changeSSN}
                 />
               </FormControl>
             </FormGroup>

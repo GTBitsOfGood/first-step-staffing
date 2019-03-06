@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./build/bin/www",
+    "debugger": "nodemon --inspect --exec babel-node ./bin/www",
     "dev": "nodemon --exec babel-node ./bin/www",
     "postinstall": "npm run build",
     "build": "babel . --ignore node_modules --out-dir build && cp -R ./bin ./build"

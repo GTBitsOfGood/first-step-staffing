@@ -1,12 +1,35 @@
-import { Schema, model } from 'mongoose'
+import {
+  Schema,
+  model
+} from 'mongoose'
 
 const userSchema = new Schema({
-  firstName: String,
-  lastName: String,
-  ssn: Number,
-  birthday: Date
+  firstName: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  lastName: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  ssn: {
+    type: Number,
+    required: true,
+    validate: {
+      validator: function(v) {
+        return /\d{4}/.test(v)
+      },
+      message: props => `${props.value} is not a valid Social Security Number!`
+    }
+  },
+  birthday: {
+    type: Date,
+    required: true
+  }
 })
 
-const User = model('User', userSchema)
+let User = model('User', userSchema)
 
 export default User

@@ -1,10 +1,10 @@
 import { Router } from 'express'
+import { create, getAll, getByLastName } from '../controllers/users'
 
 const router = Router()
 
-/* GET users listing. */
-router.get('/', (req, res) => {
-  res.send('respond with a resource')
-})
+router.post('/', create)
+router.get('/', getAll)
+router.get('/first3LettersLastName', getByLastName)
 
 export default router

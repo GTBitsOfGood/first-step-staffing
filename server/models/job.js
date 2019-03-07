@@ -7,7 +7,7 @@ const JobSchema = Schema({
     trim: true
   },
   location: {
-    type: mongoose.Schema.Types.ObjectId, ref: 'Location',
+    type: Schema.Types.ObjectId, ref: 'Location',
     required: true
   },
   peopleNeeded: {

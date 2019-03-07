@@ -1,6 +1,7 @@
 import { connect, connection } from 'mongoose'
 import './location'
 import './equipment'
+import './user'
 
 connect(
   process.env.MONGO_URL,

@@ -8,6 +8,7 @@ import logger from 'morgan'
 
 import indexRouter from './routes/index'
 import locationRouter from './routes/locations'
+import userRouter from './routes/users'
 
 const app = express()
 
@@ -23,6 +24,7 @@ app.use(ExpressStatic(join(__dirname, '../client/build/')))
 
 app.use('/', indexRouter)
 app.use('/locations', locationRouter)
+app.use('/users', userRouter)
 
 app.get('/*', (req, res) => {
   res.sendFile(join(__dirname, '../client/build/index.html'))

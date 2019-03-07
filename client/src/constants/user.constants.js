@@ -1,0 +1,1 @@
+export const GET_USERS_BY_SSN = 'GET_USERS_BY_SSN'

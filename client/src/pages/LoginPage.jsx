@@ -1,70 +1,100 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
-import TextField from '@material-ui/core/TextField'
-import Button from '@material-ui/core/Button'
+import {
+  Input,
+  InputLabel,
+  FormControl,
+  FormGroup,
+  Paper,
+  Button,
+} from '@material-ui/core'
+import moment from 'moment'
 
 const styles = theme => ({
   container: {
     display: 'flex',
-    flexWrap: 'wrap'
+    height: '100vh',
+    margin: 'auto',
+    flexDirection: 'column',
+    backgroundColor: theme.palette.primary.dark,
+    textAlign: 'center'
   },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200
+  input: {
+    padding: '10px 0'
   },
-  dense: {
-    marginTop: 19
+  form: {
+    margin: '0 15%'
   },
-  menu: {
-    width: 200
+  paper: {
+    margin: 'auto',
+    padding: '20px'
+  },
+  submit: {
+    marginTop: '20px',
+    width: '100%'
   }
 })
 
 class LoginPage extends React.Component {
-  state = {
-    lastName: '',
-    ssn: ''
+  constructor() {
+    super()
+    this.state = {
+      lastname: '',
+      ssn: '',
+    }
   }
 
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.value })
+  changeLastName = event => {
+    this.setState({ lastname: event.target.value })
+  }
+
+  changeSSN = event => {
+    if (/^\d*$/.test(event.target.value)) {
+      this.setState({ ssn: event.target.value })
+    }
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, theme } = this.props
 
     return (
-      <form className={classes.container} noValidate autoComplete="off">
-        <TextField
-          required
-          id="standard-name"
-          label="Last Name"
-          className={classes.textField}
-          value={this.state.lastName}
-          onChange={this.handleChange('lastName')}
-          margin="normal"
-        />
-
-        <TextField
-          required
-          id="standard-number"
-          label="Last Four Digits of SSN"
-          value={this.state.ssn}
-          onChange={this.handleChange('ssn')}
-          type="number"
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true
-          }}
-          margin="normal"
-        />
-
-        <Button variant="contained" color="primary" className={classes.button}>
-          Submit
+      <div className={classes.container}>
+        <h1 style={{ color: theme.palette.secondary.main }}>Login</h1>
+        <form className={classes.form}>
+          <Paper className={classes.paper} elevation={1}>
+            <FormGroup>
+              <FormControl required={true} style={styles.input}>
+                <InputLabel htmlFor={'lastname'}>Last Name</InputLabel>
+                <Input
+                  id="lastname"
+                  value={this.state.lastname}
+                  onChange={this.changeLastName}
+                />
+              </FormControl>
+              <FormControl required={true} style={styles.input}>
+                <InputLabel htmlFor={'ssn'}>Last 4 digits of SSN</InputLabel>
+                <Input
+                  id="ssn"
+                  inputProps={{
+                    maxLength: 4,
+                  }}
+                  value={this.state.ssn}
+                  onChange={this.changeSSN}
+                />
+              </FormControl>
+            </FormGroup>
+          </Paper>
+          <Button
+            variant="contained"
+            color="secondary"
+            className={classes.submit}
+            type="submit"
+          >
+            Submit
         </Button>
-      </form>
+        </form>
+      </div>
     )
   }
 }

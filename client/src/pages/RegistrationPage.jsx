@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import {
-  OutlinedInput,
   Input,
   InputLabel,
   FormControl,
   FormGroup,
   Paper,
-  Button,
-  Typography
+  Button
 } from '@material-ui/core'
 import MomentUtils from '@date-io/moment'
 import { MuiPickersUtilsProvider, InlineDatePicker } from 'material-ui-pickers'
@@ -42,7 +40,7 @@ class RegistrationPage extends Component {
     this.state = {
       firstname: '',
       lastname: '',
-      ssn: null,
+      ssn: '',
       birthday: moment().subtract(18, 'years')
     }
   }
@@ -58,7 +56,9 @@ class RegistrationPage extends Component {
   }
 
   changeSSN = event => {
-    this.setState({ ssn: event.target.vaue })
+    if (/^\d*$/.test(event.target.value)) {
+      this.setState({ ssn: event.target.value })
+    }
   }
 
   changeBirthday = birthday => {
@@ -107,8 +107,10 @@ class RegistrationPage extends Component {
                 <InputLabel htmlFor={'ssn'}>SSN</InputLabel>
                 <Input
                   id="ssn"
-                  type={'tel'}
-                  value={this.state.snn}
+                  inputProps={{
+                    maxLength: 9,
+                  }}
+                  value={this.state.ssn}
                   onChange={this.changeSSN}
                 />
               </FormControl>

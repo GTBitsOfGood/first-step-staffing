@@ -2,7 +2,6 @@ import * as userTypes from '../constants/user.constants'
 import 'whatwg-fetch'
 
 export function getUserBySSN(ssn) {
-  console.log('SSN: ', ssn)
   return dispatch => {
     dispatch(request({ ssn }))
     return fetch(`/users/SSN?SSN=${ssn}`, { method: 'GET' })

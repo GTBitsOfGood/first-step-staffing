@@ -6,7 +6,6 @@ const initialState = {
   error: null
 }
 export default function users(state = initialState, action) {
-  console.log(action)
   switch (action.type) {
     case userTypes.GET_USERS_BY_SSN_REQUEST:
       return { ...state, loading: true, error: null }

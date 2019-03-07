@@ -42,7 +42,9 @@ const styles = theme => ({
     margin: 'auto'
   },
   table: {
-    minWidth: '300px'
+    backgroundColor: 'white',
+    margin: '0 15%',
+    width: 'auto'
   }
 })
 

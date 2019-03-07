@@ -11,8 +11,6 @@ require("./location");
 
 require("./equipment");
 
-require("./user");
-
 (0, _mongoose.connect)(process.env.MONGO_URL, {
   useNewUrlParser: true
 });

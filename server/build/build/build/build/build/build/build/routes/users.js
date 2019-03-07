@@ -7,11 +7,11 @@ exports.default = void 0;
 
 var _express = require("express");
 
-var _users = require("../controllers/users");
-
 var router = (0, _express.Router)();
-router.post('/', _users.create);
-router.get('/', _users.getAll);
-router.get('/first3LettersLastName', _users.getByLastName);
+/* GET users listing. */
+
+router.get('/', function (req, res) {
+  res.send('respond with a resource');
+});
 var _default = router;
 exports.default = _default;

@@ -71,7 +71,6 @@ class CheckinPage extends React.Component {
 
   displayUsers = () => {
     const { users } = this.props
-    console.log('table users: ', users)
     return users.map(user => (
       <TableRow key={user._id}>
         <TableCell>{user.firstName}</TableCell>
@@ -83,8 +82,6 @@ class CheckinPage extends React.Component {
   render() {
     const { classes, theme, users, loading } = this.props
     const { submitted } = this.state
-    console.log('props users: ', users)
-    console.log('props loading: ', loading)
 
     return (
       <div className={classes.container}>
@@ -97,16 +94,6 @@ class CheckinPage extends React.Component {
           >
             <Paper className={classes.paper} elevation={1}>
               <FormGroup>
-                {/* <FormControl required={true} style={styles.input}>
-                <InputLabel htmlFor={'name'}>Last Name</InputLabel>
-                <Input
-                  autoFocus={true}
-                  id="name"
-                  label="Last Name"
-                  value={this.state.lastName}
-                  onChange={this.handleChange('lastName')}
-                />
-              </FormControl> */}
                 <FormControl required={true} style={styles.input}>
                   <InputLabel htmlFor={'ssn'}>
                     Last Four Digits of SSN

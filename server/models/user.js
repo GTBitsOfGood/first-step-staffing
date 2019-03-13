@@ -22,9 +22,22 @@ const userSchema = new Schema({
       message: props => `${props.value} is not a valid Social Security Number!`
     }
   },
+  ssnString: {
+    type: String,
+    required: false,
+    trim: true
+  },
   birthday: {
     type: Date,
     required: true
+  }
+})
+
+userSchema.pre('save', async function(next) {
+  if (this.isModified('ssn') || this.isNew) {
+    this.ssnString = this.ssn.toString().slice(-4)
+  } else {
+    return next()
   }
 })
 

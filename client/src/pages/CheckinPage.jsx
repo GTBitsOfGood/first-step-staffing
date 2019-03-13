@@ -99,7 +99,7 @@ class CheckinPage extends React.Component {
                   </InputLabel>
                   <Input
                     id="ssn"
-                    type="number"
+                    type="tel"
                     onInput={e => {
                       e.target.value = e.target.value.toString().slice(0, 4)
                     }}

@@ -28,6 +28,7 @@ export function getUserBySSN(ssn) {
 export function registerJobSeeker(user) {
   console.log(JSON.stringify(user))
   return dispatch => {
+    dispatch(submit({ user }))
     return fetch('/users/', {
       method: 'POST',
       headers: {
@@ -42,6 +43,10 @@ export function registerJobSeeker(user) {
         return json.user
       })
       .catch(err => dispatch(failure(err)))
+  }
+
+  function submit(user) {
+    return { type: userTypes.JOB_SEEKER_REGISTRATION_SUBMITTED, user }
   }
 
   function success(user) {

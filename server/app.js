@@ -10,6 +10,14 @@ import indexRouter from './routes/index'
 import locationRouter from './routes/locations'
 import userRouter from './routes/users'
 
+let path = ''
+
+if (process.env.NODE_ENV == 'production') {
+  path += '../../'
+} else {
+  path += '../'
+}
+
 const app = express()
 
 app.use(logger('dev'))
@@ -20,14 +28,14 @@ app.use(
   })
 )
 app.use(cookieParser())
-app.use(ExpressStatic(join(__dirname, '../client/build/')))
+app.use(ExpressStatic(join(__dirname, path + 'client/build/')))
 
 app.use('/', indexRouter)
 app.use('/locations', locationRouter)
 app.use('/users', userRouter)
 
 app.get('/*', (req, res) => {
-  res.sendFile(join(__dirname, '../client/build/index.html'))
+  res.sendFile(join(__dirname, path + 'client/build/index.html'))
 })
 
 module.exports = app

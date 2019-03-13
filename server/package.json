@@ -7,7 +7,7 @@
     "debugger": "nodemon --inspect --exec babel-node ./bin/www",
     "dev": "nodemon --exec babel-node ./bin/www",
     "postinstall": "npm run build",
-    "build": "babel . --ignore node_modules --out-dir build && cp -R ./bin ./build"
+    "build": "babel . --ignore node_modules --out-dir build && cp -R .env ./bin ./build"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",

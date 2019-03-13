@@ -34,13 +34,13 @@ const styles = theme => ({
   }
 })
 
-class RegistrationPage extends Component {
+class RegistrationForm extends Component {
   constructor() {
     super()
     this.state = {
       firstname: '',
       lastname: '',
-      ssn: '',
+      ssn: null,
       birthday: moment().subtract(18, 'years')
     }
   }
@@ -56,9 +56,7 @@ class RegistrationPage extends Component {
   }
 
   changeSSN = event => {
-    if (/^\d*$/.test(event.target.value)) {
-      this.setState({ ssn: event.target.value })
-    }
+    this.setState({ ssn: event.target.vaue })
   }
 
   changeBirthday = birthday => {
@@ -67,6 +65,11 @@ class RegistrationPage extends Component {
 
   render() {
     const { classes, theme } = this.props
+    const styles = {
+      input: {
+        padding: '10px 0'
+      }
+    }
     return (
       <div className={classes.container}>
         <h1 style={{ color: theme.palette.secondary.main }}>Register</h1>
@@ -102,16 +105,15 @@ class RegistrationPage extends Component {
                 <InputLabel htmlFor={'ssn'}>SSN</InputLabel>
                 <Input
                   id="ssn"
-                  inputProps={{
-                    maxLength: 9
-                  }}
-                  value={this.state.ssn}
+                  type={'tel'}
+                  value={this.state.snn}
                   onChange={this.changeSSN}
                 />
               </FormControl>
               <FormControl required={true} style={styles.input}>
                 <MuiPickersUtilsProvider utils={MomentUtils}>
                   <InlineDatePicker
+                    variant="outlined"
                     label="Date of birth"
                     value={this.state.birthday}
                     disableFuture
@@ -120,6 +122,7 @@ class RegistrationPage extends Component {
                     views={['year', 'month', 'day']}
                     onChange={this.changeBirthday}
                     mask={[
+                      /\d/,
                       /\d/,
                       /\d/,
                       '/',
@@ -150,4 +153,4 @@ class RegistrationPage extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(RegistrationPage)
+export default withStyles(styles, { withTheme: true })(RegistrationForm)

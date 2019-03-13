@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./build/bin/www",
+    "debugger": "nodemon --inspect --exec babel-node ./bin/www",
     "dev": "nodemon --exec babel-node ./bin/www",
     "postinstall": "npm run build",
     "build": "babel . --ignore node_modules --out-dir build && cp -R ./bin ./build"
@@ -22,6 +23,7 @@
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
     "@babel/node": "^7.2.2",
+    "@babel/plugin-proposal-optional-chaining": "^7.2.0",
     "@babel/preset-env": "^7.3.1"
   }
 }

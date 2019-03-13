@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import {
-  OutlinedInput,
   Input,
   InputLabel,
   FormControl,
   FormGroup,
   Paper,
-  Button,
-  Typography
+  Button
 } from '@material-ui/core'
 import MomentUtils from '@date-io/moment'
 import { MuiPickersUtilsProvider, InlineDatePicker } from 'material-ui-pickers'

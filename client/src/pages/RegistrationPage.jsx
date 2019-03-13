@@ -47,7 +47,6 @@ class RegistrationPage extends Component {
       ssn: '',
       birthday: moment().subtract(18, 'years')
     }
-    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {}

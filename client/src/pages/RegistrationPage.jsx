@@ -15,7 +15,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActions from '../actions/users'
 
-
 const styles = theme => ({
   container: {
     display: 'flex',
@@ -42,8 +41,8 @@ class RegistrationPage extends Component {
   constructor() {
     super()
     this.state = {
-      firstname: '',
-      lastname: '',
+      firstName: '',
+      lastName: '',
       ssn: '',
       birthday: moment().subtract(18, 'years')
     }
@@ -52,11 +51,11 @@ class RegistrationPage extends Component {
   componentDidMount() {}
 
   changeFirstName = event => {
-    this.setState({ firstname: event.target.value })
+    this.setState({ firstName: event.target.value })
   }
 
   changeLastName = event => {
-    this.setState({ lastname: event.target.value })
+    this.setState({ lastName: event.target.value })
   }
 
   changeSSN = event => {
@@ -79,7 +78,7 @@ class RegistrationPage extends Component {
     return (
       <div className={classes.container}>
         <h1 style={{ color: theme.palette.secondary.main }}>Register</h1>
-        <form className={classes.form} onSubmit={this.handleSubmit}>
+        <form className={classes.form} onSubmit={this.handleSubmit.bind(this)}>
           <Paper className={classes.paper} elevation={1}>
             <FormGroup>
               <FormControl required={true} style={styles.input}>
@@ -159,18 +158,17 @@ class RegistrationPage extends Component {
   }
 }
 
-
 const mapStateToProps = state => ({
-    users: state.users.users,
-    loading: state.users.loading,
-    error: state.users.error
-  })
-  
-const mapDispatchToProps = dispatch => ({
-    userActions: bindActionCreators(userActions, dispatch)
+  users: state.users.users,
+  loading: state.users.loading,
+  error: state.users.error
 })
 
+const mapDispatchToProps = dispatch => ({
+  userActions: bindActionCreators(userActions, dispatch)
+})
 
-
-export default connect(mapStateToProps, mapDispatchToProps) 
-(withStyles(styles, { withTheme: true })(RegistrationPage))
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles, { withTheme: true })(RegistrationPage))

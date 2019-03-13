@@ -15,10 +15,10 @@ export default function users(state = initialState, action) {
     case userTypes.GET_USERS_BY_SSN_FAILURE:
       return { ...state, loading: false, error: action.err.toString() }
     case userTypes.JOB_SEEKER_REGISTRATION_SUCCESS:
-      return { ...state, loading: false, users: [ ...users, action.user] }
+      return { ...state, loading: false, users: [...state.users, action.user] }
     case userTypes.JOB_SEEKER_REGISTRATION_FAILURE:
       return { ...state, loading: false, error: action.err.toString() }
     default:
-      return action
+      return state
   }
 }

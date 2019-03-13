@@ -26,27 +26,31 @@ export function getUserBySSN(ssn) {
 }
 
 export function registerJobSeeker(user) {
-    return dispatch => {
-        return fetch(`/users/`, {method: 'POST',
-            body: JSON.stringify(
-                user
-            )})
-            .then(handleErrors)
-            .then(res => res.json())
-            .then(json => {
-                dispatch(success(user))
-                return json.user
-            })
-            .catch(err => dispatch(failure(err)))
-    }
-
-    function success(user) {
-      return { type: userTypes.GET_USERS_BY_SSN_SUCCESS, user }
-    }
-    function failure(err) {
-      return { type: userTypes.GET_USERS_BY_SSN_FAILURE, err }
-    }
+  console.log(JSON.stringify(user))
+  return dispatch => {
+    return fetch('/users/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
+    })
+      .then(handleErrors)
+      .then(res => res.json())
+      .then(json => {
+        dispatch(success(user))
+        return json.user
+      })
+      .catch(err => dispatch(failure(err)))
   }
+
+  function success(user) {
+    return { type: userTypes.JOB_SEEKER_REGISTRATION_SUCCESS, user }
+  }
+  function failure(err) {
+    return { type: userTypes.JOB_SEEKER_REGISTRATION_FAILURE, err }
+  }
+}
 
 function handleErrors(response) {
   if (!response.ok) {

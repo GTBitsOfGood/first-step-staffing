@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./build/bin/www",
+    "start": "NODE_ENV=production node ./build/bin/www",
     "debugger": "nodemon --inspect --exec babel-node ./bin/www",
     "dev": "nodemon --exec babel-node ./bin/www",
     "postinstall": "npm run build",

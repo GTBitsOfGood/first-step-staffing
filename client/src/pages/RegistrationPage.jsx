@@ -11,6 +11,10 @@ import MomentUtils from '@date-io/moment'
 import { MuiPickersUtilsProvider, InlineDatePicker } from 'material-ui-pickers'
 import moment from 'moment'
 import { withStyles } from '@material-ui/core/styles'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as userActions from '../actions/users'
+
 
 const styles = theme => ({
   container: {
@@ -43,6 +47,7 @@ class RegistrationPage extends Component {
       ssn: '',
       birthday: moment().subtract(18, 'years')
     }
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {}
@@ -65,12 +70,17 @@ class RegistrationPage extends Component {
     this.setState({ birthday })
   }
 
+  handleSubmit = e => {
+    e.preventDefault()
+    this.props.userActions.registerJobSeeker(this.state)
+  }
+
   render() {
     const { classes, theme } = this.props
     return (
       <div className={classes.container}>
         <h1 style={{ color: theme.palette.secondary.main }}>Register</h1>
-        <form className={classes.form}>
+        <form className={classes.form} onSubmit={this.handleSubmit}>
           <Paper className={classes.paper} elevation={1}>
             <FormGroup>
               <FormControl required={true} style={styles.input}>
@@ -150,4 +160,18 @@ class RegistrationPage extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(RegistrationPage)
+
+const mapStateToProps = state => ({
+    users: state.users.users,
+    loading: state.users.loading,
+    error: state.users.error
+  })
+  
+const mapDispatchToProps = dispatch => ({
+    userActions: bindActionCreators(userActions, dispatch)
+})
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps) 
+(withStyles(styles, { withTheme: true })(RegistrationPage))

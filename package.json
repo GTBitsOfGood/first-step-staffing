@@ -7,11 +7,12 @@
     "server/node_modules"
   ],
   "scripts": {
-    "start": "cd server/ && npm run dev",
+    "start": "cd server/ && npm start",
     "install-client": "npm install --prefix client",
     "install-server": "npm install --prefix server",
     "build-client": "cd client/ && npm build",
-    "postinstall": "npm run install-client && npm run install-server && npm run build-client"
+    "build-server": "cs server/ && npm run build",
+    "postinstall": "npm run install-client && npm run install-server && npm run build-client && npm run build-server"
   },
   "engines": {
     "npm": "6.6.0",

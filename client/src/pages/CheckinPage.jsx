@@ -51,7 +51,8 @@ class CheckinPage extends React.Component {
   state = {
     lastName: '',
     ssn: '',
-    submitted: false
+    submitted: false,
+    clickedUser: null
   }
 
   handleChange = name => event => {
@@ -71,7 +72,10 @@ class CheckinPage extends React.Component {
   displayUsers = () => {
     const { users } = this.props
     return users.map(user => (
-      <TableRow key={user._id}>
+      <TableRow
+        key={user._id}
+        onClick={() => this.setState({ clickedUser: user })}
+      >
         <TableCell>{user.firstName}</TableCell>
         <TableCell>{user.lastName}</TableCell>
       </TableRow>
@@ -80,7 +84,7 @@ class CheckinPage extends React.Component {
 
   render() {
     const { classes, theme, users, loading } = this.props
-    const { submitted } = this.state
+    const { submitted, clickedUser } = this.state
 
     return (
       <div className={classes.container}>
@@ -136,6 +140,28 @@ class CheckinPage extends React.Component {
             </TableHead>
             <TableBody>{this.displayUsers()}</TableBody>
           </Table>
+        )}
+        {submitted && !loading && clickedUser && (
+          <div>
+            <h1>Is this you?</h1>
+            {clickedUser.firstName} {clickedUser.lastName}
+            <Button
+              variant="contained"
+              color="secondary"
+              className={classes.submit}
+              type="submit"
+            >
+              Yes
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              className={classes.submit}
+              type="submit"
+            >
+              No
+            </Button>
+          </div>
         )}
       </div>
     )

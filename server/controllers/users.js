@@ -57,8 +57,7 @@ export function getBySSN(req, res, next) {
   }
 
   if (req.query.SSN.length == 4) {
-    const ssn = new RegExp(req.query.SSN)
-    User.find({ ssn: req.query.SSN }, (err, users) => {
+    User.find({ ssnString: req.query.SSN.toString() }, (err, users) => {
       if (err) next(err)
       else {
         res.status(200).json({ users: users })

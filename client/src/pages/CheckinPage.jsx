@@ -26,16 +26,23 @@ const styles = theme => ({
     backgroundColor: theme.palette.primary.dark,
     textAlign: 'center'
   },
+  formContainer: {
+    margin: '0 30%'
+  },
+  formGroup: {
+    display: 'flex',
+    flexDirection: 'row'
+  },
   form: {
-    margin: '0 15%'
+    margin: '0 20px'
   },
   paper: {
     margin: 'auto',
-    padding: '20px'
+    padding: '15px'
   },
   submit: {
     marginTop: '20px',
-    width: '100%'
+    padding: '10px 50px'
   },
   load: {
     margin: 'auto'
@@ -44,28 +51,52 @@ const styles = theme => ({
     backgroundColor: 'white',
     margin: '0 15%',
     width: 'auto'
+  },
+  input: {
+    fontWeight: 'bold',
+    fontSize: '35px',
+    maxWidth: '25px'
   }
 })
 
 class CheckinPage extends React.Component {
-  state = {
-    lastName: '',
-    ssn: '',
-    submitted: false
+  constructor(props) {
+    super(props)
+    this.state = {
+      ssn: ['', '', '', ''],
+      submitted: false,
+      users: [],
+      loading: false,
+      error: ''
+    }
+
+    this.ssnInputs = [
+      React.createRef(),
+      React.createRef(),
+      React.createRef(),
+      React.createRef()
+    ]
   }
 
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.value })
-  }
-
-  changeSSN = event => {
-    this.setState({ ssn: event.target.vaue })
+  handleChange = ind => event => {
+    const ssn = [...this.state.ssn]
+    ssn[ind] = event.target.value
+    this.setState({ ssn }, () => {
+      this.autoFocus(ind)
+    })
   }
 
   handleSubmit = e => {
     e.preventDefault()
-    this.setState({ submitted: true })
-    this.props.userActions.getUserBySSN(this.state.ssn)
+    const ssn = parseInt(this.state.ssn.join(''))
+    console.log(ssn)
+    fetch(`/users/SSN?SSN=${ssn}`, { method: 'GET' })
+      .then(res => res.json())
+      .then(json => {
+        this.setState({ loading: false, users: json.users })
+      })
+      .catch(err => this.setState({ loading: false, error: err }))
+    this.setState({ submitted: true, loading: true })
   }
 
   displayUsers = () => {
@@ -78,47 +109,120 @@ class CheckinPage extends React.Component {
     ))
   }
 
+  catchBackspace = ind => event => {
+    if (event.keyCode === 8) {
+      if (!this.state.ssn[ind]) {
+        this.ssnInputs[ind - 1].focus()
+      }
+    }
+  }
+
+  autoFocus = ind => {
+    if (ind !== 3 && this.state.ssn[ind].toString().length === 1) {
+      const l = this.ssnInputs[ind + 1]
+      l.focus()
+    }
+  }
+
+  fourBoxInput = () => {
+    const { classes, theme } = this.props
+    return (
+      <form
+        autoComplete="off"
+        onSubmit={this.handleSubmit}
+        className={classes.formContainer}
+      >
+        <FormGroup className={classes.formGroup}>
+          <FormControl required={true} className={classes.form}>
+            <Paper className={classes.paper} elevation={1}>
+              <Input
+                inputRef={e => (this.ssnInputs[0] = e)}
+                className={classes.input}
+                id="ssn1"
+                type="tel"
+                disableUnderline={true}
+                inputProps={{
+                  maxLength: 1
+                }}
+                autoFocus={true}
+                value={this.state.ssn[0]}
+                onChange={this.handleChange(0)}
+                onKeyDown={this.catchBackspace(1)}
+              />
+            </Paper>
+          </FormControl>
+          <FormControl required={true} className={classes.form}>
+            <Paper className={classes.paper} elevation={1}>
+              <Input
+                inputRef={e => (this.ssnInputs[1] = e)}
+                className={classes.input}
+                id="ssn2"
+                type="tel"
+                disableUnderline={true}
+                inputProps={{
+                  maxLength: 1
+                }}
+                onKeyDown={this.catchBackspace(1)}
+                value={this.state.ssn[1]}
+                onChange={this.handleChange(1)}
+              />
+            </Paper>
+          </FormControl>
+          <FormControl required={true} className={classes.form}>
+            <Paper className={classes.paper} elevation={1}>
+              <Input
+                inputRef={e => (this.ssnInputs[2] = e)}
+                className={classes.input}
+                id="ssn3"
+                type="tel"
+                disableUnderline={true}
+                inputProps={{
+                  maxLength: 1
+                }}
+                onKeyDown={this.catchBackspace(2)}
+                value={this.state.ssn[2]}
+                onChange={this.handleChange(2)}
+              />
+            </Paper>
+          </FormControl>
+          <FormControl required={true} className={classes.form}>
+            <Paper className={classes.paper} elevation={1}>
+              <Input
+                inputRef={e => (this.ssnInputs[3] = e)}
+                className={classes.input}
+                id="ssn4"
+                type="tel"
+                disableUnderline={true}
+                inputProps={{
+                  maxLength: 1
+                }}
+                value={this.state.ssn[3]}
+                onChange={this.handleChange(3)}
+                onKeyDown={this.catchBackspace(3)}
+              />
+            </Paper>
+          </FormControl>
+        </FormGroup>
+        <Button
+          variant="contained"
+          color="secondary"
+          className={classes.submit}
+          type="submit"
+        >
+          Submit
+        </Button>
+      </form>
+    )
+  }
+
   render() {
-    const { classes, theme, users, loading } = this.props
-    const { submitted } = this.state
+    const { classes, theme } = this.props
+    const { submitted, users, loading, error } = this.state
 
     return (
       <div className={classes.container}>
         <h1 style={{ color: theme.palette.secondary.main }}>Check-in</h1>
-        {!submitted && (
-          <form
-            className={classes.form}
-            autoComplete="off"
-            onSubmit={this.handleSubmit}
-          >
-            <Paper className={classes.paper} elevation={1}>
-              <FormGroup>
-                <FormControl required={true} style={styles.input}>
-                  <InputLabel htmlFor={'ssn'}>
-                    Last Four Digits of SSN
-                  </InputLabel>
-                  <Input
-                    id="ssn"
-                    type="tel"
-                    onInput={e => {
-                      e.target.value = e.target.value.toString().slice(0, 4)
-                    }}
-                    value={this.state.ssn}
-                    onChange={this.handleChange('ssn')}
-                  />
-                </FormControl>
-              </FormGroup>
-            </Paper>
-            <Button
-              variant="contained"
-              color="secondary"
-              className={classes.submit}
-              type="submit"
-            >
-              Submit
-            </Button>
-          </form>
-        )}
+        {!submitted && this.fourBoxInput()}
         {submitted && loading && (
           <CircularProgress
             className={classes.load}
@@ -126,7 +230,7 @@ class CheckinPage extends React.Component {
             color="secondary"
           />
         )}
-        {submitted && !loading && users.length > 1 && (
+        {submitted && !loading && !error && users.length > 1 && (
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
@@ -137,6 +241,7 @@ class CheckinPage extends React.Component {
             <TableBody>{this.displayUsers()}</TableBody>
           </Table>
         )}
+        {submitted && !loading && !error && users.length === 1 && }
       </div>
     )
   }
@@ -146,17 +251,4 @@ CheckinPage.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-const mapStateToProps = state => ({
-  users: state.users.users,
-  loading: state.users.loading,
-  error: state.users.error
-})
-
-const mapDispatchToProps = dispatch => ({
-  userActions: bindActionCreators(userActions, dispatch)
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles, { withTheme: true })(CheckinPage))
+export default withStyles(styles, { withTheme: true })(CheckinPage)

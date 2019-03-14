@@ -66,7 +66,7 @@ class LoginPage extends React.Component {
           <Paper className={classes.paper} elevation={1}>
             <FormGroup>
               <FormControl required={true} style={styles.input}>
-                <InputLabel htmlFor={'lastname'}>Last Name</InputLabel>
+                <InputLabel htmlFor={'lastname'}>Username</InputLabel>
                 <Input
                   id="lastname"
                   value={this.state.lastname}
@@ -74,7 +74,7 @@ class LoginPage extends React.Component {
                 />
               </FormControl>
               <FormControl required={true} style={styles.input}>
-                <InputLabel htmlFor={'ssn'}>Last 4 digits of SSN</InputLabel>
+                <InputLabel htmlFor={'ssn'}>Password</InputLabel>
                 <Input
                   id="ssn"
                   inputProps={{

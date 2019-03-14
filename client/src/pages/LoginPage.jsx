@@ -7,9 +7,9 @@ import {
   FormControl,
   FormGroup,
   Paper,
-  Button,
+  Button
 } from '@material-ui/core'
-import moment from 'moment'
+import { Link } from 'react-router-dom'
 
 const styles = theme => ({
   container: {
@@ -24,15 +24,16 @@ const styles = theme => ({
     padding: '10px 0'
   },
   form: {
-    margin: '0 15%'
+    margin: '0 auto'
   },
   paper: {
-    margin: 'auto',
+    margin: '0 auto',
     padding: '20px'
   },
   submit: {
-    marginTop: '20px',
-    width: '100%'
+    margin: '20px auto',
+    padding: '10px 50px',
+    width: '175px'
   }
 })
 
@@ -41,7 +42,7 @@ class LoginPage extends React.Component {
     super()
     this.state = {
       lastname: '',
-      ssn: '',
+      ssn: ''
     }
   }
 
@@ -77,7 +78,7 @@ class LoginPage extends React.Component {
                 <Input
                   id="ssn"
                   inputProps={{
-                    maxLength: 4,
+                    maxLength: 4
                   }}
                   value={this.state.ssn}
                   onChange={this.changeSSN}
@@ -85,14 +86,16 @@ class LoginPage extends React.Component {
               </FormControl>
             </FormGroup>
           </Paper>
-          <Button
-            variant="contained"
-            color="secondary"
-            className={classes.submit}
-            type="submit"
-          >
-            Submit
-        </Button>
+          <Link to="/checkin" style={{ textDecoration: 'none' }}>
+            <Button
+              variant="contained"
+              color="secondary"
+              className={classes.submit}
+              type="submit"
+            >
+              Submit
+            </Button>
+          </Link>
         </form>
       </div>
     )

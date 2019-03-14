@@ -7,42 +7,46 @@ import FormGroup from '@material-ui/core/FormGroup'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import * as userActions from '../actions/users'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
+import { Link } from 'react-router-dom'
 
 const styles = theme => ({
   container: {
     display: 'flex',
-    height: '100vh',
+    height: '100%',
     margin: 'auto',
     flexDirection: 'column',
     backgroundColor: theme.palette.primary.dark,
     textAlign: 'center'
   },
-  formContainer: {
-    margin: '0 30%'
-  },
+  formContainer: {},
   formGroup: {
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: 'center'
   },
   form: {
-    margin: '0 20px'
+    margin: '0 15px'
   },
   paper: {
     margin: 'auto',
-    padding: '15px'
+    padding: '15px',
+    input: {
+      padding: '8px'
+    },
+    userCheck: {
+      margin: '20px auto'
+    }
   },
   submit: {
-    marginTop: '20px',
-    padding: '10px 50px'
+    margin: '20px auto',
+    padding: '10px 50px',
+    width: '175px'
   },
   load: {
     margin: 'auto'
@@ -54,7 +58,8 @@ const styles = theme => ({
   input: {
     fontWeight: 'bold',
     fontSize: '35px',
-    maxWidth: '25px'
+    maxWidth: '25px',
+    margin: '10px'
   },
   confirm: {
     margin: '0 auto',
@@ -83,6 +88,12 @@ class CheckinPage extends React.Component {
       React.createRef(),
       React.createRef()
     ]
+  }
+
+  componentDidMount() {
+    if (!this.state.submitted) {
+      this.ssnInputs[0].click(() => this.focus())
+    }
   }
 
   handleChange = ind => event => {
@@ -134,7 +145,7 @@ class CheckinPage extends React.Component {
   }
 
   clickedUser = user => {
-    const { classes, theme } = this.props
+    const { classes } = this.props
     return (
       <Paper className={classes.paper} elevation={1}>
         <h2>Is this you?</h2>
@@ -156,7 +167,7 @@ class CheckinPage extends React.Component {
             color="secondary"
             className={classes.submit}
             type="submit"
-            onClick={() => this.setState({ clickedUser: null })}
+            onClick={() => this.resetResults()}
           >
             No
           </Button>
@@ -165,8 +176,9 @@ class CheckinPage extends React.Component {
     )
   }
 
+  // convert to a for loop??
   fourBoxInput = () => {
-    const { classes, theme } = this.props
+    const { classes } = this.props
     return (
       <form
         autoComplete="off"
@@ -175,7 +187,7 @@ class CheckinPage extends React.Component {
       >
         <FormGroup className={classes.formGroup}>
           <FormControl required={true} className={classes.form}>
-            <Paper className={classes.paper} elevation={1}>
+            <Paper className={classes.paper.input} elevation={1}>
               <Input
                 inputRef={e => (this.ssnInputs[0] = e)}
                 className={classes.input}
@@ -193,7 +205,7 @@ class CheckinPage extends React.Component {
             </Paper>
           </FormControl>
           <FormControl required={true} className={classes.form}>
-            <Paper className={classes.paper} elevation={1}>
+            <Paper className={classes.paper.input} elevation={1}>
               <Input
                 inputRef={e => (this.ssnInputs[1] = e)}
                 className={classes.input}
@@ -210,7 +222,7 @@ class CheckinPage extends React.Component {
             </Paper>
           </FormControl>
           <FormControl required={true} className={classes.form}>
-            <Paper className={classes.paper} elevation={1}>
+            <Paper className={classes.paper.input} elevation={1}>
               <Input
                 inputRef={e => (this.ssnInputs[2] = e)}
                 className={classes.input}
@@ -227,7 +239,7 @@ class CheckinPage extends React.Component {
             </Paper>
           </FormControl>
           <FormControl required={true} className={classes.form}>
-            <Paper className={classes.paper} elevation={1}>
+            <Paper className={classes.paper.input} elevation={1}>
               <Input
                 inputRef={e => (this.ssnInputs[3] = e)}
                 className={classes.input}
@@ -256,6 +268,18 @@ class CheckinPage extends React.Component {
     )
   }
 
+  displayError = () => {
+    const { classes, theme } = this.props
+    setTimeout(() => this.resetResults(), 4000)
+    return (
+      <Paper className={classes.confirm} elevation={1}>
+        <h2 style={{ color: theme.palette.secondary.main }}>
+          Sorry it looks like something went wrong!
+        </h2>
+      </Paper>
+    )
+  }
+
   confirm = () => {
     const { classes, theme } = this.props
     setTimeout(() => this.resetResults(), 3000)
@@ -270,6 +294,31 @@ class CheckinPage extends React.Component {
 
   resetResults = () => {
     this.setState(initialState)
+  }
+
+  loading = () => {
+    const { classes } = this.props
+    return (
+      <Paper className={classes.confirm} elevation={1}>
+        <CircularProgress
+          className={classes.load}
+          style={{ height: 'auto', minWidth: '150px' }}
+          color="secondary"
+        />
+      </Paper>
+    )
+  }
+
+  noUserExists = () => {
+    const { classes, theme } = this.props
+    return (
+      <Paper className={classes.confirm} elevation={1}>
+        <h2 style={{ color: theme.palette.secondary.main }}>
+          Looks like you are not in our system yet! Please register with the
+          button below.
+        </h2>
+      </Paper>
+    )
   }
 
   render() {
@@ -287,13 +336,8 @@ class CheckinPage extends React.Component {
       <div className={classes.container}>
         <h1 style={{ color: theme.palette.secondary.main }}>Check-in</h1>
         {!submitted && this.fourBoxInput()}
-        {submitted && loading && (
-          <CircularProgress
-            className={classes.load}
-            style={{ height: 'auto', width: '15%' }}
-            color="secondary"
-          />
-        )}
+        {submitted && loading && this.loading()}
+        {submitted && !loading && error && this.displayError()}
         {submitted && !loading && !error && !checkedIn && users.length > 1 && (
           <div style={{ margin: '0 auto' }}>
             <Table className={classes.table}>
@@ -314,9 +358,25 @@ class CheckinPage extends React.Component {
           !loading &&
           !error &&
           !checkedIn &&
-          users.length === 1 &&
-          this.clickedUser(users[0])}
+          users.length === 1 && (
+            <div style={{ margin: '0 auto' }}>{this.clickedUser(users[0])}</div>
+          )}
         {checkedIn && this.confirm()}
+        {submitted &&
+          !loading &&
+          !error &&
+          users.length === 0 &&
+          this.noUserExists()}
+        <Link to="/register" style={{ textDecoration: 'none' }}>
+          <Button
+            variant="contained"
+            color="secondary"
+            className={classes.submit}
+            fullWidth={false}
+          >
+            Register
+          </Button>
+        </Link>
       </div>
     )
   }

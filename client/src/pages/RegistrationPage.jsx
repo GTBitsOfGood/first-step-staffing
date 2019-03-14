@@ -12,6 +12,7 @@ import { MuiPickersUtilsProvider, InlineDatePicker } from 'material-ui-pickers'
 import moment from 'moment'
 import { withStyles } from '@material-ui/core/styles'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import { Link } from 'react-router-dom'
 
 const initialState = {
   user: {
@@ -36,15 +37,16 @@ const styles = theme => ({
     textAlign: 'center'
   },
   form: {
-    margin: 'auto'
+    margin: '0 auto'
   },
   paper: {
     margin: 'auto',
     padding: '20px'
   },
   submit: {
-    marginTop: '20px',
-    width: '100%'
+    margin: '20px auto',
+    padding: '10px 50px',
+    width: '175px'
   },
   confirm: {
     margin: 'auto',
@@ -200,7 +202,6 @@ class RegistrationPage extends Component {
 
   loading = () => {
     const { classes } = this.props
-    setTimeout(() => this.resetResults(), 4000)
     return (
       <Paper className={classes.confirm} elevation={1}>
         <CircularProgress
@@ -218,6 +219,7 @@ class RegistrationPage extends Component {
 
   displayError = () => {
     const { classes, theme } = this.props
+    setTimeout(() => this.resetResults(), 4000)
     return (
       <Paper className={classes.confirm} elevation={1}>
         <h2 style={{ color: theme.palette.secondary.main }}>
@@ -236,6 +238,16 @@ class RegistrationPage extends Component {
         {isSubmitted && loading && this.loading()}
         {isSubmitted && !loading && error && this.displayError()}
         {isSubmitted && !loading && !error && newUser && this.confirm()}
+        <Link to="/checkin" style={{ textDecoration: 'none' }}>
+          <Button
+            variant="contained"
+            color="secondary"
+            className={classes.submit}
+            fullWidth={false}
+          >
+            Check In
+          </Button>
+        </Link>
       </div>
     )
   }

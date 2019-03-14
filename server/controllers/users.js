@@ -1,23 +1,26 @@
 const User = require('mongoose').model('User')
 
 export function create(req, res, next) {
+  let errorMessage = []
   if (!req.body.firstName) {
-    return res.status(400).json({ message: 'First name is required' })
+    errorMessage.push('First name is required')
   }
   if (!req.body.lastName) {
-    return res.status(400).json({ message: 'Last name is required' })
+    errorMessage.push('Last name is required')
   }
-  if (req.body?.ssn.toString().length != 9) {
-    return res
-      .status(400)
-      .json({ message: 'Social security numbers are 9 digits' })
-  } else if (!req.body.ssn) {
-    return res
-      .status(400)
-      .json({ message: 'Social security number is required' })
+  if (!req.body.ssn) {
+    errorMessage.push('Social security number is required')
+  } else if (req.body.ssn.toString().length != 9) {
+    errorMessage.push('Social security numbers are 9 digits')
   }
   if (!req.body.birthday) {
-    return res.status(400).json({ message: 'Birthday is required' })
+    errorMessage.push('Birthday is required')
+  }
+
+  if (errorMessage.length != 0) {
+    return res
+      .status(400)
+      .json({ error: errorMessage.join(' and ').toString() })
   }
 
   const user = {
@@ -28,7 +31,10 @@ export function create(req, res, next) {
   }
 
   User.create(user, (err, usr) => {
-    if (err) return next(err)
+    if (err) {
+      console.log('error: ', err)
+      return next(err)
+    }
     return res.status(201).json({
       user: usr
     })
@@ -51,8 +57,7 @@ export function getBySSN(req, res, next) {
   }
 
   if (req.query.SSN.length == 4) {
-    const ssn = new RegExp(req.query.SSN)
-    User.find({ ssn: req.query.SSN }, (err, users) => {
+    User.find({ ssnString: req.query.SSN.toString() }, (err, users) => {
       if (err) next(err)
       else {
         res.status(200).json({ users: users })

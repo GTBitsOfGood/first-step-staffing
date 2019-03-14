@@ -49,26 +49,33 @@ const styles = theme => ({
   },
   table: {
     backgroundColor: 'white',
-    margin: '0 15%',
     width: 'auto'
   },
   input: {
     fontWeight: 'bold',
     fontSize: '35px',
     maxWidth: '25px'
+  },
+  confirm: {
+    margin: '0 auto',
+    padding: '20px'
   }
 })
+
+const initialState = {
+  ssn: ['', '', '', ''],
+  submitted: false,
+  users: [],
+  loading: false,
+  error: '',
+  clickedUser: null,
+  checkedIn: false
+}
 
 class CheckinPage extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      ssn: ['', '', '', ''],
-      submitted: false,
-      users: [],
-      loading: false,
-      error: ''
-    }
+    this.state = initialState
 
     this.ssnInputs = [
       React.createRef(),
@@ -89,7 +96,6 @@ class CheckinPage extends React.Component {
   handleSubmit = e => {
     e.preventDefault()
     const ssn = parseInt(this.state.ssn.join(''))
-    console.log(ssn)
     fetch(`/users/SSN?SSN=${ssn}`, { method: 'GET' })
       .then(res => res.json())
       .then(json => {
@@ -100,9 +106,12 @@ class CheckinPage extends React.Component {
   }
 
   displayUsers = () => {
-    const { users } = this.props
+    const { users } = this.state
     return users.map(user => (
-      <TableRow key={user._id}>
+      <TableRow
+        key={user._id}
+        onClick={() => this.setState({ clickedUser: user })}
+      >
         <TableCell>{user.firstName}</TableCell>
         <TableCell>{user.lastName}</TableCell>
       </TableRow>
@@ -122,6 +131,38 @@ class CheckinPage extends React.Component {
       const l = this.ssnInputs[ind + 1]
       l.focus()
     }
+  }
+
+  clickedUser = user => {
+    const { classes, theme } = this.props
+    return (
+      <Paper className={classes.paper} elevation={1}>
+        <h2>Is this you?</h2>
+        <div>
+          {user.firstName} {user.lastName}
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <Button
+            variant="contained"
+            color="secondary"
+            className={classes.submit}
+            type="submit"
+            onClick={() => this.setState({ checkedIn: true })}
+          >
+            Yes
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            className={classes.submit}
+            type="submit"
+            onClick={() => this.setState({ clickedUser: null })}
+          >
+            No
+          </Button>
+        </div>
+      </Paper>
+    )
   }
 
   fourBoxInput = () => {
@@ -215,9 +256,32 @@ class CheckinPage extends React.Component {
     )
   }
 
+  confirm = () => {
+    const { classes, theme } = this.props
+    setTimeout(() => this.resetResults(), 3000)
+    return (
+      <Paper className={classes.confirm} elevation={1}>
+        <h2 style={{ color: theme.palette.secondary.main }}>
+          You're Checked In!
+        </h2>
+      </Paper>
+    )
+  }
+
+  resetResults = () => {
+    this.setState(initialState)
+  }
+
   render() {
     const { classes, theme } = this.props
-    const { submitted, users, loading, error } = this.state
+    const {
+      submitted,
+      users,
+      loading,
+      error,
+      clickedUser,
+      checkedIn
+    } = this.state
 
     return (
       <div className={classes.container}>
@@ -230,18 +294,29 @@ class CheckinPage extends React.Component {
             color="secondary"
           />
         )}
-        {submitted && !loading && !error && users.length > 1 && (
-          <Table className={classes.table}>
-            <TableHead>
-              <TableRow>
-                <TableCell>First Name</TableCell>
-                <TableCell>Last Name</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>{this.displayUsers()}</TableBody>
-          </Table>
+        {submitted && !loading && !error && !checkedIn && users.length > 1 && (
+          <div style={{ margin: '0 auto' }}>
+            <Table className={classes.table}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>First Name</TableCell>
+                  <TableCell>Last Name</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>{this.displayUsers()}</TableBody>
+            </Table>
+            <div style={{ margin: '20px 0' }}>
+              {clickedUser && this.clickedUser(this.state.clickedUser)}
+            </div>
+          </div>
         )}
-        {submitted && !loading && !error && users.length === 1 && }
+        {submitted &&
+          !loading &&
+          !error &&
+          !checkedIn &&
+          users.length === 1 &&
+          this.clickedUser(users[0])}
+        {checkedIn && this.confirm()}
       </div>
     )
   }

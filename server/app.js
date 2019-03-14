@@ -1,4 +1,5 @@
 import {} from 'dotenv/config'
+import '@babel/polyfill'
 import './models/db'
 
 import express, { json, urlencoded, static as ExpressStatic } from 'express'

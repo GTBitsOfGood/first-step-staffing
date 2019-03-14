@@ -9,6 +9,7 @@
     "build": "babel . --ignore node_modules --out-dir build && cp -R ./bin ./build"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.2.5",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "dotenv": "^6.2.0",

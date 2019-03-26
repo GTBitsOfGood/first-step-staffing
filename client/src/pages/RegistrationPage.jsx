@@ -85,7 +85,9 @@ class RegistrationPage extends Component {
   }
 
   changeBirthday = birthday => {
-    this.setState({ ...this.state.user, birthday })
+    this.setState({ 
+      user: {...this.state.user, birthday }
+    })
   }
 
   handleSubmit = e => {
@@ -156,7 +158,7 @@ class RegistrationPage extends Component {
                   value={this.state.user.birthday}
                   disableFuture
                   openTo="year"
-                  format={'DD/MM/YYYY'}
+                  format={'MM/DD/YYYY'}
                   views={['year', 'month', 'day']}
                   onChange={this.changeBirthday}
                   mask={[

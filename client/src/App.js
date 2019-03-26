@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage'
 import JobPage from './pages/JobPage'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
 import theme from './Theme'
+import CheckinPage from './pages/CheckinPage'
 
 class App extends Component {
   render() {
@@ -14,6 +15,7 @@ class App extends Component {
           <Switch>
             <Route path="/jobs" component={JobPage} />
             <Route path="/register" component={RegistrationPage} />
+            <Route path="/checkin" component={CheckinPage} />
             <Route path="/" component={LoginPage} />
           </Switch>
         </Router>

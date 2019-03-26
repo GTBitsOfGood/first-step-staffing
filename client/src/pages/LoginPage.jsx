@@ -27,6 +27,8 @@ const styles = theme => ({
     margin: '0 auto'
   },
   paper: {
+    display: 'flex',
+    flexDirection: 'column',
     margin: '0 auto',
     padding: '20px'
   },
@@ -41,62 +43,107 @@ class LoginPage extends React.Component {
   constructor() {
     super()
     this.state = {
-      lastname: '',
-      ssn: ''
+      username: '',
+      password: '',
+      submitted: false
     }
   }
 
-  changeLastName = event => {
-    this.setState({ lastname: event.target.value })
+  changeUsername = event => {
+    this.setState({ username: event.target.value })
   }
 
-  changeSSN = event => {
-    if (/^\d*$/.test(event.target.value)) {
-      this.setState({ ssn: event.target.value })
-    }
+  changePassword = event => {
+    this.setState({ password: event.target.value })
   }
 
-  render() {
+  handleSubmit = e => {
+    e.preventDefault()
+    this.setState({ submitted: true })
+  }
+
+  loginForm = () => {
     const { classes, theme } = this.props
-
     return (
       <div className={classes.container}>
         <h1 style={{ color: theme.palette.secondary.main }}>Login</h1>
-        <form className={classes.form}>
+        <form
+          autoComplete="off"
+          onSubmit={this.handleSubmit}
+          className={classes.form}
+        >
           <Paper className={classes.paper} elevation={1}>
             <FormGroup>
               <FormControl required={true} style={styles.input}>
-                <InputLabel htmlFor={'lastname'}>Username</InputLabel>
+                <InputLabel htmlFor={'username'}>Username</InputLabel>
                 <Input
-                  id="lastname"
-                  value={this.state.lastname}
-                  onChange={this.changeLastName}
+                  id="username"
+                  value={this.state.username}
+                  onChange={this.changeUsername}
                 />
               </FormControl>
               <FormControl required={true} style={styles.input}>
-                <InputLabel htmlFor={'ssn'}>Password</InputLabel>
+                <InputLabel htmlFor={'password'}>Password</InputLabel>
                 <Input
-                  id="ssn"
-                  inputProps={{
-                    maxLength: 4
-                  }}
-                  value={this.state.ssn}
-                  onChange={this.changeSSN}
+                  id="password"
+                  type="password"
+                  value={this.state.password}
+                  onChange={this.changePassword}
                 />
               </FormControl>
             </FormGroup>
           </Paper>
+          <Button
+            variant="contained"
+            color="secondary"
+            className={classes.submit}
+            type="submit"
+          >
+            Submit
+          </Button>
+        </form>
+      </div>
+    )
+  }
+
+  loginLocation = () => {
+    const { classes, theme } = this.props
+    return (
+      <div className={classes.container}>
+        <h2 style={{ color: theme.palette.secondary.main }}>
+          Where would you like to be directed?
+        </h2>
+        <Paper className={classes.paper}>
+          <Link to="/dashboard" style={{ textDecoration: 'none' }}>
+            <Button
+              variant="contained"
+              color="secondary"
+              className={classes.submit}
+            >
+              Dashboard
+            </Button>
+          </Link>
           <Link to="/checkin" style={{ textDecoration: 'none' }}>
             <Button
               variant="contained"
               color="secondary"
               className={classes.submit}
-              type="submit"
             >
-              Submit
+              Check in
             </Button>
           </Link>
-        </form>
+        </Paper>
+      </div>
+    )
+  }
+
+  render() {
+    const { classes, theme } = this.props
+    const { submitted } = this.state
+    return (
+      <div className={classes.container}>
+        {!submitted && this.loginForm()}
+        {submitted && this.loginLocation()}
       </div>
     )
   }

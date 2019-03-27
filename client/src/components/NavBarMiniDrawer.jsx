@@ -8,6 +8,8 @@ import Divider from '@material-ui/core/Divider'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
+import CssBaseline from '@material-ui/core/CssBaseline'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
@@ -23,6 +25,9 @@ import { withStyles } from '@material-ui/core/styles'
 const drawerWidth = 240
 
 const styles = theme => ({
+  root: {
+    display: 'flex'
+  },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
@@ -65,11 +70,8 @@ const styles = theme => ({
     overflowX: 'hidden',
     width: theme.spacing.unit * 7 + 1,
     [theme.breakpoints.up('sm')]: {
-      width: theme.spacing.unit * 9
+      width: theme.spacing.unit * 9 + 1
     }
-  },
-  mainToolBar: {
-    paddingRight: '0'
   },
   toolbar: {
     display: 'flex',
@@ -78,22 +80,18 @@ const styles = theme => ({
     padding: '0 8px',
     ...theme.mixins.toolbar
   },
-  account: {
-    margin: '0 20px 0 auto'
-  },
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3
   }
 })
 
-class Dashboard extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      open: false
-    }
+class NavBarMiniDrawer extends React.Component {
+  state = {
+    open: false
   }
+
+  toLink = text => text.toLowerCase().replace(/\s+/g, '')
 
   handleDrawerOpen = () => {
     this.setState({ open: true })
@@ -103,22 +101,24 @@ class Dashboard extends Component {
     this.setState({ open: false })
   }
 
-  toLink = text => text.toLowerCase().replace(/\s+/g, '')
+  handleItemClick(text) {
+    console.log(text)
+    this.props.history.push(`/dashboard/${this.toLink(text)}`)
+  }
 
   render() {
     const { classes, theme, children } = this.props
+    console.log(this.props.location.pathname)
     return (
-      <div>
+      <div className={classes.root}>
+        <CssBaseline />
         <AppBar
           position="fixed"
           className={classNames(classes.appBar, {
             [classes.appBarShift]: this.state.open
           })}
         >
-          <Toolbar
-            disableGutters={!this.state.open}
-            className={classes.mainToolBar}
-          >
+          <Toolbar disableGutters={!this.state.open}>
             <IconButton
               color="inherit"
               aria-label="Open drawer"
@@ -132,9 +132,6 @@ class Dashboard extends Component {
             <Typography variant="h6" color="inherit" noWrap>
               Admin Dashboard
             </Typography>
-            <div className={classes.account}>
-              <AccountCircle />
-            </div>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -166,7 +163,7 @@ class Dashboard extends Component {
               <ListItem
                 button
                 component={Link}
-                to={`dashboard/${this.toLink(text)}`}
+                to={`/dashboard/${this.toLink(text)}`}
                 key={text}
               >
                 <ListItemIcon>
@@ -176,13 +173,17 @@ class Dashboard extends Component {
               </ListItem>
             ))}
           </List>
+          <Divider />
         </Drawer>
         <main className={classes.content}>
-          <div className={classes.toolbar}>{children}</div>
+          <div className={classes.toolbar} />
+          {children}
         </main>
       </div>
     )
   }
 }
 
-export default withStyles(styles, { withTheme: true })(Dashboard)
+export default withRouter(
+  withStyles(styles, { withTheme: true })(NavBarMiniDrawer)
+)

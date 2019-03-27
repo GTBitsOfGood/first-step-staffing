@@ -20,21 +20,12 @@ class App extends Component {
               render={({ match: { url } }) => (
                 <>
                   <NavBarMiniDrawer>
-                    <Route exact path={`${url}/`} component={Dashboard} />
+                    <Route exact path={`${url}`} component={Dashboard} />
                     <Route path={`${url}/jobs`} component={JobPage} />
                   </NavBarMiniDrawer>
                 </>
               )}
             />
-            {/* <Route
-              path="/dashboard"
-              render={({ match: { url } }) => (
-                <>
-                  <Route exact path={`${url}/`} component={Dashboard} />
-                  <Route path={`${url}/jobs`} component={JobPage} />
-                </>
-              )}
-            /> */}
             <Route path="/register" component={RegistrationPage} />
             <Route path="/checkin" component={CheckinPage} />
             <Route path="/" component={LoginPage} />

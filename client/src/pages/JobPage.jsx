@@ -69,11 +69,28 @@ class JobPage extends React.Component {
     this.setState({ transportationCost: event.target.value })
   }
 
+  handleSubmit = e => {
+    e.preventDefault()
+    fetch('/jobs/job', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(this.state)
+    })
+      // .then(res => res.json())
+      // .then(json => {
+      //   this.setState({ loading: false, newJob: json.job })
+      // })
+      // .catch(err => this.setState({ error: err, loading: false }))
+    // this.setState({ isSubmitted: true, loading: true })
+  }
+
   render() {
     const { classes, theme } = this.props
 
     return (
-      <div className={classes.container}>
+      <div className={classes.container} onSubmit={this.handleSubmit.bind(this)}>
         <h1 style={{ color: theme.palette.secondary.main }}>Jobs</h1>
         <form className={classes.form}>
           <Paper className={classes.paper} elevation={1}>
@@ -87,7 +104,9 @@ class JobPage extends React.Component {
                 />
               </FormControl>
               <FormControl required={true} style={styles.input}>
-                <InputLabel htmlFor={'peopleNeeded'}>Number of People Needed for Job</InputLabel>
+                <InputLabel htmlFor={'peopleNeeded'}>
+                  Number of People Needed for Job
+                </InputLabel>
                 <Input
                   id="peopleNeeded"
                   type="tel"
@@ -96,21 +115,25 @@ class JobPage extends React.Component {
                 />
               </FormControl>
               <FormControl required={true} style={styles.input}>
-                <InputLabel htmlFor="transportationType">Transportation Type</InputLabel>
+                <InputLabel htmlFor="transportationType">
+                  Transportation Type
+                </InputLabel>
                 <Select
                   value={this.state.transportationType}
                   onChange={this.changeTransportationType}
                   inputProps={{
                     name: 'transportType',
-                    id: 'transportationType',
+                    id: 'transportationType'
                   }}
                 >
-                  <MenuItem value={"Uber"}>Uber</MenuItem>
-                  <MenuItem value={"Van"}>Van</MenuItem>
+                  <MenuItem value={'Uber'}>Uber</MenuItem>
+                  <MenuItem value={'Van'}>Van</MenuItem>
                 </Select>
               </FormControl>
               <FormControl required={true} style={styles.input}>
-                <InputLabel htmlFor={'transportationCost'}>Transportation Cost</InputLabel>
+                <InputLabel htmlFor={'transportationCost'}>
+                  Transportation Cost
+                </InputLabel>
                 <Input
                   id="transportationCost"
                   type="tel"
@@ -127,7 +150,7 @@ class JobPage extends React.Component {
             type="submit"
           >
             Submit
-        </Button>
+          </Button>
         </form>
       </div>
     )

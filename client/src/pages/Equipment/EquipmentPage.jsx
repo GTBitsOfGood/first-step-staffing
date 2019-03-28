@@ -29,17 +29,17 @@ class EquipmentPage extends Component {
   }
 
   rows = () => [
-    this.createData('Job1', 'Atlanta', 45, 20),
-    this.createData('Job2', 'Atlanta', 50, 27),
-    this.createData('Job3', 'Macon', 35, 27),
-    this.createData('Job4', 'Nashville', 30, 30)
+    this.createData('Steel Toed Boots', 20),
+    this.createData('Shovel', 10),
+    this.createData('Equipment1', 5),
+    this.createData('Equipment2', 30)
   ]
 
   render() {
     const { classes } = this.props
     return (
       <div>
-        <h1 className={classes.title}>Current Jobs</h1>
+        <h1 className={classes.title}>Current Equipment</h1>
         <Table>
           <TableHead>
             <TableRow>

@@ -11,7 +11,6 @@ import {
   Select,
   MenuItem
 } from '@material-ui/core'
-import moment from 'moment'
 
 const styles = theme => ({
   container: {
@@ -78,11 +77,11 @@ class JobPage extends React.Component {
       },
       body: JSON.stringify(this.state)
     })
-      // .then(res => res.json())
-      // .then(json => {
-      //   this.setState({ loading: false, newJob: json.job })
-      // })
-      // .catch(err => this.setState({ error: err, loading: false }))
+    // .then(res => res.json())
+    // .then(json => {
+    //   this.setState({ loading: false, newJob: json.job })
+    // })
+    // .catch(err => this.setState({ error: err, loading: false }))
     // this.setState({ isSubmitted: true, loading: true })
   }
 
@@ -90,7 +89,10 @@ class JobPage extends React.Component {
     const { classes, theme } = this.props
 
     return (
-      <div className={classes.container} onSubmit={this.handleSubmit.bind(this)}>
+      <div
+        className={classes.container}
+        onSubmit={this.handleSubmit.bind(this)}
+      >
         <h1 style={{ color: theme.palette.secondary.main }}>Jobs</h1>
         <form className={classes.form}>
           <Paper className={classes.paper} elevation={1}>

@@ -5,6 +5,8 @@ import LoginPage from './pages/LoginPage'
 import JobPage from './pages/Jobs/JobPage'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
 import theme from './Theme'
+import CreateEquipmentPage from './pages/CreateEquipmentPage'
+import EditEquipmentPage from './pages/EditEquipmentPage'
 import CheckinPage from './pages/CheckinPage'
 import Dashboard from './pages/Dashboard'
 import NavBarMiniDrawer from './components/NavBarMiniDrawer'
@@ -33,6 +35,8 @@ class App extends Component {
               )}
             />
             <Route path="/register" component={RegistrationPage} />
+            <Route path="/create_equipment" component={CreateEquipmentPage} />
+            <Route path="/edit_equipment" component={EditEquipmentPage} />
             <Route path="/checkin" component={CheckinPage} />
             <Route path="/" component={LoginPage} />
           </Switch>

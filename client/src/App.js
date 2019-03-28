@@ -8,6 +8,7 @@ import theme from './Theme'
 import CheckinPage from './pages/CheckinPage'
 import Dashboard from './pages/Dashboard'
 import NavBarMiniDrawer from './components/NavBarMiniDrawer'
+import EquipmentPage from './pages/Equipment/EquipmentPage'
 
 class App extends Component {
   render() {
@@ -22,6 +23,11 @@ class App extends Component {
                   <NavBarMiniDrawer>
                     <Route exact path={`${url}`} component={Dashboard} />
                     <Route path={`${url}/jobs`} component={JobPage} />
+                    <Route
+                      path={`${url}/equipment`}
+                      component={EquipmentPage}
+                    />
+                    <Route path={`${url}/equipment/new`} component={null} />
                   </NavBarMiniDrawer>
                 </>
               )}

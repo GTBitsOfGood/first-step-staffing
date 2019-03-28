@@ -11,8 +11,6 @@ import MomentUtils from '@date-io/moment'
 import { MuiPickersUtilsProvider, InlineDatePicker } from 'material-ui-pickers'
 import moment from 'moment'
 import { withStyles } from '@material-ui/core/styles'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import { Link } from 'react-router-dom'
 
 const initialState = {
   user: {
@@ -58,7 +56,7 @@ const styles = theme => ({
   }
 })
 
-class RegistrationPage extends Component {
+class RegistrationForm extends Component {
   constructor() {
     super()
     this.state = initialState
@@ -85,9 +83,7 @@ class RegistrationPage extends Component {
   }
 
   changeBirthday = birthday => {
-    this.setState({ 
-      user: {...this.state.user, birthday }
-    })
+    this.setState({ ...this.state.user, birthday })
   }
 
   handleSubmit = e => {
@@ -162,7 +158,7 @@ class RegistrationPage extends Component {
                   value={this.state.user.birthday}
                   disableFuture
                   openTo="year"
-                  format={'MM/DD/YYYY'}
+                  format={'DD/MM/YYYY'}
                   views={['year', 'month', 'day']}
                   onChange={this.changeBirthday}
                   mask={[
@@ -194,69 +190,10 @@ class RegistrationPage extends Component {
     )
   }
 
-  confirm = () => {
-    const { classes, theme } = this.props
-    setTimeout(() => this.resetResults(), 3000)
-    return (
-      <Paper className={classes.confirm} elevation={1}>
-        <h2 style={{ color: theme.palette.secondary.main }}>
-          Thanks for registering!
-        </h2>
-      </Paper>
-    )
-  }
-
-  loading = () => {
-    const { classes } = this.props
-    return (
-      <Paper className={classes.confirm} elevation={1}>
-        <CircularProgress
-          className={classes.load}
-          style={{ height: 'auto', minWidth: '150px' }}
-          color="secondary"
-        />
-      </Paper>
-    )
-  }
-
-  resetResults = () => {
-    this.setState(initialState)
-  }
-
-  displayError = () => {
-    const { classes, theme } = this.props
-    setTimeout(() => this.resetResults(), 4000)
-    return (
-      <Paper className={classes.confirm} elevation={1}>
-        <h2 style={{ color: theme.palette.secondary.main }}>
-          Sorry it looks like something went wrong!
-        </h2>
-      </Paper>
-    )
-  }
-
   render() {
-    const { classes } = this.props
-    const { isSubmitted, loading, newUser, error } = this.state
-    return (
-      <div className={classes.container}>
-        {!isSubmitted && this.registrationForm()}
-        {isSubmitted && loading && this.loading()}
-        {isSubmitted && !loading && error && this.displayError()}
-        {isSubmitted && !loading && !error && newUser && this.confirm()}
-        <Link to="/checkin" style={{ textDecoration: 'none' }}>
-          <Button
-            variant="contained"
-            color="secondary"
-            className={classes.submit}
-            fullWidth={false}
-          >
-            Check In
-          </Button>
-        </Link>
-      </div>
-    )
+    const { classes, theme } = this.props
+    return <div>{this.registrationForm()}</div>
   }
 }
 
-export default withStyles(styles, { withTheme: true })(RegistrationPage)
+export default withStyles(styles, { withTheme: true })(RegistrationForm)

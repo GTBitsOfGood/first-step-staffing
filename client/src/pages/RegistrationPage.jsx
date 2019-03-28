@@ -110,7 +110,11 @@ class RegistrationPage extends Component {
   registrationForm = () => {
     const { classes, theme } = this.props
     return (
-      <form className={classes.form} onSubmit={this.handleSubmit.bind(this)}>
+      <form
+        autoComplete="off"
+        className={classes.form}
+        onSubmit={this.handleSubmit.bind(this)}
+      >
         <h1 style={{ color: theme.palette.secondary.main }}>Register</h1>
         <Paper className={classes.paper} elevation={1}>
           <FormGroup>

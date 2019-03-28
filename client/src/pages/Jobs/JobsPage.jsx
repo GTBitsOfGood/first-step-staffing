@@ -13,8 +13,9 @@ const styles = theme => ({
     float: 'right',
     margin: '20px 0'
   },
-  font: {
-    color: 
+  title: {
+    color: theme.palette.secondary.main,
+    textAlign: 'center'
   }
 })
 
@@ -38,7 +39,7 @@ class JobsPage extends Component {
     const { classes } = this.props
     return (
       <div>
-        <h1>Current Jobs</h1>
+        <h1 className={classes.title}>Current Jobs</h1>
         <Table>
           <TableHead>
             <TableRow>

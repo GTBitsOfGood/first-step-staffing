@@ -2,13 +2,13 @@ import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import RegistrationPage from './pages/RegistrationPage'
 import LoginPage from './pages/LoginPage'
-import JobsPage from './pages/jobs/JobsPage'
+import JobsPage from './pages/Jobs/JobsPage'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
 import theme from './Theme'
 import CheckinPage from './pages/CheckinPage'
 import Dashboard from './pages/Dashboard'
 import NavBarMiniDrawer from './components/NavBarMiniDrawer'
-import JobCreationPage from './pages/jobs/JobCreationPage'
+import JobCreationPage from './pages/Jobs/JobCreationPage'
 
 class App extends Component {
   render() {

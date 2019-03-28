@@ -18,7 +18,6 @@ const styles = theme => ({
     height: '100vh',
     margin: 'auto',
     flexDirection: 'column',
-    backgroundColor: theme.palette.primary.dark,
     textAlign: 'center'
   },
   input: {
@@ -41,7 +40,7 @@ const styles = theme => ({
   }
 })
 
-class JobPage extends React.Component {
+class JobCreationPage extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -159,8 +158,8 @@ class JobPage extends React.Component {
   }
 }
 
-JobPage.propTypes = {
+JobCreationPage.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles, { withTheme: true })(JobPage)
+export default withStyles(styles, { withTheme: true })(JobCreationPage)

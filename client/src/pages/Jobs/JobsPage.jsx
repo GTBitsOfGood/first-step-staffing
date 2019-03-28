@@ -6,8 +6,9 @@ import TableCell from '@material-ui/core/TableCell'
 import TableBody from '@material-ui/core/TableBody'
 import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core/styles'
+import { Link } from 'react-router-dom'
 
-const styles = () => ({
+const styles = theme => ({
   button: {
     float: 'right',
     margin: '20px 0'
@@ -62,6 +63,8 @@ class JobsPage extends Component {
           color="secondary"
           type="submit"
           className={classes.button}
+          component={Link}
+          to="/dashboard/job/creation"
         >
           Create New Job
         </Button>
@@ -70,4 +73,4 @@ class JobsPage extends Component {
   }
 }
 
-export default withStyles(styles)(JobsPage)
+export default withStyles(styles, { withTheme: true })(JobsPage)

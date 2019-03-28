@@ -8,6 +8,7 @@ import theme from './Theme'
 import CheckinPage from './pages/CheckinPage'
 import Dashboard from './pages/Dashboard'
 import NavBarMiniDrawer from './components/NavBarMiniDrawer'
+import JobCreationPage from './pages/jobs/JobCreationPage'
 
 class App extends Component {
   render() {
@@ -22,6 +23,10 @@ class App extends Component {
                   <NavBarMiniDrawer>
                     <Route exact path={`${url}`} component={Dashboard} />
                     <Route path={`${url}/jobs`} component={JobsPage} />
+                    <Route
+                      path={`${url}/job/creation`}
+                      component={JobCreationPage}
+                    />
                   </NavBarMiniDrawer>
                 </>
               )}

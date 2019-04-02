@@ -15,7 +15,6 @@ const styles = theme => ({
     height: '100vh',
     margin: 'auto',
     flexDirection: 'column',
-    backgroundColor: theme.palette.primary.dark,
     textAlign: 'center'
   },
   form: {
@@ -34,7 +33,7 @@ const styles = theme => ({
 class EquipmentForm extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { name: props.name, cost: props.cost }
+    this.state = { name: this.props.name || '', cost: this.props.cost || '' }
   }
 
   handleChange = name => event => {
@@ -51,7 +50,7 @@ class EquipmentForm extends React.Component {
             color: theme.palette.secondary.main
           }}
         >
-          {this.props.title + ' Equipment'}
+          New Equipment
         </h1>
         <form className={classes.form}>
           <Paper className={classes.paper} elevation={1}>

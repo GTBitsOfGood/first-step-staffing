@@ -33,7 +33,7 @@ const styles = theme => ({
 class EquipmentForm extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { name: '', cost: '' }
+    this.state = { name: this.props.name || '', cost: this.props.cost || '' }
   }
 
   handleChange = name => event => {

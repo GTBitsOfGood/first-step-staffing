@@ -12,6 +12,7 @@ import Dashboard from './pages/Dashboard'
 import NavBarMiniDrawer from './components/NavBarMiniDrawer'
 import EquipmentPage from './pages/Equipment/EquipmentPage'
 import EquipmentForm from './components/forms/EquipmentForm'
+import UsersPage from './pages/User/UsersPage'
 
 class App extends Component {
   render() {
@@ -25,7 +26,7 @@ class App extends Component {
                 <>
                   <NavBarMiniDrawer>
                     <Route exact path={`${url}`} component={Dashboard} />
-                    <Route path={`${url}/jobs`} component={JobPage} />
+                    <Route exact path={`${url}/jobs`} component={JobPage} />
                     <Route
                       exact
                       path={`${url}/equipment`}
@@ -36,14 +37,23 @@ class App extends Component {
                       path={`${url}/equipment/creation`}
                       component={EquipmentForm}
                     />
+                    <Route
+                      exact
+                      path={`${url}/jobseekers`}
+                      component={UsersPage}
+                    />
                   </NavBarMiniDrawer>
                 </>
               )}
             />
-            <Route path="/register" component={RegistrationPage} />
-            <Route path="/create_equipment" component={CreateEquipmentPage} />
-            <Route path="/edit_equipment" component={EditEquipmentPage} />
-            <Route path="/checkin" component={CheckinPage} />
+            <Route exact path="/register" component={RegistrationPage} />
+            <Route
+              exact
+              path="/create_equipment"
+              component={CreateEquipmentPage}
+            />
+            <Route exact path="/edit_equipment" component={EditEquipmentPage} />
+            <Route exact path="/checkin" component={CheckinPage} />
             <Route path="/" component={LoginPage} />
           </Switch>
         </Router>

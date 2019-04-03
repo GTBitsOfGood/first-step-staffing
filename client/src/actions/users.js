@@ -63,3 +63,27 @@ function handleErrors(response) {
   }
   return response
 }
+
+export function getAllJobSeekers() {
+  return dispatch => {
+    dispatch(request())
+    return fetch(`/users/`, { method: 'GET' })
+      .then(handleErrors)
+      .then(res => res.json())
+      .then(json => {
+        dispatch(success(json.users))
+        return json.users
+      })
+      .catch(err => dispatch(failure(err)))
+  }
+
+  function request() {
+    return { type: userTypes.GET_ALL_JOB_SEEKERS_REQUEST }
+  }
+  function success(users) {
+    return { type: userTypes.GET_ALL_JOB_SEEKERS_SUCCESS, users }
+  }
+  function failure(err) {
+    return { type: userTypes.GET_ALL_JOB_SEEKERS_SUCCESS, err }
+  }
+}

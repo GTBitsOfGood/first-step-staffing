@@ -25,6 +25,12 @@ export default function users(state = initialState, action) {
       }
     case userTypes.JOB_SEEKER_REGISTRATION_FAILURE:
       return { ...state, loading: true, error: action.err.toString() }
+    case userTypes.GET_ALL_JOB_SEEKERS_REQUEST:
+      return { ...state, loading: true, error: '' }
+    case userTypes.GET_ALL_JOB_SEEKERS_SUCCESS:
+      return { ...state, loading: false, error: '', users: action.users }
+    case userTypes.GET_ALL_JOB_SEEKERS_FAILURE:
+      return { ...state, loading: false, error: action.err.toString() }
     default:
       return state
   }

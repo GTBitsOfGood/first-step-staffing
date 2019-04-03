@@ -8,6 +8,8 @@ import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
 import CustomTable from '../../components/tables/CustomTable'
+import { connect } from 'react-redux'
+import { getAllJobSeekers } from './../../actions/users'
 
 const styles = theme => ({
   button: {
@@ -22,12 +24,12 @@ const styles = theme => ({
 
 class UsersPage extends Component {
   state = {
-    users: [
-      { id: 0, firstName: 'John', lastName: 'Doe' },
-      { id: 1, firstName: 'Aria', lastName: 'Stark' },
-      { id: 2, firstName: 'Jamie', lastName: 'Lannister' },
-      { id: 3, firstName: 'Bob', lastName: 'Marley' }
-    ]
+    users: []
+  }
+
+  componentDidMount() {
+    this.props.getAllJobSeekers();
+    // console.log(this.state);
   }
 
   render() {
@@ -37,7 +39,7 @@ class UsersPage extends Component {
         <h1 className={classes.title}>Current Job Seekers</h1>
         <CustomTable
           header={['First Name', 'Last Name']}
-          data={this.state.users}
+          data={this.props.users}
           keys={['firstName', 'lastName']}
         />
         <Button
@@ -55,4 +57,21 @@ class UsersPage extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(UsersPage)
+const mapStateToProps = state => {
+  
+    console.log(state.users.users);
+  return {
+    users: state.users.users
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getAllJobSeekers: () => dispatch(getAllJobSeekers())
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles, { withTheme: true })(UsersPage))

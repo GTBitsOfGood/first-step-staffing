@@ -17,7 +17,7 @@ export default function users(state = initialState, action) {
     case userTypes.DELETE_JOB_SEEKER_REQUEST:
       return { ...state, usersLoading: true, usersError: '' }
     case userTypes.DELETE_JOB_SEEKER_SUCCESS:
-      return { ...state, usersLoading: false, usersError: '', users: state.users.filter(user => user.id !== action.deleted) }
+      return { ...state, usersLoading: false, usersError: '', users: state.users.filter(user => user._id !== action.deleted._id) }
     case userTypes.DELETE_JOB_SEEKER_FAILURE:
       return { ...state, userLoading: false, usersError: action.err.toString() }
     default:

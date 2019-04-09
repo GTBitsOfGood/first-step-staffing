@@ -43,6 +43,7 @@ class UsersPage extends Component {
           data={this.props.users}
           keys={['firstName', 'lastName']}
           deleteItem={this.props.deleteJobSeeker}
+          editable={true}
         />
         <Button
           variant="contained"

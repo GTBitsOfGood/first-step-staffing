@@ -9,7 +9,7 @@ import { withStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
 import CustomTable from '../../components/tables/CustomTable'
 import { connect } from 'react-redux'
-import { getAllJobSeekers } from './../../actions/users'
+import { getAllJobSeekers, deleteJobSeeker } from './../../actions/users'
 
 const styles = theme => ({
   button: {
@@ -24,12 +24,13 @@ const styles = theme => ({
 
 class UsersPage extends Component {
   state = {
-    users: []
+    users: [],
+    usersLoading: false,
+    usersError: false
   }
 
   componentDidMount() {
     this.props.getAllJobSeekers();
-    // console.log(this.state);
   }
 
   render() {
@@ -41,6 +42,7 @@ class UsersPage extends Component {
           header={['First Name', 'Last Name']}
           data={this.props.users}
           keys={['firstName', 'lastName']}
+          deleteItem={this.props.deleteJobSeeker}
         />
         <Button
           variant="contained"
@@ -58,16 +60,16 @@ class UsersPage extends Component {
 }
 
 const mapStateToProps = state => {
-  
-    console.log(state.users.users);
   return {
-    users: state.users.users
+    users: state.users.users,
+    
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAllJobSeekers: () => dispatch(getAllJobSeekers())
+    getAllJobSeekers: () => dispatch(getAllJobSeekers()),
+    deleteJobSeeker: (id) => dispatch(deleteJobSeeker(id))
   }
 }
 

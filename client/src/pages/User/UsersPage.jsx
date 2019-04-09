@@ -44,6 +44,7 @@ class UsersPage extends Component {
           keys={['firstName', 'lastName']}
           deleteItem={this.props.deleteJobSeeker}
           editable={true}
+          editItem={() => console.log('edit placeholder')}
         />
         <Button
           variant="contained"

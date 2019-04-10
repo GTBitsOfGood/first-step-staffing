@@ -31,13 +31,9 @@ export function create(req, res, next) {
 }
 
 export function deleteById(req, res, next) {
-  Job.findByIdAndDelete(req.params.id, (err, tasks) => {
+  Job.findByIdAndDelete(req.params.id, (err, deleted) => {
     if (err) return next(err)
-    const response = {
-      message: 'Jobs successfully deleted',
-      id: req.params.id
-    }
-    return res.status(200).send(response)
+    return res.status(200).json({ deleted: deleted })
   })
 }
 

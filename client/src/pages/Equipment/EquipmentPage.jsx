@@ -42,7 +42,7 @@ class EquipmentPage extends Component {
         <h1 className={classes.title}>Current Equipment</h1>
         <CustomTable
           header={['Name', 'Cost']}
-          data={this.props.equipment}
+          data={equipment}
           keys={['name', 'cost']}
           editable={true}
           deleteItem={this.props.deleteEquipment}

@@ -23,6 +23,21 @@ export default function users(state = initialState, action) {
         equipmemntLoading: false,
         equipmentError: action.err.toString()
       }
+    case equipmentTypes.CREATE_EQUIPMENT_REQUEST:
+      return { ...state, equipmemntLoading: true, equipmentError: '' }
+    case equipmentTypes.CREATE_EQUIPMENT_SUCCESS:
+      return {
+        ...state,
+        equipmemntLoading: false,
+        equipmentError: '',
+        equipment: [...state.equipment, action.equipment]
+      }
+    case equipmentTypes.CREATE_EQUIPMENT_FAILURE:
+      return {
+        ...state,
+        equipmemntLoading: false,
+        equipmentError: action.err.toString()
+      }
     default:
       return state
   }

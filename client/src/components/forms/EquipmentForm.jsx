@@ -8,6 +8,8 @@ import {
   Paper,
   Button
 } from '@material-ui/core'
+import { connect } from 'react-redux'
+import { createEquipment } from '../../actions/equipment'
 
 const styles = theme => ({
   container: {
@@ -40,8 +42,14 @@ class EquipmentForm extends React.Component {
     this.setState({ [name]: event.target.value })
   }
 
+  handleSubmit = e => {
+    e.preventDefault()
+    console.log(this.state)
+    this.props.createEquipment(JSON.stringify(this.state))
+  }
+
   render() {
-    const { classes, theme } = this.props
+    const { classes, theme, loading, error } = this.props
 
     return (
       <div className={classes.container}>
@@ -52,7 +60,12 @@ class EquipmentForm extends React.Component {
         >
           New Equipment
         </h1>
-        <form className={classes.form}>
+        {error && <h1>{error}</h1>}
+        <form
+          className={classes.form}
+          autoComplete="off"
+          onSubmit={this.handleSubmit.bind(this)}
+        >
           <Paper className={classes.paper} elevation={1}>
             <FormGroup>
               <FormControl required={true} style={styles.input}>
@@ -88,4 +101,21 @@ class EquipmentForm extends React.Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(EquipmentForm)
+const mapStateToProps = state => {
+  return {
+    equipment: state.equipment.equipment,
+    loading: state.equipment.equipmemntLoading,
+    error: state.equipment.equipmentError
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    createEquipment: equipment => dispatch(createEquipment(equipment))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles, { withTheme: true })(EquipmentForm))

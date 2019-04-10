@@ -15,7 +15,7 @@ class CustomTable extends Component {
       <TableHead>
         <TableRow>
           {header.map(h => (
-            <TableCell>{h}</TableCell>
+            <TableCell key={h}>{h}</TableCell>
           ))}
           {editable && <TableCell />}
         </TableRow>
@@ -27,18 +27,18 @@ class CustomTable extends Component {
     return (
       <TableBody>
         {data.map(d => (
-          <TableRow key={d.id}>
+          <TableRow key={d._id}>
             {keys.map(k => (
-              <TableCell component="th" scope="row">
+              <TableCell key={k} component="th" scope="row">
                 {d[k]}
               </TableCell>
             ))}
             {editable && (
               <TableCell align="right">
-                <IconButton onClick={() => editItem(d.id)}>
+                <IconButton onClick={() => editItem(d._id)}>
                   <Create />
                 </IconButton>
-                <IconButton onClick={() => deleteItem(d.id)}>
+                <IconButton onClick={() => deleteItem(d._id)}>
                   <Delete />
                 </IconButton>
               </TableCell>

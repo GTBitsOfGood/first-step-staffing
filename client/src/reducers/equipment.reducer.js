@@ -30,7 +30,7 @@ export default function users(state = initialState, action) {
         ...state,
         equipmemntLoading: false,
         equipmentError: '',
-        equipment: state.equipment.filter(({equipment}) => equipment.id !== action.equipmentId)
+        equipment: state.equipment.filter((equipment) => equipment._id !== action.equipmentId)
       }
     case equipmentTypes.DELETE_EQUIPMENT_FAILURE:
       return {

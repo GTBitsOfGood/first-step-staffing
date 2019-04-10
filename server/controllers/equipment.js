@@ -22,6 +22,17 @@ export function create(req, res, next) {
     }
 }
 
+export function deleteById(req, res, next) {
+    Equipment.findByIdAndDelete(req.params.id, (err, tasks) => {
+        if (err) return next(err);
+        const response = {
+            message: "Equipment successfully deleted",
+            id: req.params.id
+        };
+        return res.status(200).send(response);
+    })
+}
+
 export function getAll(req, res, next) {
     Equipment.find({}, (err, equip) => {
         if (err) return next(err)

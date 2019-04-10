@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
 import CustomTable from '../../components/tables/CustomTable'
 import { connect } from 'react-redux'
-import { getAllEquipment } from '../../actions/equipment'
+import { getAllEquipment, deleteEquipment } from '../../actions/equipment'
 
 const styles = theme => ({
   button: {
@@ -30,11 +30,10 @@ class EquipmentPage extends Component {
     // This function should likely link to a page with the id in the route
   }
 
-  deleteItem = id => {
-    this.setState(prevState => ({
-      equipment: prevState.equipment.filter(e => e.id !== id)
-    }))
-  }
+//   deleteItem = id => {
+//     console.log(id)
+//     deleteEquipment(id)
+//   }
 
   render() {
     const { classes, equipment } = this.props
@@ -43,10 +42,10 @@ class EquipmentPage extends Component {
         <h1 className={classes.title}>Current Equipment</h1>
         <CustomTable
           header={['Name', 'Cost']}
-          data={equipment}
+          data={this.props.equipment}
           keys={['name', 'cost']}
           editable={true}
-          deleteItem={this.deleteItem}
+          deleteItem={this.props.deleteEquipment}
         />
         <Button
           variant="contained"
@@ -71,7 +70,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAllEquipment: () => dispatch(getAllEquipment())
+    getAllEquipment: () => dispatch(getAllEquipment()),
+    deleteEquipment: (id) => dispatch(deleteEquipment(id))
   }
 }
 

@@ -23,6 +23,21 @@ export default function users(state = initialState, action) {
         equipmemntLoading: false,
         equipmentError: action.err.toString()
       }
+    case equipmentTypes.DELETE_EQUIPMENT_REQUEST:
+      return { ...state, equipmemntLoading: true, equipmentError: '' }
+    case equipmentTypes.DELETE_EQUIPMENT_SUCCESS:
+      return {
+        ...state,
+        equipmemntLoading: false,
+        equipmentError: '',
+        equipment: state.equipment.filter(({equipment}) => equipment.id !== action.equipmentId)
+      }
+    case equipmentTypes.DELETE_EQUIPMENT_FAILURE:
+      return {
+        ...state,
+        equipmemntLoading: false,
+        equipmentError: action.err.toString()
+      }
     default:
       return state
   }

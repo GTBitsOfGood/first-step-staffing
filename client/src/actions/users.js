@@ -1,10 +1,17 @@
 import * as userTypes from '../constants/user.constants'
 import 'whatwg-fetch'
 
-export function getUserBySSN(ssn) {
+function handleErrors(response) {
+  if (!response.ok) {
+    throw Error(response.statusText)
+  }
+  return response
+}
+
+export function getAllJobSeekers() {
   return dispatch => {
-    dispatch(request({ ssn }))
-    return fetch(`/users/SSN?SSN=${ssn}`, { method: 'GET' })
+    dispatch(request())
+    return fetch(`/users/`, { method: 'GET' })
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {
@@ -14,52 +21,37 @@ export function getUserBySSN(ssn) {
       .catch(err => dispatch(failure(err)))
   }
 
-  function request(ssn) {
-    return { type: userTypes.GET_USERS_BY_SSN_REQUEST, ssn }
+  function request() {
+    return { type: userTypes.GET_ALL_JOB_SEEKERS_REQUEST }
   }
   function success(users) {
-    return { type: userTypes.GET_USERS_BY_SSN_SUCCESS, users }
+    return { type: userTypes.GET_ALL_JOB_SEEKERS_SUCCESS, users }
   }
   function failure(err) {
-    return { type: userTypes.GET_USERS_BY_SSN_FAILURE, err }
+    return { type: userTypes.GET_ALL_JOB_SEEKERS_SUCCESS, err }
   }
 }
 
-export function registerJobSeeker(user) {
-  console.log(JSON.stringify(user))
+export function deleteJobSeeker(id) {
   return dispatch => {
-    dispatch(submit({ user }))
-    return fetch('/users/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(user)
-    })
+    dispatch(request())
+    return fetch(`/users/user/${id}`, { method: 'DELETE' })
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {
-        dispatch(success(user))
-        return json.user
+        dispatch(success(json.deleted))
+        return json.deleted
       })
       .catch(err => dispatch(failure(err)))
   }
 
-  function submit(user) {
-    return { type: userTypes.JOB_SEEKER_REGISTRATION_SUBMITTED, user }
+  function request() {
+    return { type: userTypes.DELETE_JOB_SEEKER_REQUEST }
   }
-
-  function success(user) {
-    return { type: userTypes.JOB_SEEKER_REGISTRATION_SUCCESS, user }
+  function success(deleted) {
+    return { type: userTypes.DELETE_JOB_SEEKER_SUCCESS, deleted }
   }
   function failure(err) {
-    return { type: userTypes.JOB_SEEKER_REGISTRATION_FAILURE, err }
+    return { type: userTypes.DELETE_JOB_SEEKER_FAILURE, err }
   }
-}
-
-function handleErrors(response) {
-  if (!response.ok) {
-    throw Error(response.statusText)
-  }
-  return response
 }

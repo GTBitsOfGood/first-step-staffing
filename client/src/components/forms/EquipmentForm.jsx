@@ -36,16 +36,25 @@ const styles = theme => ({
 class EquipmentForm extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { name: '', cost: '', submitted: false, redirect: false }
+    this.state = {
+      equipment: {
+        name: '',
+        cost: ''
+      },
+      submitted: false,
+      redirect: false
+    }
   }
 
   handleChange = name => event => {
-    this.setState({ [name]: event.target.value })
+    this.setState({
+      equipment: { ...this.state.equipment, [name]: event.target.value }
+    })
   }
 
   handleSubmit = e => {
     e.preventDefault()
-    this.props.createEquipment(this.state)
+    this.props.createEquipment(this.state.equipment)
     this.setState({ submitted: true })
   }
 
@@ -68,7 +77,7 @@ class EquipmentForm extends React.Component {
     return (
       <Paper className={classes.confirm} elevation={1}>
         <h2 style={{ color: theme.palette.secondary.main }}>
-          Your comonent was created successfully!
+          Your equipment was created successfully!
         </h2>
       </Paper>
     )
@@ -83,7 +92,7 @@ class EquipmentForm extends React.Component {
             color: theme.palette.secondary.main
           }}
         >
-          New Equipment
+          Create New Equipment
         </h1>
         {!loading && !this.state.submitted && (
           <form

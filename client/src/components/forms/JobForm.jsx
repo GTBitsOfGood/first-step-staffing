@@ -20,7 +20,6 @@ const styles = theme => ({
     height: '100vh',
     margin: 'auto',
     flexDirection: 'column',
-    backgroundColor: theme.palette.primary.dark,
     textAlign: 'center'
   },
   input: {
@@ -119,7 +118,7 @@ class JobForm extends React.Component {
         className={classes.container}
         onSubmit={this.handleSubmit.bind(this)}
       >
-        <h1 style={{ color: theme.palette.secondary.main }}>Job Creation</h1>
+        <h1 style={{ color: theme.palette.secondary.main }}>Create New Job</h1>
         {!submitted && !loading && (
           <form className={classes.form}>
             <Paper className={classes.paper} elevation={1}>

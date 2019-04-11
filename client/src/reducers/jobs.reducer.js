@@ -34,6 +34,17 @@ export default function jobs(state = initialState, action) {
       }
     case jobTypes.DELETE_JOB_FAILURE:
       return { ...state, jobsLoading: false, jobsError: action.err.toString() }
+    case jobTypes.CREATE_JOB_REQUEST:
+      return { ...state, jobsLoading: true, jobsError: '' }
+    case jobTypes.CREATE_JOB_SUCCESS:
+      return {
+        ...state,
+        jobsLoading: false,
+        jobsError: '',
+        jobs: [...state.jobs, action.job]
+      }
+    case jobTypes.CREATE_JOB_FAILURE:
+      return { ...state, jobsLoading: false, jobsError: action.err.toString() }
     default:
       return state
   }

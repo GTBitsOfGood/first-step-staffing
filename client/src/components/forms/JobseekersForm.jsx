@@ -8,9 +8,12 @@ import FormGroup from '@material-ui/core/FormGroup'
 import Paper from '@material-ui/core/Paper'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import '@material-ui/core/CircularProgress'
+import { MuiPickersUtilsProvider, InlineDatePicker } from 'material-ui-pickers'
+import moment from 'moment'
+import MomentUtils from '@date-io/moment'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { createEquipment } from '../../actions/equipment'
+import { createJobseeker } from '../../actions/users'
 
 const styles = theme => ({
   container: {
@@ -33,28 +36,35 @@ const styles = theme => ({
   }
 })
 
-class EquipmentForm extends React.Component {
+class JobseekersForm extends React.Component {
   constructor(props) {
     super(props)
+    
     this.state = {
-      equipment: {
-        name: '',
-        cost: ''
-      },
-      submitted: false,
-      redirect: false
-    }
+      jobseeker: {
+        firstName: '',
+        lastName: '',
+        ssn: '',
+        birthday: moment().subtract(18, 'years')
+      }, submitted: false, redirect: false }
   }
 
   handleChange = name => event => {
-    this.setState({
-      equipment: { ...this.state.equipment, [name]: event.target.value }
-    })
+    this.setState({ [name]: event.target.value })
+  }
+
+  handleChangeJobseeker = name => event => {
+    this.setState({ jobseeker: {...this.state.jobseeker, [name]: event.target.value }})
+      
+  }
+
+  handleChangeBirthday = birthday => {
+    this.setState({ jobseeker: {...this.state.jobseeker, birthday }})
   }
 
   handleSubmit = e => {
     e.preventDefault()
-    this.props.createEquipment(this.state.equipment)
+    this.props.createJobseeker(this.state.jobseeker)
     this.setState({ submitted: true })
   }
 
@@ -77,7 +87,7 @@ class EquipmentForm extends React.Component {
     return (
       <Paper className={classes.confirm} elevation={1}>
         <h2 style={{ color: theme.palette.secondary.main }}>
-          Your equipment was created successfully!
+          The jobseeker was created successfully!
         </h2>
       </Paper>
     )
@@ -92,7 +102,7 @@ class EquipmentForm extends React.Component {
             color: theme.palette.secondary.main
           }}
         >
-          Create New Equipment
+          New Jobseeker
         </h1>
         {!loading && !this.state.submitted && (
           <form
@@ -103,21 +113,66 @@ class EquipmentForm extends React.Component {
             <Paper className={classes.paper} elevation={1}>
               <FormGroup>
                 <FormControl required={true} style={styles.input}>
-                  <InputLabel htmlFor={'name'}>Equipment Name</InputLabel>
+                  <InputLabel
+                    htmlFor={'firstname'}
+                    classes={{
+                      root: classes.cssLabel,
+                      focused: classes.cssFocused
+                    }}
+                  >
+                    First Name
+              </InputLabel>
                   <Input
-                    id="name"
-                    value={this.state.name}
-                    onChange={this.handleChange('name')}
+                    id="firstname"
+                    autoFocus={true}
+                    value={this.state.jobseeker.firstName}
+                    onChange={this.handleChangeJobseeker('firstName')}
                   />
                 </FormControl>
                 <FormControl required={true} style={styles.input}>
-                  <InputLabel htmlFor={'cost'}>Cost</InputLabel>
+                  <InputLabel htmlFor={'lastname'}>Last Name</InputLabel>
                   <Input
-                    id="cost"
-                    type="number"
-                    value={this.state.cost}
-                    onChange={this.handleChange('cost')}
+                    id="lastname"
+                    value={this.state.jobseeker.lastName}
+                    onChange={this.handleChangeJobseeker('lastName')}
                   />
+                </FormControl>
+                <FormControl required={true} style={styles.input}>
+                  <InputLabel htmlFor={'ssn'}>SSN</InputLabel>
+                  <Input
+                    id="ssn"
+                    type="tel"
+                    inputProps={{
+                      maxLength: 9
+                    }}
+                    value={this.state.jobseeker.ssn}
+                    onChange={this.handleChangeJobseeker('ssn')}
+                  />
+                </FormControl>
+                <FormControl required={true} style={styles.input}>
+                  <MuiPickersUtilsProvider utils={MomentUtils}>
+                    <InlineDatePicker
+                      label="Date of birth"
+                      value={this.state.jobseeker.birthday}
+                      disableFuture
+                      openTo="year"
+                      format={'MM/DD/YYYY'}
+                      views={['year', 'month', 'day']}
+                      onChange={this.handleChangeBirthday}
+                      mask={[
+                        /\d/,
+                        /\d/,
+                        '/',
+                        /\d/,
+                        /\d/,
+                        '/',
+                        /\d/,
+                        /\d/,
+                        /\d/,
+                        /\d/
+                      ]}
+                    />
+                  </MuiPickersUtilsProvider>
                 </FormControl>
               </FormGroup>
             </Paper>
@@ -142,7 +197,7 @@ class EquipmentForm extends React.Component {
         )}
         {!loading && this.state.submitted && error && this.error()}
         {!loading && !error && this.state.submitted && this.confirm()}
-        {this.state.redirect && <Redirect to="/dashboard/equipment" />}
+        {this.state.redirect && <Redirect to="/dashboard/jobseekers" />}
       </div>
     )
   }
@@ -150,19 +205,19 @@ class EquipmentForm extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    equipment: state.equipment.equipment,
-    loading: state.equipment.equipmemntLoading,
-    error: state.equipment.equipmentError
+    jobseeker: state.users.users,
+    loading: state.users.usersLoading,
+    error: state.users.usersError
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    createEquipment: equipment => dispatch(createEquipment(equipment))
+    createJobseeker: jobseeker => dispatch(createJobseeker(jobseeker))
   }
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles, { withTheme: true })(EquipmentForm))
+)(withStyles(styles, { withTheme: true })(JobseekersForm))

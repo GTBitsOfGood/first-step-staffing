@@ -6,7 +6,7 @@ const initialState = {
   equipmentError: ''
 }
 
-export default function users(state = initialState, action) {
+export default function equipment(state = initialState, action) {
   switch (action.type) {
     case equipmentTypes.GET_ALL_EQUIPMENT_REQUEST:
       return { ...state, equipmemntLoading: true, equipmentError: '' }

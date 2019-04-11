@@ -30,12 +30,7 @@ app.use(
     extended: true
   })
 )
-app.use(json())
-app.use(
-  urlencoded({
-    extended: false
-  })
-)
+app.use(bodyParser.json())
 app.use(cookieParser())
 app.use(ExpressStatic(join(__dirname, path + 'client/build/')))
 

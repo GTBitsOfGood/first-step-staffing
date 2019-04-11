@@ -28,12 +28,14 @@ export function getAllEquipment() {
 }
 
 export function createEquipment(newEquipment) {
-  console.log(newEquipment)
   return dispatch => {
     dispatch(request())
     return fetch('/equipment/equipment', {
       method: 'POST',
-      body: newEquipment
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newEquipment)
     })
       .then(handleErrors)
       .then(res => res.json())

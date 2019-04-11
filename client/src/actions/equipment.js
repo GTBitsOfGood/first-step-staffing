@@ -59,6 +59,32 @@ export function createEquipment(newEquipment) {
   }
 }
 
+export function deleteEquipment(equipmentId) {
+  return dispatch => {
+    dispatch(request())
+    return fetch(`/equipment/equipment/${equipmentId}`, { method: 'DELETE' })
+      .then(handleErrors)
+      .then(res => res.json())
+      .then(json => {
+        dispatch(success(equipmentId))
+        return equipmentId
+      })
+      .catch(err => dispatch(failure(err)))
+  }
+
+  function request() {
+    return { type: equipmentTypes.DELETE_EQUIPMENT_REQUEST }
+  }
+
+  function success(equipment) {
+    return { type: equipmentTypes.DELETE_EQUIPMENT_SUCCESS, equipmentId }
+  }
+
+  function failure(err) {
+    return { type: equipmentTypes.DELETE_EQUIPMENT_FAILURE, err }
+  }
+}
+
 function handleErrors(response) {
   if (!response.ok) {
     throw Error(response.statusText)

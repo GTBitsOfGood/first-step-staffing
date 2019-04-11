@@ -36,7 +36,7 @@ const styles = theme => ({
 class EquipmentForm extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { name: '', cost: '', submitted: false }
+    this.state = { name: '', cost: '', submitted: false, redirect: false }
   }
 
   handleChange = name => event => {
@@ -51,7 +51,7 @@ class EquipmentForm extends React.Component {
 
   error = () => {
     const { classes, theme } = this.props
-    setTimeout(() => this.setState({ submitted: false }), 3000)
+    setTimeout(() => this.setState({ submitted: false }), 2000)
     return (
       <Paper className={classes.confirm} elevation={1}>
         <h2 style={{ color: theme.palette.secondary.main }}>
@@ -63,9 +63,8 @@ class EquipmentForm extends React.Component {
   }
 
   confirm = () => {
-    console.log('confirm')
     const { classes, theme } = this.props
-    setTimeout(() => <Redirect to="dashboard/equipment" />, 3000)
+    setTimeout(() => this.setState({ redirect: true }), 3000)
     return (
       <Paper className={classes.confirm} elevation={1}>
         <h2 style={{ color: theme.palette.secondary.main }}>
@@ -77,7 +76,6 @@ class EquipmentForm extends React.Component {
 
   render() {
     const { classes, theme, loading, error } = this.props
-    console.log('error: ', error)
     return (
       <div className={classes.container}>
         <h1
@@ -125,7 +123,7 @@ class EquipmentForm extends React.Component {
           </form>
         )}
         {loading && !error && (
-          <Paper className={classes.confirm} elevation={1}>
+          <Paper elevation={1}>
             <CircularProgress
               className={classes.load}
               style={{ height: 'auto', minWidth: '150px' }}
@@ -135,6 +133,7 @@ class EquipmentForm extends React.Component {
         )}
         {!loading && this.state.submitted && error && this.error()}
         {!loading && !error && this.state.submitted && this.confirm()}
+        {this.state.redirect && <Redirect to="/dashboard/equipment" />}
       </div>
     )
   }

@@ -23,6 +23,23 @@ export default function equipment(state = initialState, action) {
         equipmemntLoading: false,
         equipmentError: action.err.toString()
       }
+    case equipmentTypes.DELETE_EQUIPMENT_REQUEST:
+      return { ...state, equipmemntLoading: true, equipmentError: '' }
+    case equipmentTypes.DELETE_EQUIPMENT_SUCCESS:
+      return {
+        ...state,
+        equipmemntLoading: false,
+        equipmentError: '',
+        equipment: state.equipment.filter(
+          equipment => equipment._id !== action.equipmentId
+        )
+      }
+    case equipmentTypes.DELETE_EQUIPMENT_FAILURE:
+      return {
+        ...state,
+        equipmemntLoading: false,
+        equipmentError: action.err.toString()
+      }
     case equipmentTypes.CREATE_EQUIPMENT_REQUEST:
       return { ...state, equipmemntLoading: true, equipmentError: '' }
     case equipmentTypes.CREATE_EQUIPMENT_SUCCESS:

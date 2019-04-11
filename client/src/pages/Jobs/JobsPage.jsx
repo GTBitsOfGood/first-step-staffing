@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
-import Table from '@material-ui/core/Table'
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
-import TableCell from '@material-ui/core/TableCell'
-import TableBody from '@material-ui/core/TableBody'
+import CustomTable from '../../components/tables/CustomTable'
 import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
-import CustomTable from '../../components/tables/CustomTable'
+import { connect } from 'react-redux'
+import { getAllJobs, deleteJob } from './../../actions/jobs'
 
 const styles = theme => ({
   button: {
@@ -20,17 +17,16 @@ const styles = theme => ({
   }
 })
 
-let id = 0
-class JobsPage extends Component {
+class JobPage extends Component {
   state = {
-    jobs: [
-      { id: 0, name: 'Job1', location: 'Atlanta', peopleNeeded: 45, peopleAssigned: 20 },
-      { id: 1, name: 'Job2', location: 'Atlanta', peopleNeeded: 50, peopleAssigned: 27 },
-      { id: 2, name: 'Job3', location: 'Macon', peopleNeeded: 35, peopleAssigned: 27 },
-      { id: 3, name: 'Job4', location: 'Nashville', peopleNeeded: 30, peopleAssigned: 30 }
-    ]
+    jobs: [],
+    jobsLoading: false,
+    jobsError: false
   }
 
+  componentDidMount() {
+    this.props.getAllJobs()
+  }
 
   editItem = id => {
     // This function should likely link to a page with the id in the route
@@ -43,16 +39,17 @@ class JobsPage extends Component {
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, jobs } = this.props
     return (
       <div>
         <h1 className={classes.title}>Current Jobs</h1>
         <CustomTable
-          header={['Name', 'Location', 'Needed', 'Assigned']}
-          data={this.state.jobs}
-          keys={['name', 'location', 'peopleNeeded', 'peopleAssigned']}
+          header={['Name']}
+          data={this.props.jobs}
+          keys={['name']}
+          deleteItem={this.props.deleteJob}
           editable={true}
-          deleteItem={this.deleteItem}
+          editItem={() => console.log('edit placeholder')}
         />
         <Button
           variant="contained"
@@ -60,7 +57,7 @@ class JobsPage extends Component {
           type="submit"
           className={classes.button}
           component={Link}
-          to="/dashboard/job/creation"
+          to="/dashboard/jobs/creation"
         >
           Create New Job
         </Button>
@@ -69,4 +66,20 @@ class JobsPage extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(JobsPage)
+const mapStateToProps = state => {
+  return {
+    jobs: state.jobs.jobs
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getAllJobs: () => dispatch(getAllJobs()),
+    deleteJob: id => dispatch(deleteJob(id))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles, { withTheme: true })(JobPage))

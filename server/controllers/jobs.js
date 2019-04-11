@@ -28,6 +28,13 @@ export function create(req, res, next) {
   }
 }
 
+export function deleteById(req, res, next) {
+  Job.findByIdAndDelete(req.params.id, (err, deleted) => {
+    if (err) return next(err)
+    return res.status(200).json({ deleted: deleted })
+  })
+}
+
 export function getAll(req, res, next) {
   Job.find({}, (err, job) => {
     if (err) return next(err)

@@ -57,26 +57,8 @@ class JobForm extends React.Component {
     }
   }
 
-  changeName = event => {
-    this.setState({ job: { ...this.state.job, name: event.target.value } })
-  }
-
-  changePeopleNeeded = event => {
-    this.setState({
-      job: { ...this.state.job, peopleNeeded: event.target.value }
-    })
-  }
-
-  changeTransportationType = event => {
-    this.setState({
-      job: { ...this.state.job, transportationType: event.target.value }
-    })
-  }
-
-  changeTransportationCost = event => {
-    this.setState({
-      job: { ...this.state.job, transportationCost: event.target.value }
-    })
+  handleChange = name => event => {
+    this.setState({ job: { ...this.state.job, [name]: event.target.value } })
   }
 
   handleSubmit = e => {
@@ -128,7 +110,7 @@ class JobForm extends React.Component {
                   <Input
                     id="name"
                     value={this.state.job.name}
-                    onChange={this.changeName}
+                    onChange={this.handleChange('name')}
                   />
                 </FormControl>
                 <FormControl required={true} style={styles.input}>
@@ -139,7 +121,7 @@ class JobForm extends React.Component {
                     id="peopleNeeded"
                     type="number"
                     value={this.state.job.peopleNeeded}
-                    onChange={this.changePeopleNeeded}
+                    onChange={this.handleChange('peopleNeeded')}
                   />
                 </FormControl>
                 <FormControl required={true} style={styles.input}>
@@ -148,7 +130,7 @@ class JobForm extends React.Component {
                   </InputLabel>
                   <Select
                     value={this.state.job.transportationType}
-                    onChange={this.changeTransportationType}
+                    onChange={this.handleChange('transportationType')}
                     inputProps={{
                       name: 'transportType',
                       id: 'transportationType'
@@ -166,7 +148,7 @@ class JobForm extends React.Component {
                     id="transportationCost"
                     type="number"
                     value={this.state.job.transportationCost}
-                    onChange={this.changeTransportationCost}
+                    onChange={this.handleChange('transportationCost')}
                   />
                 </FormControl>
               </FormGroup>

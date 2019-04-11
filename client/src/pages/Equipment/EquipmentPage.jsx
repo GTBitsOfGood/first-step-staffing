@@ -30,11 +30,6 @@ class EquipmentPage extends Component {
     // This function should likely link to a page with the id in the route
   }
 
-//   deleteItem = id => {
-//     console.log(id)
-//     deleteEquipment(id)
-//   }
-
   render() {
     const { classes, equipment } = this.props
     return (
@@ -71,7 +66,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getAllEquipment: () => dispatch(getAllEquipment()),
-    deleteEquipment: (id) => dispatch(deleteEquipment(id))
+    deleteEquipment: id => dispatch(deleteEquipment(id))
   }
 }
 

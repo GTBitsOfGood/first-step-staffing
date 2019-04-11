@@ -6,7 +6,7 @@ const initialState = {
   equipmentError: ''
 }
 
-export default function users(state = initialState, action) {
+export default function equipment(state = initialState, action) {
   switch (action.type) {
     case equipmentTypes.GET_ALL_EQUIPMENT_REQUEST:
       return { ...state, equipmemntLoading: true, equipmentError: '' }
@@ -30,9 +30,26 @@ export default function users(state = initialState, action) {
         ...state,
         equipmemntLoading: false,
         equipmentError: '',
-        equipment: state.equipment.filter((equipment) => equipment._id !== action.equipmentId)
+        equipment: state.equipment.filter(
+          equipment => equipment._id !== action.equipmentId
+        )
       }
     case equipmentTypes.DELETE_EQUIPMENT_FAILURE:
+      return {
+        ...state,
+        equipmemntLoading: false,
+        equipmentError: action.err.toString()
+      }
+    case equipmentTypes.CREATE_EQUIPMENT_REQUEST:
+      return { ...state, equipmemntLoading: true, equipmentError: '' }
+    case equipmentTypes.CREATE_EQUIPMENT_SUCCESS:
+      return {
+        ...state,
+        equipmemntLoading: false,
+        equipmentError: '',
+        equipment: [...state.equipment, action.equipment]
+      }
+    case equipmentTypes.CREATE_EQUIPMENT_FAILURE:
       return {
         ...state,
         equipmemntLoading: false,

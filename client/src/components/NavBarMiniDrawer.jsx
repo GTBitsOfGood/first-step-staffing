@@ -102,13 +102,11 @@ class NavBarMiniDrawer extends React.Component {
   }
 
   handleItemClick(text) {
-    console.log(text)
     this.props.history.push(`/dashboard/${this.toLink(text)}`)
   }
 
   render() {
     const { classes, theme, children } = this.props
-    console.log(this.props.location.pathname)
     return (
       <div className={classes.root}>
         <CssBaseline />

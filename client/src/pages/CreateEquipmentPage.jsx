@@ -3,7 +3,7 @@ import EquipmentForm from '../components/forms/EquipmentForm'
 
 class CreateEquipmentPage extends React.Component {
   render() {
-    return <EquipmentForm title="Create"/>
+    return <EquipmentForm />
   }
 }
 

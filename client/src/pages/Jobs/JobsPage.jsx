@@ -39,13 +39,13 @@ class JobPage extends Component {
   }
 
   render() {
-    const { classes, jobs } = this.props
+    const { classes, jobs, error, loading } = this.props
     return (
       <div>
         <h1 className={classes.title}>Current Jobs</h1>
         <CustomTable
           header={['Name']}
-          data={this.props.jobs}
+          data={jobs}
           keys={['name']}
           deleteItem={this.props.deleteJob}
           editable={true}
@@ -57,7 +57,7 @@ class JobPage extends Component {
           type="submit"
           className={classes.button}
           component={Link}
-          to="/dashboard/jobs/creation"
+          to="/dashboard/job/creation"
         >
           Create New Job
         </Button>
@@ -68,7 +68,9 @@ class JobPage extends Component {
 
 const mapStateToProps = state => {
   return {
-    jobs: state.jobs.jobs
+    jobs: state.jobs.jobs,
+    error: state.jobs.jobsError,
+    loading: state.jobs.jobsLoading
   }
 }
 

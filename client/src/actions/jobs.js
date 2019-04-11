@@ -51,6 +51,36 @@ export function deleteJob(id) {
   }
 }
 
+export function createJob(job) {
+  return dispatch => {
+    dispatch(request())
+    return fetch(`/jobs/job`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(job)
+    })
+      .then(handleErrors)
+      .then(res => res.json())
+      .then(json => {
+        dispatch(success(json.job))
+        return json.job
+      })
+      .catch(err => dispatch(failure(err)))
+  }
+
+  function request() {
+    return { type: jobTypes.CREATE_JOB_REQUEST }
+  }
+  function success(job) {
+    return { type: jobTypes.CREATE_JOB_SUCCESS, job }
+  }
+  function failure(err) {
+    return { type: jobTypes.CREATE_JOB_FAILURE, err }
+  }
+}
+
 function handleErrors(response) {
   if (!response.ok) {
     throw Error(response.statusText)

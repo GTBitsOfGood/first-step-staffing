@@ -4,6 +4,7 @@ import './models/db'
 
 import express, { json, urlencoded, static as ExpressStatic } from 'express'
 import { join } from 'path'
+import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import logger from 'morgan'
 
@@ -24,12 +25,12 @@ if (process.env.NODE_ENV == 'production') {
 const app = express()
 
 app.use(logger('dev'))
-app.use(json())
 app.use(
-  urlencoded({
-    extended: false
+  bodyParser.urlencoded({
+    extended: true
   })
 )
+app.use(bodyParser.json())
 app.use(cookieParser())
 app.use(ExpressStatic(join(__dirname, path + 'client/build/')))
 

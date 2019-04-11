@@ -32,7 +32,6 @@ export function create(req, res, next) {
 
   User.create(user, (err, usr) => {
     if (err) {
-      console.log('error: ', err)
       return next(err)
     }
     return res.status(201).json({

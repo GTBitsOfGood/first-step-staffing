@@ -11,8 +11,6 @@ export function create(req, res, next) {
     let id
     const atl = Location.findOne({ city: 'Atlanta' }, (err, item) => {
       id = item['_id']
-      console.log(item)
-      console.log(id)
       const job = {
         name: req.body.name,
         location: id,

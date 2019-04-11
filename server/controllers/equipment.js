@@ -1,7 +1,6 @@
 const Equipment = require('mongoose').model('Equipment')
 
 export function create(req, res, next) {
-  console.log(req.body)
   if (req.body.name && req.body.cost) {
     const equipment = {
       name: req.body.name,

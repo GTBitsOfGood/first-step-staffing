@@ -26,7 +26,6 @@ export function getUserBySSN(ssn) {
 }
 
 export function registerJobSeeker(user) {
-  console.log(JSON.stringify(user))
   return dispatch => {
     dispatch(submit({ user }))
     return fetch('/users/', {

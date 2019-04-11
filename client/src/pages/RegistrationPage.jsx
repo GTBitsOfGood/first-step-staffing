@@ -92,7 +92,7 @@ class RegistrationPage extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    fetch('/users/', {
+    fetch('/users/user', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

@@ -52,7 +52,7 @@ class UsersPage extends Component {
           type="submit"
           className={classes.button}
           component={Link}
-          to="/dashboard/user/creation"
+          to="/dashboard/jobseekers/creation"
         >
           Create New Job Seeker
         </Button>

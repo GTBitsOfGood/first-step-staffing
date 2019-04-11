@@ -14,6 +14,7 @@ import JobCreationPage from './pages/Jobs/JobCreationPage'
 import EquipmentPage from './pages/Equipment/EquipmentPage'
 import EquipmentForm from './components/forms/EquipmentForm'
 import UsersPage from './pages/User/UsersPage'
+import JobseekersCreationPage from './pages/User/JobseekersCreationPage'
 
 class App extends Component {
   render() {
@@ -26,25 +27,33 @@ class App extends Component {
               render={({ match: { url } }) => (
                 <>
                   <NavBarMiniDrawer>
-                    <Route exact path={`${url}`} component={Dashboard} />
+                    <Route
+                      exact path={`${url}`}
+                      component={Dashboard} 
+                    />
+                    <Route 
+                      exact path={`${url}/jobs`}
+                      component={JobsPage} 
+                    />
                     <Route
                       exact path={`${url}/job/creation`}
-                      component={JobCreationPage} />
-                    <Route exact path={`${url}/jobs`} component={JobsPage} />
+                      component={JobCreationPage}
+                    />
                     <Route
-                      exact
-                      path={`${url}/equipment`}
+                      exact path={`${url}/equipment`}
                       component={EquipmentPage}
                     />
                     <Route
-                      exact
-                      path={`${url}/equipment/creation`}
+                      exact path={`${url}/equipment/creation`}
                       component={EquipmentForm}
                     />
                     <Route
-                      exact
-                      path={`${url}/jobseekers`}
+                      exact path={`${url}/jobseekers`}
                       component={UsersPage}
+                    />
+                    <Route
+                      exact path={`${url}/jobseekers/creation`}
+                      component={JobseekersCreationPage}
                     />
                   </NavBarMiniDrawer>
                 </>

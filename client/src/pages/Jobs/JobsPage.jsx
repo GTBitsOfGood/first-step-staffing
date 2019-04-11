@@ -7,6 +7,7 @@ import TableBody from '@material-ui/core/TableBody'
 import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
+import CustomTable from '../../components/tables/CustomTable'
 
 const styles = theme => ({
   button: {
@@ -21,47 +22,38 @@ const styles = theme => ({
 
 let id = 0
 class JobsPage extends Component {
-  state = {}
-
-  createData = (name, loc, needed, assigned) => {
-    id += 1
-    return { id, name, loc, needed, assigned }
+  state = {
+    jobs: [
+      { id: 0, name: 'Job1', location: 'Atlanta', peopleNeeded: 45, peopleAssigned: 20 },
+      { id: 1, name: 'Job2', location: 'Atlanta', peopleNeeded: 50, peopleAssigned: 27 },
+      { id: 2, name: 'Job3', location: 'Macon', peopleNeeded: 35, peopleAssigned: 27 },
+      { id: 3, name: 'Job4', location: 'Nashville', peopleNeeded: 30, peopleAssigned: 30 }
+    ]
   }
 
-  rows = () => [
-    this.createData('Job1', 'Atlanta', 45, 20),
-    this.createData('Job2', 'Atlanta', 50, 27),
-    this.createData('Job3', 'Macon', 35, 27),
-    this.createData('Job4', 'Nashville', 30, 30)
-  ]
+
+  editItem = id => {
+    // This function should likely link to a page with the id in the route
+  }
+
+  deleteItem = id => {
+    this.setState(prevState => ({
+      jobs: prevState.jobs.filter(e => e.id !== id)
+    }))
+  }
 
   render() {
     const { classes } = this.props
     return (
       <div>
         <h1 className={classes.title}>Current Jobs</h1>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Location</TableCell>
-              <TableCell>People Needed</TableCell>
-              <TableCell>People Assigned</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {this.rows().map(row => (
-              <TableRow key={row.id}>
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell>{row.loc}</TableCell>
-                <TableCell>{row.needed}</TableCell>
-                <TableCell>{row.assigned}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <CustomTable
+          header={['Name', 'Location', 'Needed', 'Assigned']}
+          data={this.state.jobs}
+          keys={['name', 'location', 'peopleNeeded', 'peopleAssigned']}
+          editable={true}
+          deleteItem={this.deleteItem}
+        />
         <Button
           variant="contained"
           color="secondary"

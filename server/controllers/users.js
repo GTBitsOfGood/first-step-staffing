@@ -64,3 +64,16 @@ export function getBySSN(req, res, next) {
     })
   }
 }
+
+export function deleteJobSeeker(req, res, next) {
+  if (!req.params.id) {
+    return res.status(400).json({ message: 'No id on delete' })
+  }
+
+  User.findOneAndDelete({ _id: req.params.id }, (err, deleted) => {
+    if (err) next(err)
+    else {
+      res.status(200).json({ deleted: deleted })
+    }
+  })
+}

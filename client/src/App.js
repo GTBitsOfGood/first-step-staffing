@@ -27,11 +27,10 @@ class App extends Component {
                 <>
                   <NavBarMiniDrawer>
                     <Route exact path={`${url}`} component={Dashboard} />
-                    <Route exact path={`${url}/jobs`} component={JobsPage} />
                     <Route
-                      path={`${url}/job/creation`}
-                      component={JobCreationPage}
-                    />
+                      exact path={`${url}/job/creation`}
+                      component={JobCreationPage} />
+                    <Route exact path={`${url}/jobs`} component={JobsPage} />
                     <Route
                       exact
                       path={`${url}/equipment`}

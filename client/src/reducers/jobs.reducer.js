@@ -73,8 +73,7 @@ export default function jobs(state = initialState, action) {
       }
     case jobTypes.GET_JOB_BY_ID_SUCCESS:
       const newJob = action.job
-      let i = state.job ? state.job.findIndex(j => j._id === newJob._id) : -1
-      console.log(i)
+      let i = state.jobs.length !== 0 ? state.job.findIndex(j => j._id === newJob._id) : -1
       if (i === -1) {
         return {
           ...state,

@@ -1,4 +1,5 @@
 const JobSeeker = require('mongoose').model('JobSeeker')
+const Job = require('mongoose').model('Job')
 
 export function create(req, res, next) {
   let errorMessage = []
@@ -81,9 +82,26 @@ export function deleteJobSeeker(req, res, next) {
 }
 
 export function assignJobSeekerToJob(req, res, next) {
-  if (!req.param.id) {
+  if (!req.param.jobSeekerID) {
     return res
       .status(400)
       .json({ message: 'The ID of the Job Seeker to be assigned is required' })
   }
+  if (!req.param.jobSeekerID) {
+    return res
+      .status(400)
+      .json({ message: 'The ID of the Job to be assigned is required' })
+  }
+  JobSeeker.findById(req.parma.jobSeekerID, (err, js) => {
+    if (err) return next(err)
+    else {
+      let job
+      Job.findById(req.param.jobID, (err, job) => {
+        if (err) return next(err)
+        else {
+          job = job
+        }
+      })
+    }
+  })
 }

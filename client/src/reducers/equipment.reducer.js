@@ -2,34 +2,34 @@ import * as equipmentTypes from '../constants/equipment.constants'
 
 const initialState = {
   equipment: [],
-  equipmemntLoading: false,
-  equipmentError: ''
+  loading: false,
+  error: ''
 }
 
 export default function equipment(state = initialState, action) {
   switch (action.type) {
     case equipmentTypes.GET_ALL_EQUIPMENT_REQUEST:
-      return { ...state, equipmemntLoading: true, equipmentError: '' }
+      return { ...state, loading: true, error: '' }
     case equipmentTypes.GET_ALL_EQUIPMENT_SUCCESS:
       return {
         ...state,
-        equipmemntLoading: false,
-        equipmentError: '',
+        loading: false,
+        error: '',
         equipment: action.equipment
       }
     case equipmentTypes.GET_ALL_EQUIPMENT_FAILURE:
       return {
         ...state,
-        equipmemntLoading: false,
-        equipmentError: action.err.toString()
+        loading: false,
+        error: action.err.toString()
       }
     case equipmentTypes.DELETE_EQUIPMENT_REQUEST:
-      return { ...state, equipmemntLoading: true, equipmentError: '' }
+      return { ...state, loading: true, error: '' }
     case equipmentTypes.DELETE_EQUIPMENT_SUCCESS:
       return {
         ...state,
-        equipmemntLoading: false,
-        equipmentError: '',
+        loading: false,
+        error: '',
         equipment: state.equipment.filter(
           equipment => equipment._id !== action.equipmentId
         )
@@ -37,23 +37,23 @@ export default function equipment(state = initialState, action) {
     case equipmentTypes.DELETE_EQUIPMENT_FAILURE:
       return {
         ...state,
-        equipmemntLoading: false,
-        equipmentError: action.err.toString()
+        loading: false,
+        error: action.err.toString()
       }
     case equipmentTypes.CREATE_EQUIPMENT_REQUEST:
-      return { ...state, equipmemntLoading: true, equipmentError: '' }
+      return { ...state, loading: true, error: '' }
     case equipmentTypes.CREATE_EQUIPMENT_SUCCESS:
       return {
         ...state,
-        equipmemntLoading: false,
-        equipmentError: '',
+        loading: false,
+        error: '',
         equipment: [...state.equipment, action.equipment]
       }
     case equipmentTypes.CREATE_EQUIPMENT_FAILURE:
       return {
         ...state,
-        equipmemntLoading: false,
-        equipmentError: action.err.toString()
+        loading: false,
+        error: action.err.toString()
       }
     default:
       return state

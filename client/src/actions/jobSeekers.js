@@ -1,4 +1,4 @@
-import * as userTypes from '../constants/user.constants'
+import * as jobSeekerTypes from '../constants/jobSeeker.constants'
 import 'whatwg-fetch'
 
 function handleErrors(response) {
@@ -11,31 +11,31 @@ function handleErrors(response) {
 export function getAllJobSeekers() {
   return dispatch => {
     dispatch(request())
-    return fetch(`/users/`, { method: 'GET' })
+    return fetch(`/jobseekers/`, { method: 'GET' })
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {
-        dispatch(success(json.users))
-        return json.users
+        dispatch(success(json.jobSeekers))
+        return json.jobSeekers
       })
       .catch(err => dispatch(failure(err)))
   }
 
   function request() {
-    return { type: userTypes.GET_ALL_JOB_SEEKERS_REQUEST }
+    return { type: jobSeekerTypes.GET_ALL_JOB_SEEKERS_REQUEST }
   }
-  function success(users) {
-    return { type: userTypes.GET_ALL_JOB_SEEKERS_SUCCESS, users }
+  function success(jobSeekers) {
+    return { type: jobSeekerTypes.GET_ALL_JOB_SEEKERS_SUCCESS, jobSeekers }
   }
   function failure(err) {
-    return { type: userTypes.GET_ALL_JOB_SEEKERS_SUCCESS, err }
+    return { type: jobSeekerTypes.GET_ALL_JOB_SEEKERS_SUCCESS, err }
   }
 }
 
 export function deleteJobSeeker(id) {
   return dispatch => {
     dispatch(request())
-    return fetch(`/users/user/${id}`, { method: 'DELETE' })
+    return fetch(`/jobseekers/jobseeker/${id}`, { method: 'DELETE' })
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {
@@ -46,12 +46,12 @@ export function deleteJobSeeker(id) {
   }
 
   function request() {
-    return { type: userTypes.DELETE_JOB_SEEKER_REQUEST }
+    return { type: jobSeekerTypes.DELETE_JOB_SEEKER_REQUEST }
   }
   function success(deleted) {
-    return { type: userTypes.DELETE_JOB_SEEKER_SUCCESS, deleted }
+    return { type: jobSeekerTypes.DELETE_JOB_SEEKER_SUCCESS, deleted }
   }
   function failure(err) {
-    return { type: userTypes.DELETE_JOB_SEEKER_FAILURE, err }
+    return { type: jobSeekerTypes.DELETE_JOB_SEEKER_FAILURE, err }
   }
 }

@@ -1,4 +1,4 @@
-const User = require('mongoose').model('User')
+const JobSeeker = require('mongoose').model('JobSeeker')
 
 export function create(req, res, next) {
   let errorMessage = []
@@ -23,28 +23,28 @@ export function create(req, res, next) {
       .json({ error: errorMessage.join(' and ').toString() })
   }
 
-  const user = {
+  const jobSeeker = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     ssn: req.body.ssn,
     birthday: req.body.birthday
   }
 
-  User.create(user, (err, usr) => {
+  JobSeeker.create(jobSeeker, (err, js) => {
     if (err) {
       return next(err)
     }
     return res.status(201).json({
-      user: usr
+      jobSeeker: js
     })
   })
 }
 
 export function getAll(_, res, next) {
-  User.find({}, (err, usr) => {
+  JobSeeker.find({}, (err, jobSeeker) => {
     if (err) return next(err)
     return res.status(200).json({
-      users: usr
+      jobSeekers: jobSeeker
     })
   })
 }
@@ -56,10 +56,10 @@ export function getBySSN(req, res, next) {
   }
 
   if (req.query.SSN.length == 4) {
-    User.find({ ssnString: req.query.SSN.toString() }, (err, users) => {
+    JobSeeker.find({ ssnString: req.query.SSN.toString() }, (err, js) => {
       if (err) next(err)
       else {
-        res.status(200).json({ users: users })
+        res.status(200).json({ jobSeekers: js })
       }
     })
   }
@@ -67,10 +67,12 @@ export function getBySSN(req, res, next) {
 
 export function deleteJobSeeker(req, res, next) {
   if (!req.params.id) {
-    return res.status(400).json({ message: 'No id on delete' })
+    return res
+      .status(400)
+      .json({ message: 'The ID of the Job Seeker to be deleted is required' })
   }
 
-  User.findOneAndDelete({ _id: req.params.id }, (err, deleted) => {
+  JobSeeker.findOneAndDelete({ _id: req.params.id }, (err, deleted) => {
     if (err) next(err)
     else {
       res.status(200).json({ deleted: deleted })

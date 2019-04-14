@@ -11,7 +11,7 @@ import logger from 'morgan'
 import indexRouter from './routes/index'
 import locationRouter from './routes/locations'
 import equipmentRouter from './routes/equipment'
-import userRouter from './routes/users'
+import jobSeekerRouter from './routes/jobSeekers'
 import jobRouter from './routes/jobs'
 
 let path = ''
@@ -36,7 +36,7 @@ app.use(ExpressStatic(join(__dirname, path + 'client/build/')))
 
 app.use('/', indexRouter)
 app.use('/locations', locationRouter)
-app.use('/users', userRouter)
+app.use('/jobseekers', jobSeekerRouter)
 app.use('/equipment', equipmentRouter)
 app.use('/jobs', jobRouter)
 

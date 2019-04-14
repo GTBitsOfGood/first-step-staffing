@@ -5,15 +5,16 @@ export function create(req, res, next) {
   if (
     req.body.name &&
     req.body.peopleNeeded &&
+    req.body.address &&
     req.body.transportationType &&
     req.body.transportationCost
   ) {
-    let id
     const atl = Location.findOne({ city: 'Atlanta' }, (err, item) => {
-      id = item['_id']
+      let id = item['_id']
       const job = {
         name: req.body.name,
-        location: id,
+        address: req.body.address,
+        fssLocation: id,
         peopleNeeded: req.body.peopleNeeded,
         transportationType: req.body.transportationType,
         transportationCost: req.body.transportationCost

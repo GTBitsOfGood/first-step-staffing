@@ -1,7 +1,7 @@
 import { connect, connection } from 'mongoose'
 import './location'
 import './equipment'
-import './user'
+import './jobSeeker'
 import './job'
 
 connect(

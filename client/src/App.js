@@ -5,16 +5,17 @@ import LoginPage from './pages/LoginPage'
 import JobsPage from './pages/Jobs/JobsPage'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
 import theme from './Theme'
-import CreateEquipmentPage from './pages/CreateEquipmentPage'
 import EditEquipmentPage from './pages/EditEquipmentPage'
 import CheckinPage from './pages/CheckinPage'
 import Dashboard from './pages/Dashboard'
 import NavBarMiniDrawer from './components/NavBarMiniDrawer'
 import JobCreationPage from './pages/Jobs/JobCreationPage'
 import EquipmentPage from './pages/Equipment/EquipmentPage'
-import EquipmentForm from './components/forms/EquipmentForm'
-import UsersPage from './pages/User/UsersPage'
 import JobSeekerDetailPage from './pages/JobSeekerDetailPage'
+import EquipmentCreationPage from './pages/Equipment/EquipmentCreationPage'
+import * as routes from './routes'
+import JobSeekersPage from './pages/JobSeekers/JobSeekersPage'
+import JobDetailsPage from './pages/Jobs/JobDetailsPage'
 
 class App extends Component {
   render() {
@@ -30,24 +31,32 @@ class App extends Component {
                     <Route exact path={`${url}`} component={Dashboard} />
                     <Route
                       exact
-                      path={`${url}/job/creation`}
+                      path={`${routes.JOBCREATION}`}
                       component={JobCreationPage}
                     />
-                    <Route exact path={`${url}/jobs`} component={JobsPage} />
                     <Route
                       exact
-                      path={`${url}/equipment`}
+                      path={`${routes.JOBSLIST}`}
+                      component={JobsPage}
+                    />
+                    <Route
+                      path={`${routes.JOBDETAIL}`}
+                      component={JobDetailsPage}
+                    />
+                    <Route
+                      exact
+                      path={`${routes.EQUIPMENTLIST}`}
                       component={EquipmentPage}
                     />
                     <Route
                       exact
-                      path={`${url}/equipment/creation`}
-                      component={EquipmentForm}
+                      path={`${routes.EQUIPMENTCREATION}`}
+                      component={EquipmentCreationPage}
                     />
                     <Route
                       exact
-                      path={`${url}/jobseekers`}
-                      component={UsersPage}
+                      path={`${routes.JOBSEEKERLIST}`}
+                      component={JobSeekersPage}
                     />
                     <Route
                       exact
@@ -59,11 +68,6 @@ class App extends Component {
               )}
             />
             <Route exact path="/register" component={RegistrationPage} />
-            <Route
-              exact
-              path="/create_equipment"
-              component={CreateEquipmentPage}
-            />
             <Route exact path="/edit_equipment" component={EditEquipmentPage} />
             <Route exact path="/checkin" component={CheckinPage} />
 

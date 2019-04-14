@@ -36,22 +36,31 @@ const styles = theme => ({
 class EquipmentForm extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { name: '', cost: '', submitted: false, redirect: false }
+    this.state = {
+      equipment: {
+        name: '',
+        cost: ''
+      },
+      submitted: false,
+      redirect: false
+    }
   }
 
   handleChange = name => event => {
-    this.setState({ [name]: event.target.value })
+    this.setState({
+      equipment: { ...this.state.equipment, [name]: event.target.value }
+    })
   }
 
   handleSubmit = e => {
     e.preventDefault()
-    this.props.createEquipment(this.state)
+    this.props.createEquipment(this.state.equipment)
     this.setState({ submitted: true })
   }
 
   error = () => {
     const { classes, theme } = this.props
-    setTimeout(() => this.setState({ submitted: false }), 2000)
+    setTimeout(() => this.setState({ submitted: false }), 3000)
     return (
       <Paper className={classes.confirm} elevation={1}>
         <h2 style={{ color: theme.palette.secondary.main }}>
@@ -64,11 +73,11 @@ class EquipmentForm extends React.Component {
 
   confirm = () => {
     const { classes, theme } = this.props
-    setTimeout(() => this.setState({ redirect: true }), 3000)
+    setTimeout(() => this.setState({ redirect: true }), 2000)
     return (
-      <Paper className={classes.confirm} elevation={1}>
+      <Paper className={classes.form} elevation={1}>
         <h2 style={{ color: theme.palette.secondary.main }}>
-          Your comonent was created successfully!
+          Your equipment was created successfully!
         </h2>
       </Paper>
     )
@@ -77,20 +86,19 @@ class EquipmentForm extends React.Component {
   render() {
     const { classes, theme, loading, error } = this.props
     return (
-      <div className={classes.container}>
+      <div
+        className={classes.container}
+        onSubmit={this.handleSubmit.bind(this)}
+      >
         <h1
           style={{
             color: theme.palette.secondary.main
           }}
         >
-          New Equipment
+          Create New Equipment
         </h1>
         {!loading && !this.state.submitted && (
-          <form
-            className={classes.form}
-            autoComplete="off"
-            onSubmit={this.handleSubmit.bind(this)}
-          >
+          <form className={classes.form} autoComplete="off">
             <Paper className={classes.paper} elevation={1}>
               <FormGroup>
                 <FormControl required={true} style={styles.input}>
@@ -142,8 +150,8 @@ class EquipmentForm extends React.Component {
 const mapStateToProps = state => {
   return {
     equipment: state.equipment.equipment,
-    loading: state.equipment.equipmemntLoading,
-    error: state.equipment.equipmentError
+    loading: state.equipment.loading,
+    error: state.equipment.error
   }
 }
 

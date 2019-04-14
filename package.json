@@ -8,6 +8,9 @@
   ],
   "scripts": {
     "start": "cd server/ && npm start",
+    "start-backend": "cd server/ && npm run dev",
+    "state-frontend": "cd client && npm start",
+    "dev": "npm run start-backend && npm run start-frontend",
     "install-client": "npm install --prefix client",
     "install-server": "npm install --prefix server",
     "build": "npm run build-client && npm run build-server",

@@ -44,3 +44,16 @@ export function getAll(req, res, next) {
     })
   }).populate('location')
 }
+
+export function getByID(req, res, next) {
+  if (!req.params.id) {
+    return res.status(404).json({ msg: 'id of the job is required' })
+  }
+  Job.findById(req.params.id, (err, job) => {
+    if (err) {
+      console.log(err)
+      return next(err)
+    }
+    return res.status(200).json({ job: job })
+  })
+}

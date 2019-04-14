@@ -39,7 +39,7 @@ class App extends Component {
                       component={JobsPage}
                     />
                     <Route
-                      path={`${routes.JOBDETAIL}`}
+                      path={`${routes.JOBDETAIL}:id`}
                       component={JobDetailsPage}
                     />
                     <Route

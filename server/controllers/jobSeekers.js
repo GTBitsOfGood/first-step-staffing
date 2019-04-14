@@ -79,3 +79,11 @@ export function deleteJobSeeker(req, res, next) {
     }
   })
 }
+
+export function assignJobSeekerToJob(req, res, next) {
+  if (!req.param.id) {
+    return res
+      .status(400)
+      .json({ message: 'The ID of the Job Seeker to be assigned is required' })
+  }
+}

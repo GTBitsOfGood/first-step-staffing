@@ -4,10 +4,18 @@ const JobSchema = Schema({
   name: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
+    upperCase: true
   },
-  location: {
-    type: Schema.Types.ObjectId, ref: 'Location',
+  address: {
+    type: String,
+    required: true,
+    trim: true,
+    upperCase: true
+  },
+  fssLocation: {
+    type: Schema.Types.ObjectId,
+    ref: 'Location',
     required: true
   },
   peopleNeeded: {

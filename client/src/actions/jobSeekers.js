@@ -1,4 +1,4 @@
-import * as userTypes from '../constants/user.constants'
+import * as jobSeekerTypes from '../constants/jobSeeker.constants'
 import 'whatwg-fetch'
 
 function handleErrors(response) {
@@ -11,63 +11,64 @@ function handleErrors(response) {
 export function getAllJobSeekers() {
   return dispatch => {
     dispatch(request())
-    return fetch(`/users/`, { method: 'GET' })
+    return fetch(`/jobseekers/`, { method: 'GET' })
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {
-        dispatch(success(json.users))
-        return json.users
+        dispatch(success(json.jobSeekers))
+        return json.jobSeekers
       })
       .catch(err => dispatch(failure(err)))
   }
 
   function request() {
-    return { type: userTypes.GET_ALL_JOBSEEKERS_REQUEST }
+    return { type: jobSeekerTypes.GET_ALL_JOBSEEKERS_REQUEST }
   }
-  function success(users) {
-    return { type: userTypes.GET_ALL_JOBSEEKERS_SUCCESS, users }
+  function success(jobSeekers) {
+    return { type: jobSeekerTypes.GET_ALL_JOBSEEKERS_SUCCESS, jobSeekers }
   }
   function failure(err) {
-    return { type: userTypes.GET_ALL_JOBSEEKERS_FAILURE, err }
+    return { type: jobSeekerTypes.GET_ALL_JOBSEEKERS_SUCCESS, err }
   }
 }
 
-export function createJobseeker(newJobseeker) {
+export function createJobSeeker(newJobSeeker) {
   return dispatch => {
     dispatch(request())
-    return fetch('/users/user', {
+    return fetch('/jobseekers/jobseeker', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(newJobseeker)
+      body: JSON.stringify(newJobSeeker)
     })
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {
-        dispatch(success(json.user))
-        return json.user
+        dispatch(success(json.jobSeeker))
+        return json.jobSeeker
       })
       .catch(err => dispatch(failure(err)))
   }
 
   function request() {
-    return { type: userTypes.CREATE_JOBSEEKER_REQUEST }
+    return { type: jobSeekerTypes.CREATE_JOBSEEKER_REQUEST }
   }
 
-  function success(jobseeker) {
-    return { type: userTypes.CREATE_JOBSEEKER_SUCCESS, jobseeker }
+  function success(jobSeeker) {
+    return { type: jobSeekerTypes.CREATE_JOBSEEKER_SUCCESS, jobSeeker }
   }
 
   function failure(err) {
-    return { type: userTypes.CREATE_JOBSEEKER_FAILURE, err }
+    return { type: jobSeekerTypes.CREATE_JOBSEEKER_FAILURE, err }
   }
 }
+
 
 export function deleteJobSeeker(id) {
   return dispatch => {
     dispatch(request())
-    return fetch(`/users/user/${id}`, { method: 'DELETE' })
+    return fetch(`/jobseekers/jobseeker/${id}`, { method: 'DELETE' })
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {
@@ -78,12 +79,12 @@ export function deleteJobSeeker(id) {
   }
 
   function request() {
-    return { type: userTypes.DELETE_JOBSEEKER_REQUEST }
+    return { type: jobSeekerTypes.DELETE_JOBSEEKER_REQUEST }
   }
   function success(deleted) {
-    return { type: userTypes.DELETE_JOBSEEKER_SUCCESS, deleted }
+    return { type: jobSeekerTypes.DELETE_JOBSEEKER_SUCCESS, deleted }
   }
   function failure(err) {
-    return { type: userTypes.DELETE_JOBSEEKER_FAILURE, err }
+    return { type: jobSeekerTypes.DELETE_JOBSEEKER_FAILURE, err }
   }
 }

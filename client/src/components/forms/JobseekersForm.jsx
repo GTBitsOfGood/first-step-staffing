@@ -13,7 +13,7 @@ import moment from 'moment'
 import MomentUtils from '@date-io/moment'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { createJobseeker } from '../../actions/users'
+import { createJobSeeker } from '../../actions/jobSeekers'
 
 const styles = theme => ({
   container: {
@@ -36,12 +36,12 @@ const styles = theme => ({
   }
 })
 
-class JobseekersForm extends React.Component {
+class JobSeekersForm extends React.Component {
   constructor(props) {
     super(props)
     
     this.state = {
-      jobseeker: {
+      jobSeeker: {
         firstName: '',
         lastName: '',
         ssn: '',
@@ -54,17 +54,17 @@ class JobseekersForm extends React.Component {
   }
 
   handleChangeJobseeker = name => event => {
-    this.setState({ jobseeker: {...this.state.jobseeker, [name]: event.target.value }})
+    this.setState({ jobSeeker: {...this.state.jobSeeker, [name]: event.target.value }})
       
   }
 
   handleChangeBirthday = birthday => {
-    this.setState({ jobseeker: {...this.state.jobseeker, birthday }})
+    this.setState({ jobSeeker: {...this.state.jobSeeker, birthday }})
   }
 
   handleSubmit = e => {
     e.preventDefault()
-    this.props.createJobseeker(this.state.jobseeker)
+    this.props.createJobseeker(this.state.jobSeeker)
     this.setState({ submitted: true })
   }
 
@@ -87,7 +87,7 @@ class JobseekersForm extends React.Component {
     return (
       <Paper className={classes.confirm} elevation={1}>
         <h2 style={{ color: theme.palette.secondary.main }}>
-          The jobseeker was created successfully!
+          The Job Seeker was created successfully!
         </h2>
       </Paper>
     )
@@ -102,7 +102,7 @@ class JobseekersForm extends React.Component {
             color: theme.palette.secondary.main
           }}
         >
-          New Jobseeker
+          New Job Seeker
         </h1>
         {!loading && !this.state.submitted && (
           <form
@@ -125,7 +125,7 @@ class JobseekersForm extends React.Component {
                   <Input
                     id="firstname"
                     autoFocus={true}
-                    value={this.state.jobseeker.firstName}
+                    value={this.state.jobSeeker.firstName}
                     onChange={this.handleChangeJobseeker('firstName')}
                   />
                 </FormControl>
@@ -133,7 +133,7 @@ class JobseekersForm extends React.Component {
                   <InputLabel htmlFor={'lastname'}>Last Name</InputLabel>
                   <Input
                     id="lastname"
-                    value={this.state.jobseeker.lastName}
+                    value={this.state.jobSeeker.lastName}
                     onChange={this.handleChangeJobseeker('lastName')}
                   />
                 </FormControl>
@@ -145,7 +145,7 @@ class JobseekersForm extends React.Component {
                     inputProps={{
                       maxLength: 9
                     }}
-                    value={this.state.jobseeker.ssn}
+                    value={this.state.jobSeeker.ssn}
                     onChange={this.handleChangeJobseeker('ssn')}
                   />
                 </FormControl>
@@ -153,7 +153,7 @@ class JobseekersForm extends React.Component {
                   <MuiPickersUtilsProvider utils={MomentUtils}>
                     <InlineDatePicker
                       label="Date of birth"
-                      value={this.state.jobseeker.birthday}
+                      value={this.state.jobSeeker.birthday}
                       disableFuture
                       openTo="year"
                       format={'MM/DD/YYYY'}
@@ -205,19 +205,19 @@ class JobseekersForm extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    jobseeker: state.users.users,
-    loading: state.users.usersLoading,
-    error: state.users.usersError
+    jobSeeker: state.jobSeekers.jobSeekers,
+    loading: state.jobSeekers.loading,
+    error: state.jobSeekers.error
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    createJobseeker: jobseeker => dispatch(createJobseeker(jobseeker))
+    createJobseeker: jobSeeker => dispatch(createJobSeeker(jobSeeker))
   }
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles, { withTheme: true })(JobseekersForm))
+)(withStyles(styles, { withTheme: true })(JobSeekersForm))

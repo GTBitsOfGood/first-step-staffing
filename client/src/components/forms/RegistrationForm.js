@@ -88,7 +88,7 @@ class RegistrationForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    fetch('/users/', {
+    fetch('/jobseekers/jobseeker', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

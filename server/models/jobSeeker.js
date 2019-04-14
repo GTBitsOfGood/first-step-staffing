@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose'
 
-const userSchema = new Schema({
+const jobSeekerSchema = new Schema({
   firstName: {
     type: String,
     required: true,
@@ -30,10 +30,18 @@ const userSchema = new Schema({
   birthday: {
     type: Date,
     required: true
+  },
+  currentJob: {
+    type: Schema.Types.ObjectId,
+    ref: 'Job'
+  },
+  pastJobs: {
+    type: [Schema.Types.ObjectId],
+    ref: 'Job'
   }
 })
 
-userSchema.pre('save', async function(next) {
+jobSeekerSchema.pre('save', async function(next) {
   if (this.isModified('ssn') || this.isNew) {
     this.ssnString = this.ssn.toString().slice(-4)
   } else {
@@ -41,6 +49,6 @@ userSchema.pre('save', async function(next) {
   }
 })
 
-let User = model('User', userSchema)
+let JobSeeker = model('JobSeeker', jobSeekerSchema)
 
-export default User
+export default JobSeeker

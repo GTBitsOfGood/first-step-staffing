@@ -85,14 +85,14 @@ class RegistrationPage extends Component {
   }
 
   changeBirthday = birthday => {
-    this.setState({ 
-      user: {...this.state.user, birthday }
+    this.setState({
+      user: { ...this.state.user, birthday }
     })
   }
 
   handleSubmit = e => {
     e.preventDefault()
-    fetch('/users/user', {
+    fetch('/jobseekers/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

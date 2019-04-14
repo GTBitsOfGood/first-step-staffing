@@ -48,6 +48,7 @@ class JobForm extends React.Component {
     this.state = {
       job: {
         name: '',
+        address: '',
         peopleNeeded: '',
         transportationType: '',
         transportationCost: ''
@@ -102,11 +103,11 @@ class JobForm extends React.Component {
       >
         <h1 style={{ color: theme.palette.secondary.main }}>Create New Job</h1>
         {!submitted && !loading && (
-          <form className={classes.form}>
+          <form autoComplete="off" className={classes.form}>
             <Paper className={classes.paper} elevation={1}>
               <FormGroup>
                 <FormControl required={true} style={styles.input}>
-                  <InputLabel htmlFor={'name'}>Job Name</InputLabel>
+                  <InputLabel htmlFor={'name'}>Name</InputLabel>
                   <Input
                     id="name"
                     value={this.state.job.name}
@@ -114,8 +115,16 @@ class JobForm extends React.Component {
                   />
                 </FormControl>
                 <FormControl required={true} style={styles.input}>
+                  <InputLabel htmlFor={'address'}>Address</InputLabel>
+                  <Input
+                    id="address"
+                    value={this.state.job.address}
+                    onChange={this.handleChange('address')}
+                  />
+                </FormControl>
+                <FormControl required={true} style={styles.input}>
                   <InputLabel htmlFor={'peopleNeeded'}>
-                    Number of People Needed for Job
+                    Number of People Needed
                   </InputLabel>
                   <Input
                     id="peopleNeeded"
@@ -187,8 +196,8 @@ JobForm.propTypes = {
 const mapStateToProps = state => {
   return {
     job: state.jobs.job,
-    loading: state.jobs.jobsLoading,
-    error: state.jobs.jobsError
+    loading: state.jobs.loading,
+    error: state.jobs.error
   }
 }
 

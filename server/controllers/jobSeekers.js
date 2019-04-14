@@ -82,24 +82,35 @@ export function deleteJobSeeker(req, res, next) {
 }
 
 export function assignJobSeekerToJob(req, res, next) {
-  if (!req.param.jobSeekerID) {
+  if (!req.params.jobSeekerID) {
     return res
       .status(400)
       .json({ message: 'The ID of the Job Seeker to be assigned is required' })
   }
-  if (!req.param.jobSeekerID) {
+  if (!req.params.jobID) {
     return res
       .status(400)
       .json({ message: 'The ID of the Job to be assigned is required' })
   }
-  JobSeeker.findById(req.parma.jobSeekerID, (err, js) => {
-    if (err) return next(err)
+
+  JobSeeker.findById(req.params.jobSeekerID, (err, js) => {
+    if (err) next(err)
     else {
-      let job
-      Job.findById(req.param.jobID, (err, job) => {
-        if (err) return next(err)
+      Job.findById(req.params.jobID, (err, job) => {
+        if (err) next(err)
         else {
-          job = job
+          let curJob = null
+          if (js.currentJob) curJob = js.currentJob
+          if (curJob) js.pastJobs = [...js.pastJobs, curJob]
+          Object.assign(js, { currentJob: job }) 
+          JobSeeker.update({ _id: req.params.jobSeekerID }, js, (err, newJS) => {
+            if (err) return next(err) 
+            else {
+              return res.status(201).json({
+                jobSeeker: newJS
+              })
+            }
+          })
         }
       })
     }

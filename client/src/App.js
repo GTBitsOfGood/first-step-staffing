@@ -15,6 +15,7 @@ import EquipmentCreationPage from './pages/Equipment/EquipmentCreationPage'
 import * as routes from './routes'
 import JobSeekersPage from './pages/JobSeekers/JobSeekersPage'
 import JobDetailsPage from './pages/Jobs/JobDetailsPage'
+import JobSeekerCreationPage from './pages/JobSeekers/JobSeekerCreationPage'
 
 class App extends Component {
   render() {
@@ -27,7 +28,6 @@ class App extends Component {
               render={({ match: { url } }) => (
                 <>
                   <NavBarMiniDrawer>
-                    <Route exact path={`${url}`} component={Dashboard} />
                     <Route
                       exact
                       path={`${routes.JOBCREATION}`}
@@ -56,6 +56,10 @@ class App extends Component {
                       exact
                       path={`${routes.JOBSEEKERLIST}`}
                       component={JobSeekersPage}
+                    />
+                    <Route
+                      exact path={`${routes.JOBSEEKERCREATION}`}
+                      component={JobSeekerCreationPage}
                     />
                   </NavBarMiniDrawer>
                 </>

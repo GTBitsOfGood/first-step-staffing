@@ -9,7 +9,7 @@ import {
 const router = Router()
 
 router.delete('/jobseeker/:id', deleteJobSeeker)
-router.post('/', create)
+router.post('/jobseeker', create)
 router.get('/', getAll)
 router.get('/SSN', getBySSN)
 

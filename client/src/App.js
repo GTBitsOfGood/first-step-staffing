@@ -14,6 +14,7 @@ import JobCreationPage from './pages/Jobs/JobCreationPage'
 import EquipmentPage from './pages/Equipment/EquipmentPage'
 import EquipmentForm from './components/forms/EquipmentForm'
 import UsersPage from './pages/User/UsersPage'
+import JobSeekerDetailPage from './pages/JobSeekerDetailPage'
 
 class App extends Component {
   render() {
@@ -28,8 +29,10 @@ class App extends Component {
                   <NavBarMiniDrawer>
                     <Route exact path={`${url}`} component={Dashboard} />
                     <Route
-                      exact path={`${url}/job/creation`}
-                      component={JobCreationPage} />
+                      exact
+                      path={`${url}/job/creation`}
+                      component={JobCreationPage}
+                    />
                     <Route exact path={`${url}/jobs`} component={JobsPage} />
                     <Route
                       exact
@@ -46,6 +49,11 @@ class App extends Component {
                       path={`${url}/jobseekers`}
                       component={UsersPage}
                     />
+                    <Route
+                      exact
+                      path={`${url}/jobseekers/detail`}
+                      component={JobSeekerDetailPage}
+                    />
                   </NavBarMiniDrawer>
                 </>
               )}
@@ -58,6 +66,7 @@ class App extends Component {
             />
             <Route exact path="/edit_equipment" component={EditEquipmentPage} />
             <Route exact path="/checkin" component={CheckinPage} />
+
             <Route path="/" component={LoginPage} />
           </Switch>
         </Router>

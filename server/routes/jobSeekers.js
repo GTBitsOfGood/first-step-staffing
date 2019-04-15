@@ -3,7 +3,8 @@ import {
   create,
   getAll,
   getBySSN,
-  deleteJobSeeker
+  deleteJobSeeker, 
+  assignJobSeekerToJob
 } from '../controllers/jobSeekers'
 
 const router = Router()
@@ -12,5 +13,6 @@ router.delete('/jobseeker/:id', deleteJobSeeker)
 router.post('/jobseeker', create)
 router.get('/', getAll)
 router.get('/SSN', getBySSN)
+router.get('/jobseeker/:jobSeekerID/job/:jobID', assignJobSeekerToJob)
 
 export default router

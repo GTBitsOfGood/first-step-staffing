@@ -32,6 +32,7 @@ class CustomTable extends Component {
   }
 
   multirowSelectHandler = (e, id) => {
+
     const { selected } = this.state
     const selectedIndex = selected.indexOf(id)
     let newSelected = []
@@ -49,19 +50,30 @@ class CustomTable extends Component {
       )
     }
 
+    if (this.props.multiselectable) {
+      this.props.multiselectable(newSelected)
+    }
     this.setState({ selected: newSelected })
   }
 
   rowSelectHandler = (e, id) => {
     const { selected } = this.state
     if (selected === id) {
+      if (this.props.selectable) {
+        this.props.selectable('')
+      }
       this.setState({ selected: '' })
-    } else this.setState({ selected: id })
+    } else {
+      if (this.props.selectable) {
+        this.props.selectable(id)
+      }
+      this.setState({ selected: id })
+    }
   }
 
   isSelected = id => this.state.selected.indexOf(id) !== -1
 
-  selectableTableBody = (data, keys, multiselect) => {
+  selectableTableBody = (data, keys, multiselectable, selectable) => {
     const { classes } = this.props
     return (
       <TableBody>
@@ -74,7 +86,7 @@ class CustomTable extends Component {
               classes={{ selected: classes.selected }}
               key={d._id}
               onClick={e =>
-                multiselect
+                multiselectable
                   ? this.multirowSelectHandler(e, d._id)
                   : this.rowSelectHandler(e, d._id)
               }
@@ -136,14 +148,14 @@ class CustomTable extends Component {
       editItem,
       deleteItem,
       rowClick,
-      selectable = false,
-      multiselectable = false
+      selectable,
+      multiselectable
     } = this.props
     return (
       <Table>
         {this.tableHeader(header, editItem, deleteItem)}
         {selectable || multiselectable
-          ? this.selectableTableBody(data, keys, multiselectable)
+          ? this.selectableTableBody(data, keys, multiselectable, selectable)
           : this.tableBody(data, keys, editItem, deleteItem, rowClick)}
       </Table>
     )
@@ -180,38 +192,38 @@ CustomTable.propTypes = {
       return new Error('deleteItem must be a function')
     }
   },
-  selectable: function(props, propName, componentName) {
-    if (
-      (typeof props['editItem'] === 'function' ||
-        typeof props['deleteItem'] === 'function') &&
-      props[propName] === true
-    ) {
-      return new Error('The table cannot be editable and selectable')
-    } else if (props['multiselectable'] === true && props[propName] === true) {
-      return new Error('The table cannot be single and multiselectable')
-    } else if (
-      props[propName] !== undefined &&
-      typeof props[propName] !== 'boolean'
-    ) {
-      return new Error('selectable must be a boolean')
-    }
-  },
-  multiselectable: function(props, propName, componentName) {
-    if (
-      (typeof props['editItem'] === 'function' ||
-        typeof props['deleteItem'] === 'function') &&
-      props[propName] === true
-    ) {
-      return new Error('The table cannot be editable and selectable')
-    } else if (props['selectable'] === true && props[propName] === true) {
-      return new Error('The table cannot be single and multiselectable')
-    } else if (
-      props[propName] !== undefined &&
-      typeof props[propName] !== 'boolean'
-    ) {
-      return new Error('multiselectable must be a boolean')
-    }
-  },
+  // selectable: function(props, propName, componentName) {
+  //   if (
+  //     (typeof props['editItem'] === 'function' ||
+  //       typeof props['deleteItem'] === 'function') &&
+  //     props[propName] === true
+  //   ) {
+  //     return new Error('The table cannot be editable and selectable')
+  //   } else if (props['multiselectable'] === true && props[propName] === true) {
+  //     return new Error('The table cannot be single and multiselectable')
+  //   } else if (
+  //     props[propName] !== undefined &&
+  //     typeof props[propName] !== 'boolean'
+  //   ) {
+  //     return new Error('selectable must be a boolean')
+  //   }
+  // },
+  // multiselectable: function(props, propName, componentName) {
+  //   if (
+  //     (typeof props['editItem'] === 'function' ||
+  //       typeof props['deleteItem'] === 'function') &&
+  //     props[propName] === true
+  //   ) {
+  //     return new Error('The table cannot be editable and selectable')
+  //   } else if (props['selectable'] === true && props[propName] === true) {
+  //     return new Error('The table cannot be single and multiselectable')
+  //   } else if (
+  //     props[propName] !== undefined &&
+  //     typeof props[propName] !== 'boolean'
+  //   ) {
+  //     return new Error('multiselectable must be a boolean')
+  //   }
+  // },
   rowClick: function(props, propName, componentName) {
     if (
       (props['multiselectable'] === true || props['selectable'] === true) &&

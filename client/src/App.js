@@ -16,6 +16,7 @@ import * as routes from './routes'
 import JobSeekersPage from './pages/JobSeekers/JobSeekersPage'
 import JobDetailsPage from './pages/Jobs/JobDetailsPage'
 import JobSeekerCreationPage from './pages/JobSeekers/JobSeekerCreationPage'
+import JobAssignmentPage from './components/JobAssignmentPage'
 
 class App extends Component {
   render() {
@@ -60,6 +61,10 @@ class App extends Component {
                     <Route
                       exact path={`${routes.JOBSEEKERCREATION}`}
                       component={JobSeekerCreationPage}
+                    />
+                    <Route
+                      exact path={`${routes.JOBASSIGNMENTLIST}:id`}
+                      component={JobAssignmentPage}
                     />
                   </NavBarMiniDrawer>
                 </>

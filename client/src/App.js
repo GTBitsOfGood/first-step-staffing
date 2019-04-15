@@ -16,6 +16,8 @@ import EquipmentCreationPage from './pages/Equipment/EquipmentCreationPage'
 import * as routes from './routes'
 import JobSeekersPage from './pages/JobSeekers/JobSeekersPage'
 import JobDetailsPage from './pages/Jobs/JobDetailsPage'
+import JobSeekerCreationPage from './pages/JobSeekers/JobSeekerCreationPage'
+import JobAssignmentPage from './components/JobAssignmentPage'
 
 class App extends Component {
   render() {
@@ -28,7 +30,6 @@ class App extends Component {
               render={({ match: { url } }) => (
                 <>
                   <NavBarMiniDrawer>
-                    <Route exact path={`${url}`} component={Dashboard} />
                     <Route
                       exact
                       path={`${routes.JOBCREATION}`}
@@ -40,7 +41,7 @@ class App extends Component {
                       component={JobsPage}
                     />
                     <Route
-                      path={`${routes.JOBDETAIL}`}
+                      path={`${routes.JOBDETAIL}:id`}
                       component={JobDetailsPage}
                     />
                     <Route
@@ -59,9 +60,17 @@ class App extends Component {
                       component={JobSeekersPage}
                     />
                     <Route
+                      exact path={`${routes.JOBSEEKERCREATION}`}
+                      component={JobSeekerCreationPage}
+                    />
+                    <Route
                       exact
                       path={`${routes.JOBSEEKERDETAIL}:id`}
                       component={JobSeekerDetailPage}
+                    />
+                    <Route
+                      exact path={`${routes.JOBASSIGNMENTLIST}:id`}
+                      component={JobAssignmentPage}
                     />
                   </NavBarMiniDrawer>
                 </>

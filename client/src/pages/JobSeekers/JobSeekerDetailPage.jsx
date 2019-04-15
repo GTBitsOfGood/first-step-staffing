@@ -35,8 +35,8 @@ class JobSeekerDetailsPage extends Component {
           color="secondary"
           variant="contained"
           className={classes.button}
-          // component={Link}
-          //  to={`${routes.JOBASSIGNMENTLIST}${jobSeeker._id}`}
+          component={Link}
+          to={`${routes.JOBASSIGNMENTLIST}${this.props.match.params.id}`}
         >
           Assign to Job
         </Button>

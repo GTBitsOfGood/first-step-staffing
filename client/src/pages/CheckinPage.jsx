@@ -69,7 +69,7 @@ const styles = theme => ({
 const initialState = {
   ssn: ['', '', '', ''],
   submitted: false,
-  users: [],
+  jobSeekers: [],
   loading: false,
   error: '',
   clickedUser: null,
@@ -106,18 +106,18 @@ class CheckinPage extends React.Component {
   handleSubmit = e => {
     e.preventDefault()
     const ssn = parseInt(this.state.ssn.join(''))
-    fetch(`/users/SSN?SSN=${ssn}`, { method: 'GET' })
+    fetch(`/jobseekers/SSN?SSN=${ssn}`, { method: 'GET' })
       .then(res => res.json())
       .then(json => {
-        this.setState({ loading: false, users: json.users })
+        this.setState({ loading: false, jobSeekers: json.jobSeekers })
       })
       .catch(err => this.setState({ loading: false, error: err }))
     this.setState({ submitted: true, loading: true })
   }
 
-  displayUsers = () => {
-    const { users } = this.state
-    return users.map(user => (
+  displayJobSeekers = () => {
+    const { jobSeekers } = this.state
+    return jobSeekers.map(user => (
       <TableRow
         key={user._id}
         onClick={() => this.setState({ clickedUser: user })}
@@ -324,7 +324,7 @@ class CheckinPage extends React.Component {
     const { classes, theme } = this.props
     const {
       submitted,
-      users,
+      jobSeekers,
       loading,
       error,
       clickedUser,
@@ -337,7 +337,7 @@ class CheckinPage extends React.Component {
         {!submitted && this.fourBoxInput()}
         {submitted && loading && this.loading()}
         {submitted && !loading && error && this.displayError()}
-        {submitted && !loading && !error && !checkedIn && users.length > 1 && (
+        {submitted && !loading && !error && !checkedIn && jobSeekers.length > 1 && (
           <div style={{ margin: '0 auto' }}>
             <Table className={classes.table}>
               <TableHead>
@@ -346,7 +346,7 @@ class CheckinPage extends React.Component {
                   <TableCell>Last Name</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>{this.displayUsers()}</TableBody>
+              <TableBody>{this.displayJobSeekers()}</TableBody>
             </Table>
             <div style={{ margin: '20px 0' }}>
               {clickedUser && this.clickedUser(this.state.clickedUser)}
@@ -357,14 +357,14 @@ class CheckinPage extends React.Component {
           !loading &&
           !error &&
           !checkedIn &&
-          users.length === 1 && (
-            <div style={{ margin: '0 auto' }}>{this.clickedUser(users[0])}</div>
+          jobSeekers.length === 1 && (
+            <div style={{ margin: '0 auto' }}>{this.clickedUser(jobSeekers[0])}</div>
           )}
         {checkedIn && this.confirm()}
         {submitted &&
           !loading &&
           !error &&
-          users.length === 0 &&
+          jobSeekers.length === 0 &&
           this.noUserExists()}
         <Link to="/register" style={{ textDecoration: 'none' }}>
           <Button

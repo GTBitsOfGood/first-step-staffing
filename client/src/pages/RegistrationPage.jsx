@@ -15,7 +15,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import { Link } from 'react-router-dom'
 
 const initialState = {
-  user: {
+  jobSeeker: {
     firstName: '',
     lastName: '',
     ssn: '',
@@ -23,7 +23,7 @@ const initialState = {
   },
   loading: false,
   isSubmitted: false,
-  newUser: null,
+  newJobSeeker: null,
   error: ''
 }
 
@@ -68,25 +68,25 @@ class RegistrationPage extends Component {
 
   changeFirstName = event => {
     this.setState({
-      user: { ...this.state.user, firstName: event.target.value }
+      jobSeeker: { ...this.state.jobSeeker, firstName: event.target.value }
     })
   }
 
   changeLastName = event => {
     this.setState({
-      user: { ...this.state.user, lastName: event.target.value }
+      jobSeeker: { ...this.state.jobSeeker, lastName: event.target.value }
     })
   }
 
   changeSSN = event => {
     if (/^\d*$/.test(event.target.value)) {
-      this.setState({ user: { ...this.state.user, ssn: event.target.value } })
+      this.setState({ jobSeeker: { ...this.state.jobSeeker, ssn: event.target.value } })
     }
   }
 
   changeBirthday = birthday => {
     this.setState({
-      user: { ...this.state.user, birthday }
+      jobSeeker: { ...this.state.jobSeeker, birthday }
     })
   }
 
@@ -97,11 +97,11 @@ class RegistrationPage extends Component {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(this.state.user)
+      body: JSON.stringify(this.state.jobSeeker)
     })
       .then(res => res.json())
       .then(json => {
-        this.setState({ loading: false, newUser: json.user })
+        this.setState({ loading: false, newJobSeeker: json.jobSeeker })
       })
       .catch(err => this.setState({ error: err, loading: false }))
     this.setState({ isSubmitted: true, loading: true })
@@ -131,7 +131,7 @@ class RegistrationPage extends Component {
               <Input
                 id="firstname"
                 autoFocus={true}
-                value={this.state.user.firstName}
+                value={this.state.jobSeeker.firstName}
                 onChange={this.changeFirstName}
               />
             </FormControl>
@@ -139,7 +139,7 @@ class RegistrationPage extends Component {
               <InputLabel htmlFor={'lastname'}>Last Name</InputLabel>
               <Input
                 id="lastname"
-                value={this.state.user.lastName}
+                value={this.state.jobSeeker.lastName}
                 onChange={this.changeLastName}
               />
             </FormControl>
@@ -151,7 +151,7 @@ class RegistrationPage extends Component {
                 inputProps={{
                   maxLength: 9
                 }}
-                value={this.state.user.ssn}
+                value={this.state.jobSeeker.ssn}
                 onChange={this.changeSSN}
               />
             </FormControl>
@@ -159,7 +159,7 @@ class RegistrationPage extends Component {
               <MuiPickersUtilsProvider utils={MomentUtils}>
                 <InlineDatePicker
                   label="Date of birth"
-                  value={this.state.user.birthday}
+                  value={this.state.jobSeeker.birthday}
                   disableFuture
                   openTo="year"
                   format={'MM/DD/YYYY'}
@@ -237,13 +237,13 @@ class RegistrationPage extends Component {
 
   render() {
     const { classes } = this.props
-    const { isSubmitted, loading, newUser, error } = this.state
+    const { isSubmitted, loading, newJobSeeker, error } = this.state
     return (
       <div className={classes.container}>
         {!isSubmitted && this.registrationForm()}
         {isSubmitted && loading && this.loading()}
         {isSubmitted && !loading && error && this.displayError()}
-        {isSubmitted && !loading && !error && newUser && this.confirm()}
+        {isSubmitted && !loading && !error && newJobSeeker && this.confirm()}
         <Link to="/checkin" style={{ textDecoration: 'none' }}>
           <Button
             variant="contained"

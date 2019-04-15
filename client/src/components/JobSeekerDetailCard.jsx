@@ -25,6 +25,7 @@ const styles = {
 class JobSeekerDetailCard extends Component {
   render() {
     const { jobSeeker, classes } = this.props
+    if (jobSeeker) console.log(jobSeeker.currentJob.name)
     return (
       <div className={classes.group}>
         {jobSeeker && (

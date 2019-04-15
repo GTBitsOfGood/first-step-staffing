@@ -22,15 +22,48 @@ export function getAllJobSeekers() {
   }
 
   function request() {
-    return { type: jobSeekerTypes.GET_ALL_JOB_SEEKERS_REQUEST }
+    return { type: jobSeekerTypes.GET_ALL_JOBSEEKERS_REQUEST }
   }
   function success(jobSeekers) {
-    return { type: jobSeekerTypes.GET_ALL_JOB_SEEKERS_SUCCESS, jobSeekers }
+    return { type: jobSeekerTypes.GET_ALL_JOBSEEKERS_SUCCESS, jobSeekers }
   }
   function failure(err) {
-    return { type: jobSeekerTypes.GET_ALL_JOB_SEEKERS_SUCCESS, err }
+    return { type: jobSeekerTypes.GET_ALL_JOBSEEKERS_SUCCESS, err }
   }
 }
+
+export function createJobSeeker(newJobSeeker) {
+  return dispatch => {
+    dispatch(request())
+    return fetch('/jobseekers/jobseeker', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newJobSeeker)
+    })
+      .then(handleErrors)
+      .then(res => res.json())
+      .then(json => {
+        dispatch(success(json.jobSeeker))
+        return json.jobSeeker
+      })
+      .catch(err => dispatch(failure(err)))
+  }
+
+  function request() {
+    return { type: jobSeekerTypes.CREATE_JOBSEEKER_REQUEST }
+  }
+
+  function success(jobSeeker) {
+    return { type: jobSeekerTypes.CREATE_JOBSEEKER_SUCCESS, jobSeeker }
+  }
+
+  function failure(err) {
+    return { type: jobSeekerTypes.CREATE_JOBSEEKER_FAILURE, err }
+  }
+}
+
 
 export function deleteJobSeeker(id) {
   return dispatch => {
@@ -46,13 +79,13 @@ export function deleteJobSeeker(id) {
   }
 
   function request() {
-    return { type: jobSeekerTypes.DELETE_JOB_SEEKER_REQUEST }
+    return { type: jobSeekerTypes.DELETE_JOBSEEKER_REQUEST }
   }
   function success(deleted) {
-    return { type: jobSeekerTypes.DELETE_JOB_SEEKER_SUCCESS, deleted }
+    return { type: jobSeekerTypes.DELETE_JOBSEEKER_SUCCESS, deleted }
   }
   function failure(err) {
-    return { type: jobSeekerTypes.DELETE_JOB_SEEKER_FAILURE, err }
+    return { type: jobSeekerTypes.DELETE_JOBSEEKER_FAILURE, err }
   }
 }
 
@@ -75,20 +108,20 @@ export function getJobSeekerByID(id) {
 
   function request() {
     return {
-      type: jobSeekerTypes.GET_JOB_SEEKER_BY_ID_REQUEST
+      type: jobSeekerTypes.GET_JOBSEEKER_BY_ID_REQUEST
     }
   }
 
   function success(jobSeeker) {
     return {
-      type: jobSeekerTypes.GET_JOB_SEEKER_BY_ID_SUCCESS,
+      type: jobSeekerTypes.GET_JOBSEEKER_BY_ID_SUCCESS,
       jobSeeker
     }
   }
 
   function failure(err) {
     return {
-      type: jobSeekerTypes.GET_JOB_SEEKER_BY_ID_FAILURE,
+      type: jobSeekerTypes.GET_JOBSEEKER_BY_ID_FAILURE,
       err
     }
   }

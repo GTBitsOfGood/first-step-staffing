@@ -12,7 +12,7 @@ import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import { createJob } from '../../actions/jobs'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import { Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 const styles = theme => ({
   container: {
@@ -83,7 +83,7 @@ class JobForm extends React.Component {
 
   confirm = () => {
     const { classes, theme } = this.props
-    setTimeout(() => this.setState({ redirect: true }), 2000)
+    setTimeout(() => this.props.history.push('/dashboard/jobs'), 2000)
     return (
       <Paper className={classes.form} elevation={1}>
         <h2 style={{ color: theme.palette.secondary.main }}>
@@ -95,7 +95,7 @@ class JobForm extends React.Component {
 
   render() {
     const { classes, theme, error, loading } = this.props
-    const { submitted, redirect } = this.state
+    const { submitted } = this.state
     return (
       <div
         className={classes.container}
@@ -183,7 +183,6 @@ class JobForm extends React.Component {
         )}
         {!loading && submitted && error && this.error()}
         {!loading && !error && this.state.submitted && this.confirm()}
-        {redirect && <Redirect to="/dashboard/jobs" />}
       </div>
     )
   }
@@ -207,7 +206,9 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles, { withTheme: true })(JobForm))
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(withStyles(styles, { withTheme: true })(JobForm))
+)

@@ -65,6 +65,20 @@ export function getBySSN(req, res, next) {
   }
 }
 
+export function getByID(req, res, next) {
+  if (!req.params.id) {
+    return res.status(404).json({ message: 'ID is required' })
+  }
+  JobSeeker.findById(req.params.id)
+    .populate('currentJob')
+    .exec((err, jobSeeker) => {
+      if (err) {
+        return next(err)
+      }
+      return res.status(200).json({ jobSeeker: jobSeeker })
+    })
+}
+
 export function deleteJobSeeker(req, res, next) {
   if (!req.params.id) {
     return res

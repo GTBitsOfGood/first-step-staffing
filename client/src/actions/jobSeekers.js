@@ -55,3 +55,41 @@ export function deleteJobSeeker(id) {
     return { type: jobSeekerTypes.DELETE_JOB_SEEKER_FAILURE, err }
   }
 }
+
+export function getJobSeekerByID(id) {
+  return dispatch => {
+    dispatch(request())
+    return fetch(`/jobseekers/jobseeker/${id}`, {
+      method: 'GET'
+    })
+      .then(handleErrors)
+      .then(res => res.json())
+      .then(json => {
+        dispatch(success(json.jobSeeker))
+        return json.jobSeeker
+      })
+      .catch(err => {
+        dispatch(failure(err))
+      })
+  }
+
+  function request() {
+    return {
+      type: jobSeekerTypes.GET_JOB_SEEKER_BY_ID_REQUEST
+    }
+  }
+
+  function success(jobSeeker) {
+    return {
+      type: jobSeekerTypes.GET_JOB_SEEKER_BY_ID_SUCCESS,
+      jobSeeker
+    }
+  }
+
+  function failure(err) {
+    return {
+      type: jobSeekerTypes.GET_JOB_SEEKER_BY_ID_FAILURE,
+      err
+    }
+  }
+}

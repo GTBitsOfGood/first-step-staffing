@@ -11,7 +11,7 @@ import Dashboard from './pages/Dashboard'
 import NavBarMiniDrawer from './components/NavBarMiniDrawer'
 import JobCreationPage from './pages/Jobs/JobCreationPage'
 import EquipmentPage from './pages/Equipment/EquipmentPage'
-import JobSeekerDetailPage from './pages/JobSeekerDetailPage'
+import JobSeekerDetailPage from './pages/JobSeekers/JobSeekerDetailPage'
 import EquipmentCreationPage from './pages/Equipment/EquipmentCreationPage'
 import * as routes from './routes'
 import JobSeekersPage from './pages/JobSeekers/JobSeekersPage'
@@ -60,7 +60,7 @@ class App extends Component {
                     />
                     <Route
                       exact
-                      path={`${url}/jobseekers/detail`}
+                      path={`${routes.JOBSEEKERDETAIL}:id`}
                       component={JobSeekerDetailPage}
                     />
                   </NavBarMiniDrawer>

@@ -39,14 +39,17 @@ const styles = theme => ({
 class JobSeekersForm extends React.Component {
   constructor(props) {
     super(props)
-    
+
     this.state = {
       jobSeeker: {
         firstName: '',
         lastName: '',
         ssn: '',
         birthday: moment().subtract(18, 'years')
-      }, submitted: false, redirect: false }
+      },
+      submitted: false,
+      redirect: false
+    }
   }
 
   handleChange = name => event => {
@@ -54,12 +57,13 @@ class JobSeekersForm extends React.Component {
   }
 
   handleChangeJobseeker = name => event => {
-    this.setState({ jobSeeker: {...this.state.jobSeeker, [name]: event.target.value }})
-      
+    this.setState({
+      jobSeeker: { ...this.state.jobSeeker, [name]: event.target.value }
+    })
   }
 
   handleChangeBirthday = birthday => {
-    this.setState({ jobSeeker: {...this.state.jobSeeker, birthday }})
+    this.setState({ jobSeeker: { ...this.state.jobSeeker, birthday } })
   }
 
   handleSubmit = e => {
@@ -121,7 +125,7 @@ class JobSeekersForm extends React.Component {
                     }}
                   >
                     First Name
-              </InputLabel>
+                  </InputLabel>
                   <Input
                     id="firstname"
                     autoFocus={true}

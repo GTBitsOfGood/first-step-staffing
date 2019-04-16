@@ -1,18 +1,17 @@
 import React, { Component } from 'react'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
-import { withStyles } from '@material-ui/core';
+import { withStyles } from '@material-ui/core'
 
 const styles = {
-    grid: {
-        margin: '0 0 0 20px'
-    }
+  grid: {
+    margin: '0 0 0 20px'
+  }
 }
 
 class JobDetailCard extends Component {
   render() {
-    const { job, classes } = this.props
-    console.log(this.props)
+    const { job, assigned, classes } = this.props
     return (
       <Paper>
         {job && (
@@ -27,7 +26,10 @@ class JobDetailCard extends Component {
               People Needed: {job.peopleNeeded}
             </Grid>
             <Grid item xs={6}>
-              People Assigned: TODO
+              People Assigned:{' '}
+              {assigned
+                ? assigned
+                : 'No People have been assigned to this job yet'}
             </Grid>
             <Grid item xs={6}>
               Transportation Type: {job.transportationType}

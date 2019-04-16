@@ -30,6 +30,7 @@ class App extends Component {
               render={({ match: { url } }) => (
                 <>
                   <NavBarMiniDrawer>
+                    <Route exact path={`${url}`} component={Dashboard} />
                     <Route
                       exact
                       path={`${routes.JOBCREATION}`}
@@ -60,7 +61,8 @@ class App extends Component {
                       component={JobSeekersPage}
                     />
                     <Route
-                      exact path={`${routes.JOBSEEKERCREATION}`}
+                      exact
+                      path={`${routes.JOBSEEKERCREATION}`}
                       component={JobSeekerCreationPage}
                     />
                     <Route
@@ -69,7 +71,8 @@ class App extends Component {
                       component={JobSeekerDetailPage}
                     />
                     <Route
-                      exact path={`${routes.JOBASSIGNMENTLIST}:id`}
+                      exact
+                      path={`${routes.JOBASSIGNMENTLIST}:id`}
                       component={JobAssignmentPage}
                     />
                   </NavBarMiniDrawer>

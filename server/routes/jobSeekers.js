@@ -5,7 +5,8 @@ import {
   getBySSN,
   deleteJobSeeker,
   getByID,
-  assignJobSeekerToJob
+  assignJobSeekerToJob,
+  getJobSeekersByJobID
 } from '../controllers/jobSeekers'
 
 const router = Router()
@@ -16,5 +17,6 @@ router.get('/', getAll)
 router.get('/SSN', getBySSN)
 router.get('/jobseeker/:id', getByID)
 router.get('/jobseeker/:jobSeekerID/job/:jobID', assignJobSeekerToJob)
+router.get('/job/:id', getJobSeekersByJobID)
 
 export default router

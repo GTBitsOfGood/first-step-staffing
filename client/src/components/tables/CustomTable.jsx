@@ -32,7 +32,6 @@ class CustomTable extends Component {
   }
 
   multirowSelectHandler = (e, id) => {
-
     const { selected } = this.state
     const selectedIndex = selected.indexOf(id)
     let newSelected = []
@@ -108,7 +107,7 @@ class CustomTable extends Component {
       <TableBody>
         {data.map(d => {
           return (
-            <TableRow hover={rowClick !== null} key={d._id}>
+            <TableRow hover={rowClick !== undefined} key={d._id}>
               {keys.map(k => (
                 <TableCell
                   key={k}

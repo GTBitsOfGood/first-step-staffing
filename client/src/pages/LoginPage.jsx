@@ -138,7 +138,7 @@ class LoginPage extends React.Component {
   }
 
   render() {
-    const { classes, theme } = this.props
+    const { classes } = this.props
     const { submitted } = this.state
     return (
       <div className={classes.container}>

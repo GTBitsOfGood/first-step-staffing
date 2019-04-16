@@ -16,16 +16,13 @@ const styles = {
   },
   button: {
     maxHeight: '22px',
-    margin: '0 0 0 20px',
-    padding: '5px 5px',
-    fontSize: '12px'
+    margin: '0 0 0 20px'
   }
 }
 
 class JobSeekerDetailCard extends Component {
   render() {
     const { jobSeeker, classes } = this.props
-    if (jobSeeker) console.log(jobSeeker.currentJob.name)
     return (
       <div className={classes.group}>
         {jobSeeker && (
@@ -35,16 +32,22 @@ class JobSeekerDetailCard extends Component {
             <p> SSN: {jobSeeker.ssn} </p>
             <p> Birthday: {jobSeeker.birthday} </p>
             <p>
-              Current Job Assignment: {jobSeeker.currentJob.name}
-              <Button
-                color="secondary"
-                variant="contained"
-                className={classes.button}
-                component={Link}
-                to={`${routes.JOBDETAIL}${jobSeeker.currentJob._id}`}
-              >
-                See Details
-              </Button>
+              Current Job Assignment:{' '}
+              {jobSeeker.currentJob
+                ? jobSeeker.currentJob.name
+                : 'This person has not been assigned to a job yet'}
+              {jobSeeker.currentJob && (
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  size="small"
+                  className={classes.button}
+                  component={Link}
+                  to={`${routes.JOBDETAIL}${jobSeeker.currentJob._id}`}
+                >
+                  See Details
+                </Button>
+              )}
             </p>
           </Paper>
         )}

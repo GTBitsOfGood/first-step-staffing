@@ -30,9 +30,7 @@ export default function jobSeekers(state = initialState, action) {
         ...state,
         loading: false,
         error: '',
-        jobSeekers: state.jobSeekers.filter(
-          js => js._id !== action.deleted._id
-        )
+        jobSeekers: state.jobSeekers.filter(js => js._id !== action.deleted._id)
       }
     case jobSeekerTypes.DELETE_JOBSEEKER_FAILURE:
       return { ...state, loading: false, error: action.err.toString() }
@@ -51,7 +49,7 @@ export default function jobSeekers(state = initialState, action) {
         loading: false,
         error: action.err.toString()
       }
-      case jobSeekerTypes.GET_JOBSEEKER_BY_ID_FAILURE:
+    case jobSeekerTypes.GET_JOBSEEKER_BY_ID_FAILURE:
       return { ...state, loading: false, error: action.err.toString() }
     case jobSeekerTypes.GET_JOBSEEKER_BY_ID_REQUEST:
       return { ...state, loading: true, error: '' }

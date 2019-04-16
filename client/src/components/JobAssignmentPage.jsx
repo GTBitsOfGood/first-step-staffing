@@ -2,12 +2,10 @@ import React, { Component } from 'react'
 import CustomTable from './tables/CustomTable'
 import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core/styles'
-import { Link } from 'react-router-dom'
 import Paper from '@material-ui/core/Paper'
 import { connect } from 'react-redux'
 import { getAllJobs } from '../actions/jobs'
 import { Redirect } from 'react-router-dom'
-import * as routes from '../routes'
 import 'whatwg-fetch'
 
 const styles = theme => ({
@@ -48,17 +46,22 @@ class JobAssignmentPage extends Component {
     this.props.getAllJobs()
   }
 
-  childRowSelectHandler = (id) => {
+  childRowSelectHandler = id => {
     this.setState({ selected: id })
   }
 
-  childMultirowSelectHandler = (newSelected) => {
+  childMultirowSelectHandler = newSelected => {
     this.setState({ selected: newSelected })
   }
 
   handleSubmit = e => {
     e.preventDefault()
-    fetch(`/jobseekers/jobseeker/${this.props.match.params.id}/job/${this.state.selected}`, { method: 'GET' })
+    fetch(
+      `/jobseekers/jobseeker/${this.props.match.params.id}/job/${
+        this.state.selected
+      }`,
+      { method: 'GET' }
+    )
     this.setState({ submitted: true })
   }
 
@@ -67,9 +70,7 @@ class JobAssignmentPage extends Component {
     setTimeout(() => this.setState({ redirect: true }), 3000)
     return (
       <Paper className={classes.confirm} elevation={1}>
-        <h2 style={{ color: theme.palette.secondary.main }}>
-          Changes saved!
-        </h2>
+        <h2 style={{ color: theme.palette.secondary.main }}>Changes saved!</h2>
       </Paper>
     )
   }
@@ -102,7 +103,7 @@ class JobAssignmentPage extends Component {
           </Button>
         )}
         {this.state.submitted && this.confirm()}
-        {this.state.redirect && <Redirect to='/dashboard/jobseekers/' />}
+        {this.state.redirect && <Redirect to="/dashboard/jobseekers/" />}
       </div>
     )
   }

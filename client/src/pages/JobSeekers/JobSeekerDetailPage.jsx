@@ -15,6 +15,11 @@ const styles = theme => ({
   title: {
     color: theme.palette.secondary.main,
     textAlign: 'center'
+  },
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
   }
 })
 
@@ -30,16 +35,19 @@ class JobSeekerDetailsPage extends Component {
     return (
       <div>
         <h1 className={classes.title}>Job Seeker Details</h1>
-        <JobDetailCard jobSeeker={jobSeeker} />
-        <Button
-          color="secondary"
-          variant="contained"
-          className={classes.button}
-          component={Link}
-          to={`${routes.JOBASSIGNMENTLIST}${this.props.match.params.id}`}
-        >
-          Assign to Job
-        </Button>
+        <div className={classes.container}>
+          <JobDetailCard jobSeeker={jobSeeker} />
+          <Button
+            color="secondary"
+            variant="contained"
+            className={classes.button}
+            component={Link}
+            size="small"
+            to={`${routes.JOBASSIGNMENTLIST}${this.props.match.params.id}`}
+          >
+            Assign to Job
+          </Button>
+        </div>
       </div>
     )
   }

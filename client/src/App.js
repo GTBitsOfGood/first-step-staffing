@@ -11,6 +11,7 @@ import Dashboard from './pages/Dashboard'
 import NavBarMiniDrawer from './components/NavBarMiniDrawer'
 import JobCreationPage from './pages/Jobs/JobCreationPage'
 import EquipmentPage from './pages/Equipment/EquipmentPage'
+import JobSeekerDetailPage from './pages/JobSeekers/JobSeekerDetailPage'
 import EquipmentCreationPage from './pages/Equipment/EquipmentCreationPage'
 import * as routes from './routes'
 import JobSeekersPage from './pages/JobSeekers/JobSeekersPage'
@@ -29,6 +30,7 @@ class App extends Component {
               render={({ match: { url } }) => (
                 <>
                   <NavBarMiniDrawer>
+                    <Route exact path={`${url}`} component={Dashboard} />
                     <Route
                       exact
                       path={`${routes.JOBCREATION}`}
@@ -59,11 +61,18 @@ class App extends Component {
                       component={JobSeekersPage}
                     />
                     <Route
-                      exact path={`${routes.JOBSEEKERCREATION}`}
+                      exact
+                      path={`${routes.JOBSEEKERCREATION}`}
                       component={JobSeekerCreationPage}
                     />
                     <Route
-                      exact path={`${routes.JOBASSIGNMENTLIST}:id`}
+                      exact
+                      path={`${routes.JOBSEEKERDETAIL}:id`}
+                      component={JobSeekerDetailPage}
+                    />
+                    <Route
+                      exact
+                      path={`${routes.JOBASSIGNMENTLIST}:id`}
                       component={JobAssignmentPage}
                     />
                   </NavBarMiniDrawer>
@@ -73,6 +82,7 @@ class App extends Component {
             <Route exact path="/register" component={RegistrationPage} />
             <Route exact path="/edit_equipment" component={EditEquipmentPage} />
             <Route exact path="/checkin" component={CheckinPage} />
+
             <Route path="/" component={LoginPage} />
           </Switch>
         </Router>

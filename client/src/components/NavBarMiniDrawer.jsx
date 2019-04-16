@@ -85,7 +85,7 @@ const styles = theme => ({
   }
 })
 
-class NavBarMiniDrawer extends React.Component {
+class NavBarMiniDrawer extends Component {
   state = {
     open: false
   }
@@ -126,9 +126,14 @@ class NavBarMiniDrawer extends React.Component {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" color="inherit" noWrap>
-              Admin Dashboard
-            </Typography>
+            <Link
+              style={{ textDecoration: 'none', color: 'white' }}
+              to={'/dashboard'}
+            >
+              <Typography variant="h6" color="inherit" noWrap>
+                Admin Dashboard
+              </Typography>
+            </Link>
           </Toolbar>
         </AppBar>
         <Drawer

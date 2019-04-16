@@ -30,9 +30,7 @@ export default function jobSeekers(state = initialState, action) {
         ...state,
         loading: false,
         error: '',
-        jobSeekers: state.jobSeekers.filter(
-          js => js._id !== action.deleted._id
-        )
+        jobSeekers: state.jobSeekers.filter(js => js._id !== action.deleted._id)
       }
     case jobSeekerTypes.DELETE_JOBSEEKER_FAILURE:
       return { ...state, loading: false, error: action.err.toString() }
@@ -50,6 +48,28 @@ export default function jobSeekers(state = initialState, action) {
         ...state,
         loading: false,
         error: action.err.toString()
+      }
+    case jobSeekerTypes.GET_JOBSEEKER_BY_ID_FAILURE:
+      return { ...state, loading: false, error: action.err.toString() }
+    case jobSeekerTypes.GET_JOBSEEKER_BY_ID_REQUEST:
+      return { ...state, loading: true, error: '' }
+    case jobSeekerTypes.GET_JOBSEEKER_BY_ID_SUCCESS:
+      let newJob = action.jobSeeker
+      let i = state.jobSeekers
+        ? state.jobSeekers.findIndex(js => js._id === newJob._id)
+        : -1
+      if (i === -1) {
+        return {
+          ...state,
+          loading: false,
+          error: '',
+          jobSeekers: [...state.jobSeekers, newJob]
+        }
+      }
+      return {
+        ...state,
+        loading: false,
+        error: ''
       }
     default:
       return state

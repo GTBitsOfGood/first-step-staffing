@@ -64,7 +64,6 @@ export function createJobSeeker(newJobSeeker) {
   }
 }
 
-
 export function deleteJobSeeker(id) {
   return dispatch => {
     dispatch(request())
@@ -86,5 +85,67 @@ export function deleteJobSeeker(id) {
   }
   function failure(err) {
     return { type: jobSeekerTypes.DELETE_JOBSEEKER_FAILURE, err }
+  }
+}
+
+export function getJobSeekerByID(id) {
+  return dispatch => {
+    dispatch(request())
+    return fetch(`/jobseekers/jobseeker/${id}`, {
+      method: 'GET'
+    })
+      .then(handleErrors)
+      .then(res => res.json())
+      .then(json => {
+        dispatch(success(json.jobSeeker))
+        return json.jobSeeker
+      })
+      .catch(err => {
+        dispatch(failure(err))
+      })
+  }
+
+  function request() {
+    return {
+      type: jobSeekerTypes.GET_JOBSEEKER_BY_ID_REQUEST
+    }
+  }
+
+  function success(jobSeeker) {
+    return {
+      type: jobSeekerTypes.GET_JOBSEEKER_BY_ID_SUCCESS,
+      jobSeeker
+    }
+  }
+
+  function failure(err) {
+    return {
+      type: jobSeekerTypes.GET_JOBSEEKER_BY_ID_FAILURE,
+      err
+    }
+  }
+}
+
+export function getJobSeekersByJobID(id) {
+  return dispatch => {
+    dispatch(request())
+    return fetch(`/jobseekers/job/${id}`, { method: 'GET' })
+      .then(handleErrors)
+      .then(res => res.json())
+      .then(json => {
+        dispatch(success(json.jobSeekers))
+        return json.jobSeekers
+      })
+      .catch(err => dispatch(failure(err)))
+  }
+
+  function request() {
+    return { type: jobSeekerTypes.GET_JOBSEEKER_BY_JOB_ID_REQUEST }
+  }
+  function success(jobSeekers) {
+    return { type: jobSeekerTypes.GET_JOBSEEKER_BY_JOB_ID_SUCCESS, jobSeekers }
+  }
+  function failure(err) {
+    return { type: jobSeekerTypes.GET_JOBSEEKER_BY_JOB_ID_FAILURE, err }
   }
 }

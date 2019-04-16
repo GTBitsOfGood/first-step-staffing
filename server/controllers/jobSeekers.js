@@ -1,5 +1,6 @@
 const JobSeeker = require('mongoose').model('JobSeeker')
 const Job = require('mongoose').model('Job')
+var ObjectId = require('mongodb').ObjectID
 
 export function create(req, res, next) {
   let errorMessage = []
@@ -34,20 +35,23 @@ export function create(req, res, next) {
   JobSeeker.create(jobSeeker, (err, js) => {
     if (err) {
       return next(err)
-    }
-    return res.status(201).json({
-      jobSeeker: js
-    })
+    } else
+      return res.status(201).json({
+        jobSeeker: js
+      })
   })
 }
 
 export function getAll(_, res, next) {
-  JobSeeker.find({}, (err, jobSeeker) => {
-    if (err) return next(err)
-    return res.status(200).json({
-      jobSeekers: jobSeeker
+  JobSeeker.find()
+    .populate('currentJob')
+    .exec((err, jobSeeker) => {
+      if (err) return next(err)
+      else
+        return res.status(200).json({
+          jobSeekers: jobSeeker
+        })
     })
-  })
 }
 
 // getBySSN
@@ -64,6 +68,21 @@ export function getBySSN(req, res, next) {
       }
     })
   }
+}
+
+export function getByID(req, res, next) {
+  if (!req.params.id) {
+    return res.status(404).json({ message: 'ID is required' })
+  }
+  JobSeeker.findById(req.params.id)
+    .populate('currentJob')
+    .exec((err, jobSeeker) => {
+      if (err) {
+        return next(err)
+      } else {
+        return res.status(200).json({ jobSeeker: jobSeeker })
+      }
+    })
 }
 
 export function deleteJobSeeker(req, res, next) {
@@ -102,17 +121,33 @@ export function assignJobSeekerToJob(req, res, next) {
           let curJob = null
           if (js.currentJob) curJob = js.currentJob
           if (curJob) js.pastJobs = [...js.pastJobs, curJob]
-          Object.assign(js, { currentJob: job }) 
-          JobSeeker.update({ _id: req.params.jobSeekerID }, js, (err, newJS) => {
-            if (err) return next(err) 
-            else {
-              return res.status(201).json({
-                jobSeeker: newJS
-              })
+          Object.assign(js, { currentJob: job })
+          JobSeeker.update(
+            { _id: req.params.jobSeekerID },
+            js,
+            (err, newJS) => {
+              if (err) return next(err)
+              else {
+                return res.status(201).json({
+                  jobSeeker: newJS
+                })
+              }
             }
-          })
+          )
         }
       })
+    }
+  })
+}
+
+export function getJobSeekersByJobID(req, res, next) {
+  if (!req.params.id) {
+    return res.status(400).json({ message: 'The ID of the Job is required' })
+  }
+  JobSeeker.find({ currentJob: req.params.id }, (err, js) => {
+    if (err) return next(err)
+    else {
+      return res.status(200).json({ jobSeekers: js })
     }
   })
 }

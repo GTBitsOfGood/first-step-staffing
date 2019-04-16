@@ -51,7 +51,6 @@ export function getByID(req, res, next) {
   }
   Job.findById(req.params.id, (err, job) => {
     if (err) {
-      console.log(err)
       return next(err)
     }
     return res.status(200).json({ job: job })

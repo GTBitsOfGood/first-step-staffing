@@ -16,6 +16,7 @@ import jobRouter from './routes/jobs'
 
 let path = ''
 
+// this should be doable in webpack, this shouldn't have to be done here
 if (process.env.NODE_ENV == 'production') {
   path += '../../'
 } else {

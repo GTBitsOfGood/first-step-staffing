@@ -1,2 +1,11 @@
 import jobSeekerResolvers from './jobseekers'
-export default [jobSeekerResolvers]
+import jobResolvers from './job'
+import equipmentResolvers from './equipment'
+import locationResolvers from './location'
+
+export default [
+  jobSeekerResolvers,
+  jobResolvers,
+  equipmentResolvers,
+  locationResolvers
+]

@@ -33,20 +33,28 @@ const jobSeekerSchema = new Schema({
   },
   currentJob: {
     type: Schema.Types.ObjectId,
-    ref: 'Job'
+    ref: 'Job',
+    set: function(currentJob) {
+      this._previousJob = this.currentJob
+      return currentJob
+    }
   },
-  pastJobs: {
-    type: [Schema.Types.ObjectId],
-    ref: 'Job'
-  }
+  pastJobs: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Job'
+    }
+  ]
 })
 
 jobSeekerSchema.pre('save', async function(next) {
   if (this.isModified('ssn') || this.isNew) {
     this.ssnString = this.ssn.toString().slice(-4)
-  } else {
-    return next()
   }
+  if (this.isModified('currentJob') || this.isNew) {
+    this.pastJobs = [...this.pastJobs, this._previousJob]
+  }
+  return next()
 })
 
 let JobSeeker = model('JobSeeker', jobSeekerSchema)

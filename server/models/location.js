@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose'
 
+// TODO: Add zipcode?
 const LocationSchema = Schema({
   streetNumber: {
     type: Number,

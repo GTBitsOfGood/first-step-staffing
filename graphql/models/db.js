@@ -1,14 +1,12 @@
-import {
-  connect,
-  connection
-} from 'mongoose'
+import { connect, connection } from 'mongoose'
 import './location'
 import './equipment'
 import './jobSeeker'
 import './job'
 
 connect(
-  process.env.MONGO_URL, {
+  process.env.MONGO_URL,
+  {
     useNewUrlParser: true
   }
 )

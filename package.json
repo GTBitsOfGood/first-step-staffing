@@ -8,13 +8,23 @@
   ],
   "scripts": {
     "start": "cd server/ && npm start",
+    "start-backend": "cd server/ && npm run dev",
+    "state-frontend": "cd client && npm start",
+    "dev": "npm run start-backend && npm run start-frontend",
     "install-client": "npm install --prefix client",
     "install-server": "npm install --prefix server",
-    "build-client": "cd client/ && npm build",
-    "postinstall": "npm run install-client && npm run install-server && npm run build-client"
+    "build": "npm run build-client && npm run build-server",
+    "build-client": "cd client/ && npm run build",
+    "build-server": "cd server/ && npm run build",
+    "postinstall": "npm run install-client && npm run install-server && npm run build"
   },
   "engines": {
     "npm": "6.6.0",
     "node": "10.10.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "eslint-config-airbnb": "^17.1.1",
+    "eslint-plugin-prettier": "^3.1.0"
   }
 }

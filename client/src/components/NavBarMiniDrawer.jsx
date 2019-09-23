@@ -19,6 +19,7 @@ import WorkIcon from '@material-ui/icons/Work'
 import BuildIcon from '@material-ui/icons/Build'
 import AssignmentInd from '@material-ui/icons/AssignmentInd'
 import classNames from 'classnames'
+import HomeIcon from '@material-ui/icons/Home';
 import { withStyles } from '@material-ui/core/styles'
 
 const drawerWidth = 240
@@ -101,7 +102,11 @@ class NavBarMiniDrawer extends Component {
   }
 
   handleItemClick(text) {
-    this.props.history.push(`/dashboard/${this.toLink(text)}`)
+    if (text == '') {
+      this.props.history.push(`/dashboard/`)
+    } else {
+      this.props.history.push(`/dashboard/${this.toLink(text)}`)
+    }
   }
 
   render() {
@@ -125,6 +130,7 @@ class NavBarMiniDrawer extends Component {
               })}
             >
               <MenuIcon />
+              <HomeIcon />
             </IconButton>
             <Link
               style={{ textDecoration: 'none', color: 'white' }}
@@ -161,7 +167,7 @@ class NavBarMiniDrawer extends Component {
           </div>
           <Divider />
           <List>
-            {['Jobs', 'Equipment', 'Job Seekers'].map((text, index) => (
+            {['Jobs', 'Equipment', 'Job Seekers', ''].map((text, index) => (
               <ListItem
                 button
                 component={Link}
@@ -169,7 +175,7 @@ class NavBarMiniDrawer extends Component {
                 key={text}
               >
                 <ListItemIcon>
-                  {[<WorkIcon />, <BuildIcon />, <AssignmentInd />][index]}
+                  {[<WorkIcon />, <BuildIcon />, <AssignmentInd />, <HomeIcon />][index]}
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItem>

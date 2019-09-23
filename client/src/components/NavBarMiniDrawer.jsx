@@ -102,7 +102,7 @@ class NavBarMiniDrawer extends Component {
   }
 
   handleItemClick(text) {
-    if (text == '') {
+    if (text == 'home') {
       this.props.history.push(`/dashboard/`)
     } else {
       this.props.history.push(`/dashboard/${this.toLink(text)}`)
@@ -130,7 +130,6 @@ class NavBarMiniDrawer extends Component {
               })}
             >
               <MenuIcon />
-              <HomeIcon />
             </IconButton>
             <Link
               style={{ textDecoration: 'none', color: 'white' }}
@@ -167,7 +166,7 @@ class NavBarMiniDrawer extends Component {
           </div>
           <Divider />
           <List>
-            {['Jobs', 'Equipment', 'Job Seekers', ''].map((text, index) => (
+            {['Jobs', 'Equipment', 'Job Seekers', 'home'].map((text, index) => (
               <ListItem
                 button
                 component={Link}

@@ -59,6 +59,45 @@ export function createEquipment(newEquipment) {
   }
 }
 
+export function getEquipmentByID(id) {
+  return dispatch => {
+    dispatch(request())
+    return fetch(`/equipment/equipment/${id}`, {
+        method: 'GET'
+      })
+      .then(handleErrors)
+      .then(res => res.json())
+      .then(json => {
+        dispatch(success(json.equipment))
+        return json.equipment
+      })
+      .catch(err => {
+        dispatch(failure(err))
+      })
+  }
+
+  function request() {
+    return {
+      type: equipmentTypes.GET_EQUIPMENT_BY_ID_REQUEST
+    }
+  }
+
+  function success(equipment) {
+    return {
+      type: equipmentTypes.GET_EQUIPMENT_BY_ID_SUCCESS,
+      equipment
+    }
+  }
+
+  function failure(err) {
+    return {
+      type: equipmentTypes.GET_EQUIPMENT_BY_ID_FAILURE,
+      err
+    }
+  }
+}
+
+
 export function deleteEquipment(equipmentId) {
   return dispatch => {
     dispatch(request())

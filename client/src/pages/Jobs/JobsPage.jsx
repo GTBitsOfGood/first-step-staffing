@@ -53,6 +53,7 @@ class JobPage extends Component {
     this.props.history.push(`${routes.JOBDETAIL}${id}`)
   }
 
+  // My stuff
   handleChange = event => {
     this.setState({
       // jobAssigned: event.target.value,
@@ -89,6 +90,11 @@ class JobPage extends Component {
         </Button>
         <br></br>
 
+
+
+
+
+       {/*  My stuff */}
         <font size="2.5"> Job Assigned: </font>
         <br></br>
         <Select

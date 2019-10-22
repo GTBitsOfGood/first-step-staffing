@@ -160,7 +160,7 @@ class RegistrationPage extends Component {
                 <InlineDatePicker
                   label="Date of birth"
                   value={this.state.jobSeeker.birthday}
-                  disableFuture
+                  maxDate={moment().subtract(18,'years')}
                   openTo="year"
                   format={'MM/DD/YYYY'}
                   views={['year', 'month', 'day']}

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Tile, Form, TextInput, FormLabel, DatePicker, DatePickerInput } from 'carbon-components-react'
 import "./CheckinPage.scss"
+import JobDetailsPage from './JobDetailsPage.jsx'
 
 class CheckinPage extends React.Component {
   constructor(props) {
@@ -9,6 +10,7 @@ class CheckinPage extends React.Component {
       firstName: '',
       lastName: '',
       birthday: null,
+      submitted: false
     }
   }
 
@@ -45,7 +47,8 @@ class CheckinPage extends React.Component {
   handleSubmit = e => {
     e.preventDefault()
     // Submit
-    this.setState({ submitted: true, loading: true })
+    this.setState({ submitted: !this.state.submitted, loading: true })
+    console.log(this.state.submitted)
   }
 
   displayError = () => {
@@ -61,11 +64,14 @@ class CheckinPage extends React.Component {
 
   render() {
     return (
+
+
       <div className="container">
+      {!this.state.submitted && (
         <Tile className="tile">
           <Form class="bx--form-item">
             <FormLabel class="formLabel">
-              Let's get you signed in
+            Let's get you signed in.
             </FormLabel>
             <TextInput className="text" onChange={this.changeFirstName} labelText={"First Name"} placeholder="First Name" id="f_name" />
             <TextInput className="text" onChange={this.changeLastName} labelText={"Last Name"} placeholder="Last Name" id="l_name" />
@@ -113,11 +119,15 @@ class CheckinPage extends React.Component {
               kind="primary"
               tabIndex={1}
               type="button"
+              onClick={this.handleSubmit}
             >
               Next
             </Button>
           </div>
         </Tile>
+        )}
+        {this.state.submitted && (<JobDetailsPage name={this.state.firstName}/>)}
+
       </div>
     )
   }

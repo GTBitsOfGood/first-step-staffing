@@ -4,6 +4,7 @@
     height: 100%;
     overflow: auto;
     display: flex;
+
 }
 
 .tile {
@@ -20,13 +21,14 @@
         font-size: 150%;
         padding: 12px;
     }
-    
+
     .text {
         background-color: white;
     }
 
     > * {
         width: 300px;
+        padding-left: 15px;
     }
 
     .row {
@@ -42,4 +44,12 @@
 .bx--btn-set {
     width: 392px;
     padding-top: 15px;
+}
+
+.dropdown {
+    width: 200px;
+    height: 30px;
+    background-color: white;
+    margin-left: 15px;
+
 }

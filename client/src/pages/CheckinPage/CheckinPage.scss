@@ -20,15 +20,23 @@
     .formLabel {
         font-size: 150%;
         padding: 12px;
+        width: 300px;
+
+        .text-tile {
+            background-color: rgba($color: #474343, $alpha: 0.2);
+            width: fit-content;
+            height: 10px;
+            padding: 10px;
+            text-align: center;
+        }
+
     }
 
     .text {
         background-color: white;
-    }
-
-    > * {
         width: 300px;
     }
+
 
     .font {
         padding-left: 15px;
@@ -42,6 +50,18 @@
         }
     }
 
+    .signature {
+        background-color: white;
+        canvas {
+            width: 300px;
+            height: 150px;
+        }
+    }
+
+    Select {
+        background-color: white;
+    }    
+
 }
 
 .bx--btn-set {
@@ -49,10 +69,3 @@
     padding-top: 15px;
 }
 
-.dropdown {
-    width: 200px;
-    height: 30px;
-    background-color: white;
-    margin-left: 15px;
-
-}

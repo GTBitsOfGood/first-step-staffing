@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Tile, Form, TextInput, FormLabel, DatePicker, DatePickerInput } from 'carbon-components-react'
+import { Button, Tile, Form, FormLabel} from 'carbon-components-react'
 import "./CheckinPage.scss"
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -34,14 +34,14 @@ class JobDetailsPage extends React.Component {
         return (
             <div className="container">
             <Tile className="tile">
-              <Form class="bx--form-item">
-                <FormLabel class="formLabel">
+              <Form className="bx--form-item">
+                <FormLabel className="formLabel">
                 Adjust {this.props.name}'s job details.
                 </FormLabel>
                 <br></br>
 
 
-                <font size="2.5"> Job Assigned: </font>
+                <font className="font" size="2.5"> Job Assigned: </font>
 
                 <br></br>
                 <Select
@@ -59,7 +59,7 @@ class JobDetailsPage extends React.Component {
 
                 <br></br>
 
-                <font size="2.5"> Transportation: </font>
+                <font className="font" size="2.5"> Transportation: </font>
                 <br></br>
                 <Select
                   className="dropdown"

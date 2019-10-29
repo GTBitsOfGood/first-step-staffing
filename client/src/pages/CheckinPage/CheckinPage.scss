@@ -28,13 +28,16 @@
 
     > * {
         width: 300px;
+    }
+
+    .font {
         padding-left: 15px;
     }
 
     .row {
         display: flex;
         flex-direction: row;
-        #date-picker, #ssn {
+        #date-picker, #ssn, .bx--text-input__field-wrapper {
             width: 140px;
         }
     }

@@ -1,51 +1,65 @@
-import {} from 'dotenv/config'
-import '@babel/polyfill'
-import './models/db'
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
 
-import express, { json, urlencoded, static as ExpressStatic } from 'express'
-import { join } from 'path'
-import bodyParser from 'body-parser'
-import cookieParser from 'cookie-parser'
-import logger from 'morgan'
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
+var mongoose = require('mongoose')
+var app = express();
+var cors = require("cors");
+require('dotenv').config();
 
-import indexRouter from './routes/index'
-import locationRouter from './routes/locations'
-import equipmentRouter from './routes/equipment'
-import jobSeekerRouter from './routes/jobSeekers'
-import jobRouter from './routes/jobs'
-
-let path = ''
-
-<<<<<<< HEAD
-=======
-// this should be doable in webpack, this shouldn't have to be done here
->>>>>>> 2739759ea38f095a94ad050b06d45cd756692332
-if (process.env.NODE_ENV == 'production') {
-  path += '../../'
-} else {
-  path += '../'
+if (app.get('env') === 'development') {
+    const whiteList = ['*']
+    const corsOptions = {
+        origin: function (origin, callback) {
+            if (whiteList.indexOf(origin)  == -1 || !origin) {
+                callback(null, true)
+            } else {
+                console.log(origin)
+                callback(new Error("Not allowed by CORS"))
+            }
+        }
+    }
+    app.use(cors(corsOptions))
 }
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
-const app = express()
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
 
-app.use(logger('dev'))
-app.use(
-  bodyParser.urlencoded({
-    extended: true
-  })
-)
-app.use(bodyParser.json())
-app.use(cookieParser())
-app.use(ExpressStatic(join(__dirname, path + 'client/build/')))
 
-app.use('/', indexRouter)
-app.use('/locations', locationRouter)
-app.use('/jobseekers', jobSeekerRouter)
-app.use('/equipment', equipmentRouter)
-app.use('/jobs', jobRouter)
 
-app.get('/*', (req, res) => {
-  res.sendFile(join(__dirname, path + 'client/build/index.html'))
-})
 
-module.exports = app
+// app.use(express.static(path.join(__dirname, 'public')));
+// Connect to MongoDB
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true }).then(() => {
+    console.log("Connected to MongoDB")
+  });
+
+// Start server to serve endpoints
+console.log('Express started. Listening on port', process.env.PORT || 5000);
+app.listen(process.env.PORT || 5000);
+
+// Render React page
+app.use(express.static(path.join(__dirname, "../client/build/")));
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
+});
+
+function handleError(err, req, res, next) {
+    const statusCode = err.statusCode ? err.statusCode : 500
+    const message = err.message ? err.message : 'Something broke!'
+    console.error(err.stack)
+    res.status(statusCode).send(message)
+  }
+
+app.use(handleError)
+
+
+
+module.exports = app;

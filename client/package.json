@@ -6,19 +6,12 @@
     "@date-io/moment": "^1.1.0",
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
-<<<<<<< HEAD
-    "install": "^0.12.2",
-    "material-ui-pickers": "^2.2.4",
-    "moment": "^2.24.0",
-    "npm": "^6.9.0",
-=======
     "apollo-boost": "^0.4.3",
     "graphql": "^14.4.2",
     "install": "^0.12.2",
     "material-ui-pickers": "^2.2.4",
     "moment": "^2.24.0",
     "npm": "^6.10.2",
->>>>>>> 2739759ea38f095a94ad050b06d45cd756692332
     "react": "^16.7.0",
     "react-apollo": "^2.5.8",
     "react-dom": "^16.7.0",

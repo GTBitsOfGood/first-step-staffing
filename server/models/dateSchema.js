@@ -1,11 +1,10 @@
 let mongoose = require('mongoose');
-
-
+var date = require('./date')
 let dateSchema = new mongoose.Schema({
     date: {
-        jobLocations: [String],
-        transportation: [String]
+        "jobLocations": [String],
+        "transportation": [String]
     }
-}, {collection: 'Dates'})
+})
 
-module.exports = mongoose.model('dateSchema', dateSchema)
+module.exports = mongoose.model('dateSchema', dateSchema, "Dates")

@@ -2,15 +2,14 @@ let mongoose = require('mongoose');
 
 
 let employeeSchema = new mongoose.Schema({
-    employee: {
         fname: String,
         lname: String,
-        ssn: Boolean,
-        date_of_birth: Date,
+        ssn: String,
+        date_of_birth: String,
         EID: String,
-        job_location: String,
+        job_locations: String,
         transportation: String,
-    }
+    
 }, {collection: 'Employees'})
 
 module.exports = mongoose.model('employeeSchema', employeeSchema)

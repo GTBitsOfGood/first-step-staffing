@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Tile, Form, TextInput, FormLabel, DatePicker, DatePickerInput, Select, SelectItem, SelectItemGroup } from 'carbon-components-react'
 import CheckinPage from "../CheckinPage/CheckinPage.jsx"
+import "./DispatchPage.scss"
 
 
 class DispatchPage extends React.Component {
@@ -12,15 +13,17 @@ class DispatchPage extends React.Component {
     }
 
     goToCheckIn = event => {
-        this.setState({
-            clickCheckin: true
-        })
+        // this.setState({
+        //     clickCheckin: true
+        // })
+        window.location.href = "/checkin"
     }
 
     render() {
         return (
             <div>
                 <Button
+                className="checkin"
                 disabled={false}
                 kind="primary"
                 tabIndex={1}

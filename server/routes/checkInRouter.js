@@ -41,6 +41,8 @@ router.post("/checkin", (req, res) => {
     var EID = employeeInfo.firstName + employeeInfo.lastName + employeeInfo.date_of_birth;
     var JB = employeeInfo.jobLocation;
     console.log(employeeInfo.signature)
+
+
     var newCheckIn = new employeeSchema({
             fname: employeeInfo.firstName,
             lname: employeeInfo.lastName,

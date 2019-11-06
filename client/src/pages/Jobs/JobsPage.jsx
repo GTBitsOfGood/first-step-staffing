@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import CustomTable from '../../components/tables/CustomTable'
 import Button from '@material-ui/core/Button'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+import InputLabel from '@material-ui/core/InputLabel'
 import { withStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -15,6 +18,11 @@ const styles = theme => ({
   title: {
     color: theme.palette.secondary.main,
     textAlign: 'center'
+  },
+  dropDown: {
+    minWidth: 200,
+
+
   }
 })
 
@@ -22,7 +30,9 @@ class JobPage extends Component {
   state = {
     jobs: [],
     jobsLoading: false,
-    jobsError: false
+    jobsError: false,
+    jobAssigned: '',
+    transportation: ''
   }
 
   componentDidMount() {
@@ -41,6 +51,16 @@ class JobPage extends Component {
 
   rowClick = (e, id) => {
     this.props.history.push(`${routes.JOBDETAIL}${id}`)
+  }
+
+  // My stuff
+  handleChange = event => {
+    this.setState({
+      // jobAssigned: event.target.value,
+      // transportation: event.target.value
+      [event.target.name] : event.target.value
+    });
+
   }
 
   render() {
@@ -68,6 +88,49 @@ class JobPage extends Component {
         >
           Create New Job
         </Button>
+        <br></br>
+
+
+
+
+
+       {/*  My stuff */}
+        <font size="2.5"> Job Assigned: </font>
+        <br></br>
+        <Select
+          name="jobAssigned"
+          value={this.state.jobAssigned}
+          className={classes.dropDown}
+          onClick={this.handleChange}
+          inputProps={{id: 'JobAssignments'}}
+          >
+            <MenuItem value="Job1"> Painting </MenuItem>
+            <MenuItem value="Job2"> Mowing </MenuItem>
+            <MenuItem value="Job3"> Factory work </MenuItem>
+            <MenuItem value="Job4"> Food Critic </MenuItem>
+        </Select>
+
+        <br></br>
+        <br></br>
+        <font size="2.5"> Transportation: </font>
+        <br></br>
+        <Select
+          name="transportation"
+          value={this.state.transportation}
+          className={classes.dropDown}
+          onClick={this.handleChange}
+          inputProps={{id: 'Transportation'}}
+          >
+            <MenuItem value="trans1"> Marta </MenuItem>
+            <MenuItem value="trans2"> Uber </MenuItem>
+            <MenuItem value="trans3"> Personal car </MenuItem>
+            <MenuItem value="trans4"> Bird </MenuItem>
+        </Select>
+
+
+
+
+
       </div>
     )
   }

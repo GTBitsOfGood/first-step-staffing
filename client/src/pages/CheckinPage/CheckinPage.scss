@@ -1,0 +1,71 @@
+.container {
+    background-color: gray;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    display: flex;
+
+}
+
+.tile {
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+    padding: 0;
+}
+
+.bx--form-item {
+    padding: 10px;
+
+    .formLabel {
+        font-size: 150%;
+        padding: 12px;
+        width: 300px;
+
+        .text-tile {
+            background-color: rgba($color: #474343, $alpha: 0.2);
+            width: fit-content;
+            height: 10px;
+            padding: 10px;
+            text-align: center;
+        }
+
+    }
+
+    .text {
+        background-color: white;
+        width: 300px;
+    }
+
+
+    .font {
+        padding-left: 15px;
+    }
+
+    .row {
+        display: flex;
+        flex-direction: row;
+        #date-picker, #ssn, .bx--text-input__field-wrapper {
+            width: 140px;
+        }
+    }
+
+    .signature {
+        background-color: white;
+        canvas {
+            width: 300px;
+            height: 150px;
+        }
+    }
+
+    Select {
+        background-color: white;
+    }    
+
+}
+
+.bx--btn-set {
+    width: 392px;
+    padding-top: 15px;
+}
+

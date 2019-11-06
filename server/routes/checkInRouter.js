@@ -29,7 +29,7 @@ router.get("/date/:date", (req, res) => {
         }
         var toBeReturned = {
             jobLocations: foundObj[date].jobLocations,
-            transporations: foundObj[date].locations
+            transporations: foundObj[date].transportation
         }
         res.status(200).send(toBeReturned)
     })

@@ -9,6 +9,7 @@ let employeeSchema = new mongoose.Schema({
         EID: String,
         job_locations: String,
         transportation: String,
+        signature: String
     
 }, {collection: 'Employees'})
 

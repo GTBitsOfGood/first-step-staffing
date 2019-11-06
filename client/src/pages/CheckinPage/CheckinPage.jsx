@@ -156,7 +156,6 @@ class CheckinPage extends React.Component {
           
         this.initializeState()
       }
-
     }
   }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Tile, Form, TextInput, FormLabel, DatePicker, DatePickerInput, Select, SelectItem, SelectItemGroup } from 'carbon-components-react'
+import { Button, Tile, Form, TextInput, FormLabel, DatePicker, DatePickerInput, Select, SelectItem } from 'carbon-components-react'
 import "./CheckinPage.scss"
 import SignaturePad from 'react-signature-pad-wrapper'
 
@@ -16,12 +16,47 @@ class CheckinPage extends React.Component {
       lastNameInvalid: '',
       birthdayInvalid: '',
       ssnInvalid: '',
-      jobAssigned: 'Painting',
-      transportation: 'Marta',
+      jobAssigned: '',
+      transportation: '',
+      jobLocations: [],
+      transportations: [],
     }
   }
 
-  componentDidMount() { }
+  initializeState() {
+    this.setState({
+      firstName: '',
+      lastName: '',
+      birthday: null,
+      screen: 1,
+      ssn: '',
+      firstNameInvalid: '',
+      lastNameInvalid: '',
+      birthdayInvalid: '',
+      ssnInvalid: '',
+      jobAssigned: '',
+      transportation: '',
+    })
+  }
+
+  componentDidMount() {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0')
+    var mm = String(today.getMonth() + 1).padStart(2, '0')
+    var yyyy = today.getFullYear()
+
+    today = mm + '-' + dd + '-' + yyyy;
+    today = '10-29-2019'
+
+    fetch(`/api/checkin/date/${today}`, {
+      method: 'GET'
+    })
+    .then(res => res.json().then(dat => {
+      this.setState({jobLocations: dat.jobLocations, transportations: dat.transportations})
+      this.setState({jobAssigned: this.state.jobLocations[0], transportation: this.state.transportations[0]})
+    }))
+    
+  }
 
   changeFirstName = event => {
     this.setState({
@@ -94,7 +129,33 @@ class CheckinPage extends React.Component {
       if (this.state.jobAssigned.length !== 0 && this.state.transportation.length !== 0 ) {  
         this.setState({screen: 3})
       }
-    
+    } else if (this.state.screen === 3) {
+
+      if (!this.signaturePad.isEmpty()){       
+        let user = {
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          ssn: this.state.ssn,
+          date_of_birth: this.state.birthday,
+          jobLocation: this.state.jobAssigned,
+          transportation: this.state.transportation,
+          signature: this.signaturePad.toDataURL()
+        }
+        fetch('/api/checkin/checkin', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(user)
+        })
+          .then(res => res.json())
+          .then(json => {
+            this.setState({ loading: false })
+          })
+          .catch(err => this.setState({ error: err, loading: false }))
+          
+        this.initializeState()
+      }
     }
   }
 
@@ -178,22 +239,13 @@ class CheckinPage extends React.Component {
                 light={false}
                 onChange={this.changeJob}
               >
-                <SelectItem
-                  text="Painting"
-                  value="Painting"
-                />
-                <SelectItem
-                  text="Mowing"
-                  value="Mowing"
-                />
-                <SelectItem
-                  text="Factory work"
-                  value="Factory work"
-                />
-                <SelectItem
-                  text="Food critic"
-                  value="Food critic"
-                />
+                {this.state.jobLocations.map((jobLoc) =>
+                  <SelectItem
+                    text={jobLoc}
+                    value={jobLoc}
+                    key={jobLoc}
+                  />
+                )}
               </Select>
 
               <Select
@@ -207,22 +259,13 @@ class CheckinPage extends React.Component {
                 light={false}
                 onChange={this.changeTransportation}
               >
-                <SelectItem
-                  text="Marta"
-                  value="Marta"
-                />
-                <SelectItem
-                  text="Uber"
-                  value="Uber"
-                />
-                <SelectItem
-                  text="Personal car"
-                  value="Personal car"
-                />
-                <SelectItem
-                  text="Bird"
-                  value="Bird"
-                />
+                {this.state.transportations.map((transport) =>
+                  <SelectItem
+                    text={transport}
+                    value={transport}
+                    key={transport}
+                  />
+                )}
               </Select>
             </Form>
           )}
@@ -233,7 +276,7 @@ class CheckinPage extends React.Component {
               </FormLabel>
               <div style={{"paddingLeft": "10px"}}>Please sign to confirm</div>        
               <div className="signature">
-                <SignaturePad></SignaturePad>
+                <SignaturePad ref={ref => this.signaturePad = ref}></SignaturePad>
               </div>
             </Form>
           )}

@@ -96,7 +96,7 @@ class CheckinPage extends React.Component {
         this.setState({screen: 3})
       }
 
-    } else if (this.state.screen == 3) {
+    } else if (this.state.screen === 3) {
       this.setState({screen: 4})
     }
   }
@@ -118,6 +118,10 @@ class CheckinPage extends React.Component {
         </h2>
       </div>
     )
+  }
+
+  goToDispatch = () => {
+    window.location.href = "/dispatch"
   }
 
   render() {
@@ -241,9 +245,11 @@ class CheckinPage extends React.Component {
             </Form>
           )}
 
-          {this.state.screen === 4 && (
-            <DispatchPage> </DispatchPage>
-          )}
+
+          {this.state.screen === 4 && this.goToDispatch()}
+
+
+
 
           <div className="bx--btn-set">
             <Button

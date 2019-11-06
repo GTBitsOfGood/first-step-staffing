@@ -7,6 +7,7 @@ import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
 import theme from './Theme'
 import EditEquipmentPage from './pages/EditEquipmentPage'
 import CheckinPage from './pages/CheckinPage/CheckinPage'
+import DispatchPage from './pages/DispatchPage/DispatchPage'
 import Dashboard from './pages/Dashboard'
 import NavBarMiniDrawer from './components/NavBarMiniDrawer'
 import JobCreationPage from './pages/Jobs/JobCreationPage'
@@ -18,6 +19,7 @@ import JobSeekersPage from './pages/JobSeekers/JobSeekersPage'
 import JobDetailsPage from './pages/Jobs/JobDetailsPage'
 import JobSeekerCreationPage from './pages/JobSeekers/JobSeekerCreationPage'
 import JobAssignmentPage from './components/JobAssignmentPage'
+
 
 class App extends Component {
   render() {
@@ -82,6 +84,7 @@ class App extends Component {
             <Route exact path="/register" component={RegistrationPage} />
             <Route exact path="/edit_equipment" component={EditEquipmentPage} />
             <Route exact path="/checkin" component={CheckinPage} />
+            <Route exact path="/dispatch" component={DispatchPage} />
 
             <Route path="/" component={LoginPage} />
           </Switch>

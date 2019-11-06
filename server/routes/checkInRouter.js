@@ -29,7 +29,7 @@ router.get("/date/:date", (req, res) => {
         }
         var toBeReturned = {
             jobLocations: foundObj[date].jobLocations,
-            transporations: foundObj[date].transportation
+            transportations: foundObj[date].transportation
         }
         res.status(200).send(toBeReturned)
     })
@@ -38,10 +38,11 @@ router.get("/date/:date", (req, res) => {
 
 router.post("/checkin", (req, res) => {
     const employeeInfo = req.body;
-    console.log(employeeInfo)
     var EID = employeeInfo.firstName + employeeInfo.lastName + employeeInfo.date_of_birth;
     var JB = employeeInfo.jobLocation;
-    console.log(JB)
+    console.log(employeeInfo.signature)
+
+
     var newCheckIn = new employeeSchema({
             fname: employeeInfo.firstName,
             lname: employeeInfo.lastName,
@@ -49,7 +50,8 @@ router.post("/checkin", (req, res) => {
             date_of_birth: employeeInfo.date_of_birth,
             EID: EID,
             job_locations:employeeInfo.jobLocation,
-            transportation: employeeInfo.transportation
+            transportation: employeeInfo.transportation,
+            signature: employeeInfo.signature
     })
 
     newCheckIn.save().then(res.status(200).send("done"))

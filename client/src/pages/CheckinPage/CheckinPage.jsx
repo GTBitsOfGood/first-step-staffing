@@ -53,7 +53,7 @@ class CheckinPage extends React.Component {
     })
     .then(res => res.json().then(dat => {
       this.setState({jobLocations: dat.jobLocations, transportations: dat.transportations})
-      this.setState({jobAssigned: this.state.jobLocations[0], transportation: this.state.transportations[0]})
+      this.setState({jobAssigned: this.state.jobLocations[0][0], transportation: this.state.transportations[0]})
     }))
     
   }
@@ -241,9 +241,9 @@ class CheckinPage extends React.Component {
               >
                 {this.state.jobLocations.map((jobLoc) =>
                   <SelectItem
-                    text={jobLoc}
-                    value={jobLoc}
-                    key={jobLoc}
+                    text={jobLoc[0]}
+                    value={jobLoc[0]}
+                    key={jobLoc[0]}
                   />
                 )}
               </Select>

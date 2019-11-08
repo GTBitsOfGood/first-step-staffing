@@ -11,6 +11,7 @@ router.get("/date/:date", (req, res) => {
     const date = req.params.date;
     console.log(date)
     dateSchema.find({date: date}, (err, info) => {
+
         if (err) {
             res.status(500).send(err)
         } else if (!info) {
@@ -23,8 +24,6 @@ router.get("/date/:date", (req, res) => {
         }
         res.status(200).send(toBeReturned)
     })
-
-    
     
 })
 
@@ -47,7 +46,6 @@ router.post("/checkin", (req, res) => {
     newCheckIn.save().then(res.status(200).send("done"))
 
 })
-
 router.post("/createDate", (req, res) => {
     var objToSave = req.body;
     let newDate = new dateSchema({

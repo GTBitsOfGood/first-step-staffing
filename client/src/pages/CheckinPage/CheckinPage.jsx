@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Tile, Form, TextInput, FormLabel, DatePicker, DatePickerInput, Select, SelectItem } from 'carbon-components-react'
 import "./CheckinPage.scss"
+import DispatchPage from "../DispatchPage/DispatchPage.jsx"
 import SignaturePad from 'react-signature-pad-wrapper'
 
 class CheckinPage extends React.Component {
@@ -112,7 +113,6 @@ class CheckinPage extends React.Component {
       var lastNameInvalid = (this.state.lastName.length === 0 && 'Please enter a last name') || (/\d/.test(this.state.lastName) && 'Last name can not contain numbers')
       var birthdayInvalid = ((this.state.birthday === null || this.state.birthday.length === 0) && 'Please enter a birthday') || (!(/[0-9][0-9]\/[0-9][0-9]\/[0-9][0-9][0-9][0-9]/.test(this.state.birthday)) && 'Please use the format \'mm/dd/yyyy\'')
       var ssnInvalid = ((this.state.ssn.length === 0) && 'Please enter the last 4 of your SSN') || (!(/[0-9][0-9][0-9][0-9]/.test(this.state.ssn)) && 'Please enter 4 digits')
-      
       if (!firstNameInvalid && !lastNameInvalid && !birthdayInvalid && !ssnInvalid) {
         // Validate user info
         this.setState({ screen: 2 })
@@ -126,7 +126,8 @@ class CheckinPage extends React.Component {
       })
 
     } else if (this.state.screen === 2) {
-      if (this.state.jobAssigned.length !== 0 && this.state.transportation.length !== 0 ) {  
+
+      if (this.state.jobAssigned.length !== 0 && this.state.transportation.length !== 0 ) {
         this.setState({screen: 3})
       }
     } else if (this.state.screen === 3) {
@@ -155,12 +156,13 @@ class CheckinPage extends React.Component {
           .catch(err => this.setState({ error: err, loading: false }))
           
         this.initializeState()
+        this.setState({screen: 4})
       }
     }
   }
 
   handleBack = e => {
-    
+
     if (this.state.screen > 1) {
       this.setState({screen: this.state.screen - 1})
     }
@@ -176,6 +178,10 @@ class CheckinPage extends React.Component {
         </h2>
       </div>
     )
+  }
+
+  goToDispatch = () => {
+    window.location.href = "/dispatch"
   }
 
   render() {
@@ -274,12 +280,18 @@ class CheckinPage extends React.Component {
               <FormLabel className="formLabel" style={{"lineHeight" : "24px", "width": "370px"}}>
                 Hi {this.state.firstName}. Here are today's job details. You will be working at {this.state.jobAssigned}. {this.state.transportation} will be your transport.
               </FormLabel>
-              <div style={{"paddingLeft": "10px"}}>Please sign to confirm</div>        
+
+              <div style={{"paddingLeft": "10px"}}>Please sign to confirm</div>
               <div className="signature">
                 <SignaturePad ref={ref => this.signaturePad = ref}></SignaturePad>
               </div>
             </Form>
           )}
+
+
+
+          {this.state.screen === 4 && this.goToDispatch()}
+
           <div className="bx--btn-set">
             <Button
               disabled={false}

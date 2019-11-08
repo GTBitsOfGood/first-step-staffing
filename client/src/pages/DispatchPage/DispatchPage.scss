@@ -1,0 +1,33 @@
+
+
+.dispatch-header {
+    display: flex;
+    padding: 1%;
+    height: 25%;
+    vertical-align: middle;
+    justify-content: space-between;
+    padding-left:3%
+
+}
+.dispatch-name{
+
+    padding: 1% 0;
+   
+    font-size: 30px;
+}
+
+.accordion-container {
+    height: 80%;
+
+}
+
+.dispatch-container{
+    width: 90%;
+    float:right;
+  
+}
+.sidebar-container{
+    width: 10%;
+    float: left;
+}
+

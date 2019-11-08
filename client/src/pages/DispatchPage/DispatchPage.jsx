@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Tile, Form, TextInput, FormLabel, DatePicker, DatePickerInput, Select, SelectItem, SelectItemGroup } from 'carbon-components-react'
+import { Button, Tile, Form, TextInput, FormLabel, DatePicker, DatePickerInput, Select, SelectItem, SelectItemGroup, Accordion } from 'carbon-components-react'
 import CheckinPage from "../CheckinPage/CheckinPage.jsx"
 import "./DispatchPage.scss"
 
@@ -22,13 +22,23 @@ class DispatchPage extends React.Component {
     render() {
         return (
             <div>
-                <Button
-                className="checkin"
-                disabled={false}
-                kind="primary"
-                tabIndex={1}
-                type="button"
-                onClick={this.goToCheckIn}> Check-In Worker + </Button>
+                <div className="dispatch-header">
+                    <Button
+                    className="checkin"
+                    disabled={false}
+                    kind="primary"
+                    tabIndex={1}
+                    type="button"
+                    onClick={this.goToCheckIn}> Check-In Worker + </Button>
+                </div>
+                <div className="accordion-container">
+                    <Accordion>
+
+                        
+                    </Accordion>
+
+                </div>
+             
 
                 {this.state.clickCheckin && (
                     <CheckinPage> </CheckinPage>

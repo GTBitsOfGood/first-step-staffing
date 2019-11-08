@@ -54,7 +54,7 @@ class CheckinPage extends React.Component {
     })
     .then(res => res.json().then(dat => {
       this.setState({jobLocations: dat.jobLocations, transportations: dat.transportations})
-      this.setState({jobAssigned: this.state.jobLocations[0], transportation: this.state.transportations[0]})
+      this.setState({jobAssigned: this.state.jobLocations[0][0], transportation: this.state.transportations[0]})
     }))
     
   }
@@ -113,7 +113,6 @@ class CheckinPage extends React.Component {
       var lastNameInvalid = (this.state.lastName.length === 0 && 'Please enter a last name') || (/\d/.test(this.state.lastName) && 'Last name can not contain numbers')
       var birthdayInvalid = ((this.state.birthday === null || this.state.birthday.length === 0) && 'Please enter a birthday') || (!(/[0-9][0-9]\/[0-9][0-9]\/[0-9][0-9][0-9][0-9]/.test(this.state.birthday)) && 'Please use the format \'mm/dd/yyyy\'')
       var ssnInvalid = ((this.state.ssn.length === 0) && 'Please enter the last 4 of your SSN') || (!(/[0-9][0-9][0-9][0-9]/.test(this.state.ssn)) && 'Please enter 4 digits')
-
       if (!firstNameInvalid && !lastNameInvalid && !birthdayInvalid && !ssnInvalid) {
         // Validate user info
         this.setState({ screen: 2 })
@@ -127,6 +126,7 @@ class CheckinPage extends React.Component {
       })
 
     } else if (this.state.screen === 2) {
+
       if (this.state.jobAssigned.length !== 0 && this.state.transportation.length !== 0 ) {
         this.setState({screen: 3})
       }
@@ -158,7 +158,6 @@ class CheckinPage extends React.Component {
         this.initializeState()
         this.setState({screen: 4})
       }
-
     }
   }
 
@@ -248,9 +247,9 @@ class CheckinPage extends React.Component {
               >
                 {this.state.jobLocations.map((jobLoc) =>
                   <SelectItem
-                    text={jobLoc}
-                    value={jobLoc}
-                    key={jobLoc}
+                    text={jobLoc[0]}
+                    value={jobLoc[0]}
+                    key={jobLoc[0]}
                   />
                 )}
               </Select>
@@ -281,6 +280,7 @@ class CheckinPage extends React.Component {
               <FormLabel className="formLabel" style={{"lineHeight" : "24px", "width": "370px"}}>
                 Hi {this.state.firstName}. Here are today's job details. You will be working at {this.state.jobAssigned}. {this.state.transportation} will be your transport.
               </FormLabel>
+
               <div style={{"paddingLeft": "10px"}}>Please sign to confirm</div>
               <div className="signature">
                 <SignaturePad ref={ref => this.signaturePad = ref}></SignaturePad>
@@ -289,10 +289,8 @@ class CheckinPage extends React.Component {
           )}
 
 
+
           {this.state.screen === 4 && this.goToDispatch()}
-
-
-
 
           <div className="bx--btn-set">
             <Button

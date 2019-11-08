@@ -10,26 +10,17 @@ router.get("/date/:date", (req, res) => {
     // res.send(" route")
     const date = req.params.date;
     console.log(date)
-    dateSchema.find({}, (err, info) => {
+    dateSchema.find({date: date}, (err, info) => {
+
         if (err) {
             res.status(500).send(err)
         } else if (!info) {
             res.status(404).send("Could not find this date!!!!")
         }
-        var foundObj = {}
-        for (var i in info){
-            for (var j in info[i].toJSON()){
-                console.log(j)
-                if (j == date) {
-                    foundObj = info[i].toJSON();
-                    break;
-                }
-            }
-            
-        }
+        var foundObj = info[0]
         var toBeReturned = {
-            jobLocations: foundObj[date].jobLocations,
-            transportations: foundObj[date].transportation
+            jobLocations: foundObj.jobLocations,
+            transportations: foundObj.transportations
         }
         res.status(200).send(toBeReturned)
     })
@@ -54,5 +45,20 @@ router.post("/checkin", (req, res) => {
 
     newCheckIn.save().then(res.status(200).send("done"))
 
+})
+router.post("/createDate", (req, res) => {
+    var objToSave = req.body;
+    let newDate = new dateSchema({
+        date: objToSave.date,
+        jobLocations: objToSave.jobLocations,
+        transportations: objToSave.transportations
+    })
+    newDate.save(function (err) {
+        if (err) {
+            res.status(500).send(err)
+        } else {
+            res.status(200).send(newDate.toJSON())
+        }
+    })
 })
 module.exports = router

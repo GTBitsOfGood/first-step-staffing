@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Tile, Form, TextInput, FormLabel, DatePicker, DatePickerInput, Select, SelectItem, SelectItemGroup, Accordion } from 'carbon-components-react'
+import { Button, SideNav,SideNavItems, SideNavMenuItem, Tile, Form, TextInput, FormLabel, DatePicker, DatePickerInput, Select, SelectItem, SelectItemGroup, Accordion, AccordionItem } from 'carbon-components-react'
 import CheckinPage from "../CheckinPage/CheckinPage.jsx"
 import "./DispatchPage.scss"
 
@@ -20,11 +20,31 @@ class DispatchPage extends React.Component {
     }
 
     render() {
+        //here is where we call get request
+
+
+
         return (
             <div>
+                <div className="sidebar-container">
+                    <SideNav
+                        isFixedNav
+                    >
+                        <SideNavItems>
+                            <SideNavMenuItem>Test</SideNavMenuItem>
+                        </SideNavItems>
+                        
+
+                    </SideNav>
+                </div>
+                 <div className="dispatch-container">
                 <div className="dispatch-header">
+                    <div className="dispatch-name">
+                    Dispatch
+
+                    </div>
                     <Button
-                    className="checkin"
+                   
                     disabled={false}
                     kind="primary"
                     tabIndex={1}
@@ -33,8 +53,11 @@ class DispatchPage extends React.Component {
                 </div>
                 <div className="accordion-container">
                     <Accordion>
+                        <AccordionItem>
 
-                        
+                        </AccordionItem>
+
+
                     </Accordion>
 
                 </div>
@@ -45,6 +68,9 @@ class DispatchPage extends React.Component {
                 )}
 
             </div>
+
+            </div>
+           
 
         )
     }

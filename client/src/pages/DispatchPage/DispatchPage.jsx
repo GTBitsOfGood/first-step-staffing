@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, SideNav,SideNavItems, SideNavMenuItem, Tile, Form, TextInput, FormLabel, DatePicker, DatePickerInput, Select, SelectItem, SelectItemGroup, Accordion, AccordionItem } from 'carbon-components-react'
 import CheckinPage from "../CheckinPage/CheckinPage.jsx"
 import "./DispatchPage.scss"
+import Fetch
 
 
 class DispatchPage extends React.Component {
@@ -10,6 +11,12 @@ class DispatchPage extends React.Component {
         this.state = {
             clickCheckin: false
         }
+    }
+    componentDidMount(){
+        fetch('/api/getEmployeesByJobs')
+        .then(response => response.json())
+        .then()
+
     }
 
     goToCheckIn = event => {

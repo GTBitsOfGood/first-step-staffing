@@ -2,20 +2,21 @@ import React from 'react'
 import { Button, SideNav,SideNavItems, SideNavMenuItem, Tile, Form, TextInput, FormLabel, DatePicker, DatePickerInput, Select, SelectItem, SelectItemGroup, Accordion, AccordionItem } from 'carbon-components-react'
 import CheckinPage from "../CheckinPage/CheckinPage.jsx"
 import "./DispatchPage.scss"
-import Fetch
+
 
 
 class DispatchPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            allData: {},
             clickCheckin: false
         }
     }
     componentDidMount(){
-        fetch('/api/getEmployeesByJobs')
+        fetch('/api/dispatch/getEmployeesByJobs')
         .then(response => response.json())
-        .then()
+        .then(data => this.setState({allData:data}))
 
     }
 
@@ -27,7 +28,7 @@ class DispatchPage extends React.Component {
     }
 
     render() {
-        //here is where we call get request
+    
 
 
 

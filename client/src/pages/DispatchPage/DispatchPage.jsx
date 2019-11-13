@@ -29,7 +29,8 @@ class DispatchPage extends React.Component {
 
     render() {
     
-
+        console.log(this.state.allData);
+        const keys = Object.keys(this.state.allData);
 
 
         return (
@@ -61,9 +62,8 @@ class DispatchPage extends React.Component {
                 </div>
                 <div className="accordion-container">
                     <Accordion>
-                        <AccordionItem>
-
-                        </AccordionItem>
+                        {keys.map(key => (<AccordionItem title={key}> </AccordionItem>))}
+                        
 
 
                     </Accordion>

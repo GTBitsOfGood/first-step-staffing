@@ -8,6 +8,7 @@ import theme from './Theme'
 import EditEquipmentPage from './pages/EditEquipmentPage'
 import CheckinPage from './pages/CheckinPage/CheckinPage'
 import DispatchPage from './pages/DispatchPage/DispatchPage'
+import SettingsPage from './pages/SettingsPage/SettingsPage'
 import Dashboard from './pages/Dashboard'
 import NavBarMiniDrawer from './components/NavBarMiniDrawer'
 import JobCreationPage from './pages/Jobs/JobCreationPage'
@@ -85,6 +86,7 @@ class App extends Component {
             <Route exact path="/edit_equipment" component={EditEquipmentPage} />
             <Route exact path="/checkin" component={CheckinPage} />
             <Route exact path="/dispatch" component={DispatchPage} />
+            <Route exact path="/settings" component={SettingsPage} />
 
             <Route path="/" component={LoginPage} />
           </Switch>

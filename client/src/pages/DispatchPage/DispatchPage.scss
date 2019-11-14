@@ -6,8 +6,11 @@
     height: 25%;
     vertical-align: middle;
     justify-content: space-between;
-    padding-left:3%
+    padding-left: 3%;
 
+    .check-in-button {
+        padding-right: 12px;
+    }
 }
 .dispatch-name{
 

@@ -120,12 +120,14 @@ class HomePage extends React.Component {
                       <Table>
                         <TableHead className ='head'>
                           <TableRow>
-                          <TableHeader></TableHeader>
+                          <TableHeader>On/Off</TableHeader>
                             {headers.map(header => (
                               <TableHeader {...getHeaderProps({ header })}>
                                 {header.header}
                               </TableHeader>
+
                             ))}
+                            <TableHeader> Spots Available </TableHeader>
                           </TableRow>
                         </TableHead>
                         <TableBody>

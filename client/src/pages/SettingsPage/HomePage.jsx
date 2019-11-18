@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Toggle, SideNav,SideNavItems, SideNavMenuItem, Tile, Form, TextInput, FormLabel, DatePicker, DataTable, NumberInput, DatePickerInput, Select, SelectItem, SelectItemGroup, Accordion, AccordionItem } from 'carbon-components-react'
+import { Button, Toggle, ToggleSmall, SideNav,SideNavItems, SideNavMenuItem, Tile, Form, TextInput, FormLabel, DatePicker, DataTable, NumberInput, DatePickerInput, Select, SelectItem, SelectItemGroup, Accordion, AccordionItem } from 'carbon-components-react'
 import "./HomePage.scss"
 const {
   TableContainer,
@@ -89,19 +89,19 @@ class HomePage extends React.Component {
               {
                 id: '0',
                 location: 'Elander',
-                spotsAvail: '12',
+                spotsAvail: '',
 
               },
               {
                 id: '1',
                 location: 'Chief',
-                spotsAvail: '12',
+                spotsAvail: '',
 
               },
               {
                 id: '2',
                 location: 'Candy Factory',
-                spotsAvail: '12',
+                spotsAvail: '',
 
               },
             ],
@@ -116,24 +116,20 @@ class HomePage extends React.Component {
                   rows={this.state.rows}
                   headers={headers}
                   render={({ rows, headers, getHeaderProps, getSelectionProps }) => (
-                    <TableContainer title="Today's Dispatch">
+                    <TableContainer title="Welcome! Setup today's dispatch here">
                       <Table>
                         <TableHead className ='head'>
                           <TableRow>
-                          <TableHeader>On/Off</TableHeader>
-                            {headers.map(header => (
-                              <TableHeader {...getHeaderProps({ header })}>
-                                {header.header}
-                              </TableHeader>
-
-                            ))}
+                            <TableHeader>On/Off</TableHeader>
+                            <TableHeader>Location</TableHeader>
                             <TableHeader> Spots Available </TableHeader>
                           </TableRow>
                         </TableHead>
                         <TableBody>
                           {rows.map(row => (
                             <TableRow key={row.id}>
-                              <TableSelectRow {...getSelectionProps({ row })} />
+                          {/* could put toggle small here but it doesn't toggle*/}
+                              <Toggle />
                               {row.cells.map(cell => (
                                 <TableCell
                                  className="cell-body"
@@ -142,7 +138,7 @@ class HomePage extends React.Component {
                                  </TableCell>
 
                               ))}
-                              <NumberInput/>
+                              <NumberInput className='numberinput'/>
                             </TableRow>
                           ))}
                         </TableBody>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Toggle, SideNav,SideNavItems, SideNavMenuItem, Tile, Form, TextInput, FormLabel, DatePicker, DataTable, NumberInput, DatePickerInput, Select, SelectItem, SelectItemGroup, Accordion, AccordionItem } from 'carbon-components-react'
-import "./SettingsPage.scss"
+import "./HomePage.scss"
 const {
   TableContainer,
   Table,
@@ -20,19 +20,18 @@ const {
 const headers = [
 
     //ask about this cuz it makes no sense
-
   {
     key: 'location',
     header: 'Location',
   },
 
-  {
-    key: 'spotsAvail',
-    header: 'Spots Available',
-  }
+  // {
+  //   key: 'spotsAvail',
+  //   header: 'Spots Available',
+  // }
 
 ];
-class SettingsPage extends React.Component {
+class HomePage extends React.Component {
     componentDidMount() {
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0')
@@ -119,7 +118,7 @@ class SettingsPage extends React.Component {
                   render={({ rows, headers, getHeaderProps, getSelectionProps }) => (
                     <TableContainer title="Today's Dispatch">
                       <Table>
-                        <TableHead>
+                        <TableHead className ='head'>
                           <TableRow>
                           <TableHeader></TableHeader>
                             {headers.map(header => (
@@ -137,10 +136,11 @@ class SettingsPage extends React.Component {
                                 <TableCell
                                  className="cell-body"
                                  key={cell.id}>{cell.value}
-                                 <NumberInput/>
+
                                  </TableCell>
 
                               ))}
+                              <NumberInput/>
                             </TableRow>
                           ))}
                         </TableBody>
@@ -155,7 +155,7 @@ class SettingsPage extends React.Component {
     }
 }
 
-export default SettingsPage
+export default HomePage
 
 
 

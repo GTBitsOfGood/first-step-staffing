@@ -50,22 +50,22 @@ class DispatchPage extends React.Component {
 
         return (
             <div>
-                <div className="sidebar-container">
-                    <SideNav
-                        isFixedNav
-                        expanded={true}
-                    >
-                        <img className="logo" src="./0.png" alt="First Step Logo" />
-                        <SideNavItems>
-                            <SideNavMenuItem><a href="/homepage">Home</a></SideNavMenuItem>
-                            <SideNavMenuItem><a href="/checkin">Check In</a></SideNavMenuItem>
+              
+                <SideNav
+                    isFixedNav
+                    expanded={true}
+                >
+                    <img className="logo" src="./0.png" alt="First Step Logo" />
+                    <SideNavItems>
+                        <SideNavMenuItem><a href="/homepage">Home</a></SideNavMenuItem>
+                        <SideNavMenuItem><a href="/checkin">Check In</a></SideNavMenuItem>
 
-                        </SideNavItems>
-                        
+                    </SideNavItems>
+                    
 
-                    </SideNav>
-                
-                </div>
+                </SideNav>
+            
+    
                  <div className="dispatch-container">
                 <div className="dispatch-header">
                     <div className="dispatch-name">

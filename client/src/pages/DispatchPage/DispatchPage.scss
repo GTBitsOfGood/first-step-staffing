@@ -20,8 +20,12 @@
 }
 
 .accordion-container {
-    height: 80%;
+    height: auto;
 
+}
+.logo {
+    max-width: 100%;
+    height: auto;
 }
 
 .dispatch-container{
@@ -29,8 +33,16 @@
     float:right;
   
 }
-.sidebar-container{
+
+.bx--side-nav--expanded {
     width: 10%;
+}
+.sidebar-container{
+    width: 5%;
     float: left;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid black;
+    height: 100vh;
 }
 

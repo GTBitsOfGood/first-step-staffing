@@ -15,7 +15,27 @@ class DispatchPage extends React.Component {
         fetch('/api/dispatch/getEmployeesByJobs')
         .then(response => response.json())
         .then(data => this.setState({allData:data}))
-        
+
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0')
+        var mm = String(today.getMonth() + 1).padStart(2, '0')
+        var yyyy = today.getFullYear()
+
+        today = mm + '-' + dd + '-' + yyyy;
+        today = '10-29-2019'
+
+        fetch(`/api/checkin/date/${today}`, {
+            method: 'GET'
+        })
+            .then(res => res.json().then(dat => {
+                var cap = {}
+                for (var i = 0; i < dat.jobLocations.length; i++) {
+                    cap[dat.jobLocations[i][0]] = dat.jobLocations[i][1]
+                }
+                this.setState({capacities:cap})
+        }))
+
+
     }
 
     goToCheckIn = event => {
@@ -63,7 +83,7 @@ class DispatchPage extends React.Component {
                 </div>
                 <div className="accordion-container">
                     <Accordion>
-                        {keys.map(key => (<AccordionItem title={key}>
+                        {keys.map(key => (<AccordionItem key={key} title={key + " " + this.state.allData[key].length + ((typeof this.state.capacities !== 'undefined' && key in this.state.capacities) ? "/" + this.state.capacities[key] : "") +" Filled"}>
                             <StructuredListWrapper
                                 ariaLabel="List of users"
                                 border
@@ -100,10 +120,6 @@ class DispatchPage extends React.Component {
                                     >
                                         Transport
                                     </StructuredListCell>
-                                    <StructuredListCell
-                                        head
-                                        noWrap={false}
-                                    />
                                     </StructuredListRow>
                                 </StructuredListHead>
                                 <StructuredListBody onKeyDown={function noRefCheck(){}}>
@@ -148,16 +164,6 @@ class DispatchPage extends React.Component {
                                             title={"row-" + i}
                                             value={"row-" + i}
                                         />
-                                        <StructuredListCell
-                                            head={false}
-                                            noWrap={false}
-                                        >
-                                            <svg focusable="false" preserveAspectRatio="xMidYMid meet" aria-label="select an option" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" role="img" class="bx--structured-list-svg" style={{"willChange": "transform"}}>
-                                                <path d="M8,1C4.1,1,1,4.1,1,8c0,3.9,3.1,7,7,7s7-3.1,7-7C15,4.1,11.9,1,8,1z M7,11L4.3,8.3l0.9-0.8L7,9.3l4-3.9l0.9,0.8L7,11z"></path>
-                                                <path d="M7,11L4.3,8.3l0.9-0.8L7,9.3l4-3.9l0.9,0.8L7,11z" data-icon-path="inner-path" opacity="0"></path>
-                                                <title>select an option</title>
-                                            </svg>
-                                        </StructuredListCell>
                                     </StructuredListRow>)}
                                 </StructuredListBody>
                             </StructuredListWrapper>

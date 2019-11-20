@@ -46,8 +46,9 @@ class HomePage extends React.Component {
         })
         .then(res => res.json().then(dat => {
           this.setState({jobLocations: dat.jobLocations, transportations: dat.transportations})
-          this.setState({jobAssigned: this.state.jobLocations[0][0], transportation: this.state.transportations[0]})
+          console.log(this.state.jobLocations)
         }))
+        console.log(this.state.jobLocations)
 
   }
 
@@ -79,6 +80,8 @@ class HomePage extends React.Component {
             this.setState({ loading: false })
           })
           .catch(err => this.setState({ error: err, loading: false }))
+
+
     }
 
 
@@ -105,10 +108,32 @@ class HomePage extends React.Component {
 
               },
             ],
-            location: ''
+            location: '',
+            jobLocations: []
 
         }
     }
+
+
+    handleChange = e => {
+      var temp = this.state.jobLocations
+      temp[e.target.id][0] = e.target.value
+      this.setState({jobLocations: temp})
+
+      console.log(temp);
+    }
+
+     handleChangeCapacity = e => {
+      // var temp = this.state.jobLocations
+      // console.log(temp)
+      // console.log(e.target.id)
+      // console.log(temp[e.target.id])
+      // temp[e.target.id][1] = e.target.value
+      // this.setState({jobLocations: temp})
+
+      // console.log(temp);
+    }
+
     render() {
         return (
             <div>
@@ -126,19 +151,20 @@ class HomePage extends React.Component {
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {rows.map(row => (
-                            <TableRow key={row.id}>
+                          {this.state.jobLocations.map((jobLoc, i) => (
+                            <TableRow key={jobLoc}>
                           {/* could put toggle small here but it doesn't toggle*/}
-                              <Toggle />
-                              {row.cells.map(cell => (
-                                <TableCell
-                                 className="cell-body"
-                                 key={cell.id}>{cell.value}
-
+                              <Toggle/>
+                                 <TableCell
+                                 className="cell-job">
+                                  <TextInput
+                                  onBlur = {this.handleChange}
+                                  defaultValue={jobLoc[0]}
+                                  id={i}
+                                  />
                                  </TableCell>
 
-                              ))}
-                              <NumberInput className='numberinput'/>
+                              <NumberInput onChange = {this.handleChangeCapacity} id={i} className = 'numberinput' value={jobLoc[1]}/>
                             </TableRow>
                           ))}
                         </TableBody>

@@ -57,9 +57,8 @@ class DispatchPage extends React.Component {
                     >
                         <img className="logo" src="./0.png" alt="First Step Logo" />
                         <SideNavItems>
-                            <SideNavMenuItem>Test 1</SideNavMenuItem>
-                            <SideNavMenuItem>Test 2</SideNavMenuItem>
-                            <SideNavMenuItem>Test 3</SideNavMenuItem>
+                            <SideNavMenuItem><a href="/homepage">Home</a></SideNavMenuItem>
+                            <SideNavMenuItem><a href="/checkin">Check In</a></SideNavMenuItem>
 
                         </SideNavItems>
                         

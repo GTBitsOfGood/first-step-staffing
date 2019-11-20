@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, SideNav,SideNavItems, SideNavMenuItem, StructuredListWrapper, StructuredListBody, StructuredListRow, StructuredListCell, StructuredListInput, StructuredListHead, Accordion, AccordionItem } from 'carbon-components-react'
+import { Button, SideNavLink, SideNav,SideNavItems, SideNavMenuItem, StructuredListWrapper, StructuredListBody, StructuredListRow, StructuredListCell, StructuredListInput, StructuredListHead, Accordion, AccordionItem } from 'carbon-components-react'
 import "./DispatchPage.scss"
 
 
@@ -57,8 +57,8 @@ class DispatchPage extends React.Component {
                 >
                     <img className="logo" src="./0.png" alt="First Step Logo" />
                     <SideNavItems>
-                        <SideNavMenuItem><a href="/homepage">Home</a></SideNavMenuItem>
-                        <SideNavMenuItem><a href="/checkin">Check In</a></SideNavMenuItem>
+                        <SideNavLink href="/homepage)">Home</SideNavLink>
+                        <SideNavLink href="/checkin">Check In</SideNavLink>
 
                     </SideNavItems>
                     

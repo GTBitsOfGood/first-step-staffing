@@ -47,8 +47,11 @@ class HomePage extends React.Component {
         .then(res => res.json().then(dat => {
           this.setState({jobLocations: dat.jobLocations, transportations: dat.transportations})
           console.log(this.state.jobLocations)
+          console.log(this.state.transportations)
+  
         }))
         console.log(this.state.jobLocations)
+        
 
   }
 
@@ -64,6 +67,7 @@ class HomePage extends React.Component {
         let object = {
           date: today,
           jobLocations: this.state.location,
+          transportations: this.state.transportations
         }
 
 
@@ -88,30 +92,12 @@ class HomePage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            rows: [
-              {
-                id: '0',
-                location: 'Elander',
-                spotsAvail: '',
-
-              },
-              {
-                id: '1',
-                location: 'Chief',
-                spotsAvail: '',
-
-              },
-              {
-                id: '2',
-                location: 'Candy Factory',
-                spotsAvail: '',
-
-              },
-            ],
-            location: '',
-            jobLocations: []
-
+            jobLocations: [],
+            transportations: []
         }
+        this.handleChange = this.handleChange.bind(this);
+        this.handleChangeCapacity = this.handleChangeCapacity.bind(this);
+     
     }
 
 
@@ -119,60 +105,89 @@ class HomePage extends React.Component {
       var temp = this.state.jobLocations
       temp[e.target.id][0] = e.target.value
       this.setState({jobLocations: temp})
+      console.log(temp);
+    }
 
+    handleTransChange = e => {
+      var temp = this.state.transportations;
+      temp[e.target.id] = e.target.value
+      this.setState({transportations: temp})
       console.log(temp);
     }
 
      handleChangeCapacity = e => {
-      // var temp = this.state.jobLocations
-      // console.log(temp)
-      // console.log(e.target.id)
-      // console.log(temp[e.target.id])
+      var temp = this.state.jobLocations;
+      console.log(temp);
+      console.log('id:' + e.target.id);
+      //console.log(temp[e.target.id - ]);
       // temp[e.target.id][1] = e.target.value
       // this.setState({jobLocations: temp})
 
-      // console.log(temp);
+      console.log(temp);
     }
-
+  
     render() {
         return (
             <div>
-                <DataTable
-                  rows={this.state.rows}
-                  headers={headers}
-                  render={({ rows, headers, getHeaderProps, getSelectionProps }) => (
-                    <TableContainer title="Welcome! Setup today's dispatch here">
-                      <Table>
-                        <TableHead className ='head'>
-                          <TableRow>
-                            <TableHeader>On/Off</TableHeader>
-                            <TableHeader>Location</TableHeader>
-                            <TableHeader> Spots Available </TableHeader>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {this.state.jobLocations.map((jobLoc, i) => (
-                            <TableRow key={jobLoc}>
-                          {/* could put toggle small here but it doesn't toggle*/}
-                              <Toggle/>
-                                 <TableCell
-                                 className="cell-job">
-                                  <TextInput
-                                  onBlur = {this.handleChange}
-                                  defaultValue={jobLoc[0]}
-                                  id={i}
-                                  />
-                                 </TableCell>
+              <h2 style = {{font: 'bold'}}> Welcome! </h2>
+              <br></br>
+              <h4> All changes made here will be reflected in the "Dispatch" Page.</h4>
+              <br></br>
+              <h4 className = 'title'>Job Location & Availability </h4> 
+              <div className = 'header-container'>
+                <h5 className = 'header1'> On/Off </h5>
+                <h5 className = 'header'> Location </h5>
+                <h5> Spots Available </h5>
+              </div>
+              {this.state.jobLocations.map((jobLoc, i) => (
+                        
+                       
+                          
+                <Tile className = 'body'>         
+              {/* could put toggle small here but it doesn't toggle*/}
+                    <Toggle/>
+                    
+                    <TextInput
+                    className = 'textInput'
+                    onBlur = {this.handleChange}
+                    defaultValue={jobLoc[0]}
+                    id={i}
+                    />
 
-                              <NumberInput onChange = {this.handleChangeCapacity} id={i} className = 'numberinput' value={jobLoc[1]}/>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
-                    )}
-                />
+                    <NumberInput 
+                    style = {{height: '25px', backgroundColor: 'rgb(235, 235, 235)'}} 
+                    onChange = {this.handleChangeCapacity} id ={i} className = 'numberinput' value={jobLoc[1]}/>
+                    
+                </Tile>
+                
+              ))}
 
+ 
+
+
+              <br></br>
+
+
+              <h4 className = 'title'>Tranportation </h4> 
+              <div className = 'header-container'>
+                <h5 className = 'header1'> On/Off </h5>
+                <h5 className = 'header'> Transportation </h5>
+                
+              </div>
+              {this.state.transportations.map((trans, i) => (                         
+                <Tile className = 'body'>         
+              {/* could put toggle small here but it doesn't toggle*/}
+                    <Toggle/> 
+                    <TextInput
+                    className = 'transpInput'
+                    onBlur = {this.handleTransChange}
+                    defaultValue={trans}
+                    id={i}
+                    />
+                </Tile>
+                
+              ))}
+                
             </div>
         );
 

@@ -5,10 +5,47 @@
     margin: right;
 }
 .numberinput {
-    top: -20px;
-
+    top: 7px;
 }
 .row {
     width: 500px;
 }
+.body {
+    display: flex;
+    background-color: rgb(235, 235, 235);
+    max-width: 950px;
+    vertical-align: top;
+    height: 80px;;
+}
+.textInput {
+    // left: 50px;
+    // position: relative;
+    // float: left;
+    width: 600px;
+    background-color: rgb(235, 235, 235);
+    
+}
+.header-container {
+    display: flex;
+    background-color: rgb(235, 235, 235); 
+    max-width: 950px;
+    //padding: 30px;
+}
+.header {
+    margin-right: 35%;
+}
+.header1 {
+    margin-left: 2%;
+    margin-right: 34%;
+}
+.title {
+    font-weight: bold;
+}
+
+.transpInput {
+    width: 700px;
+    background-color: rgb(235, 235, 235);
+    margin-left: -10%;
+}
+
 

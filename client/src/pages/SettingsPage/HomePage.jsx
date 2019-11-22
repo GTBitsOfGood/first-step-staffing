@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Toggle, ToggleSmall, SideNav,SideNavItems, SideNavLink, SideNavMenuItem, Tile, Form, TextInput, FormLabel, DatePicker, DataTable, NumberInput, DatePickerInput, Select, SelectItem, SelectItemGroup, Accordion, AccordionItem } from 'carbon-components-react'
+import { Button, Icon, Toggle, ToggleSmall, SideNav,SideNavItems, SideNavLink, SideNavMenuItem, Tile, Form, TextInput, FormLabel, DatePicker, DataTable, NumberInput, DatePickerInput, Select, SelectItem, SelectItemGroup, Accordion, AccordionItem } from 'carbon-components-react'
 import "./HomePage.scss"
 const {
   TableContainer,
@@ -96,7 +96,10 @@ class HomePage extends React.Component {
         super(props);
         this.state = {
             jobLocations: [],
-            transportations: []
+            transportations: [],
+            newLocation: '',
+            newSpotsAvail: '',
+            newTransp: ''
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeCapacity = this.handleChangeCapacity.bind(this);
@@ -132,11 +135,42 @@ class HomePage extends React.Component {
       console.log(temp);
     }
 
+    handleNew = e => {
+      this.setState({
+        [e.target.id] : e.target.value
+      });
+      console.log('location ' + this.state.newLocation);
+      console.log('spots ' + this.state.newSpotsAvail);
+      console.log('transp ' + this.state.newTransp);
+    }
+
+    handleClickJob = e => {
+      let temp = this.state.jobLocations;
+      temp.push([this.state.newLocation, this.state.newSpotsAvail]);
+      this.setState({
+        jobLocations: temp
+      });
+      // console.log('location ' + this.state.newLocation);
+      // console.log('spots ' + this.state.newSpotsAvail);
+      // console.log('transp ' + this.state.newTransp);
+      console.log("state " + this.state.jobLocations);
+    }
+
+    handleClickTransp = e => {
+      let temp = this.state.transportations;
+      temp.push([this.state.newTransp]);
+      this.setState({
+        transportations: temp
+      });
+      // console.log('location ' + this.state.newLocation);
+      // console.log('spots ' + this.state.newSpotsAvail);
+      // console.log('transp ' + this.state.newTransp);
+      console.log("state " + this.state.transportations);
+    }
+
     render() {
         return (
             <div>
-
-
               <SideNav
                     isFixedNav
                     expanded={true}
@@ -177,8 +211,13 @@ class HomePage extends React.Component {
                     onChange = {this.handleChangeCapacity} id ={i} className = 'numberinput' value={jobLoc[1]}/>
                 </Tile>
               ))}
-
-
+              {/*Don't know how to put icons*/}
+              <Tile className = 'add-new'>
+                <Button onClick = {this.handleClickJob} className = 'add-button'/> 
+                <TextInput id = 'newLocation' onBlur = {this.handleNew}style = {{marginLeft: '10px'}} placeholder = 'Add a new location ... ' className = 'textInput'/>
+                <TextInput id = 'newSpotsAvail' onBlur = {this.handleNew} style = {{backgroundColor: 'rgb(235, 235, 235)'}} className = 'numberInput'/> 
+              </Tile>
+              
 
 
               <br></br>
@@ -201,6 +240,10 @@ class HomePage extends React.Component {
                 </Tile>
 
               ))}
+              <Tile className = 'add-new'>
+                <Button onClick = {this.handleClickTransp} className = 'add-button'/> 
+                <TextInput onBlur = {this.handleNew} id = 'newTransp' style = {{marginLeft: '10px'}} placeholder = 'Add a new transportation ... ' className = 'transpInput'/>
+              </Tile>
 
             </div>
         );

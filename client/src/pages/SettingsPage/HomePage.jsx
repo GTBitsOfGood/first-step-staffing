@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Toggle, ToggleSmall, SideNav,SideNavItems, SideNavMenuItem, Tile, Form, TextInput, FormLabel, DatePicker, DataTable, NumberInput, DatePickerInput, Select, SelectItem, SelectItemGroup, Accordion, AccordionItem } from 'carbon-components-react'
+import { Button, Toggle, ToggleSmall, SideNav,SideNavItems, SideNavLink, SideNavMenuItem, Tile, Form, TextInput, FormLabel, DatePicker, DataTable, NumberInput, DatePickerInput, Select, SelectItem, SelectItemGroup, Accordion, AccordionItem } from 'carbon-components-react'
 import "./HomePage.scss"
 const {
   TableContainer,
@@ -48,10 +48,10 @@ class HomePage extends React.Component {
           this.setState({jobLocations: dat.jobLocations, transportations: dat.transportations})
           console.log(this.state.jobLocations)
           console.log(this.state.transportations)
-  
+
         }))
         console.log(this.state.jobLocations)
-        
+
 
   }
 
@@ -69,6 +69,9 @@ class HomePage extends React.Component {
           jobLocations: this.state.location,
           transportations: this.state.transportations
         }
+
+
+        console.log("object" + object.transportations);
 
 
 
@@ -97,7 +100,7 @@ class HomePage extends React.Component {
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeCapacity = this.handleChangeCapacity.bind(this);
-     
+
     }
 
 
@@ -115,6 +118,9 @@ class HomePage extends React.Component {
       console.log(temp);
     }
 
+
+    // having issue with this method. Only updates when they manually
+    // change the numbers and not when they increment using the arrows
      handleChangeCapacity = e => {
       var temp = this.state.jobLocations;
       console.log(temp);
@@ -125,28 +131,40 @@ class HomePage extends React.Component {
 
       console.log(temp);
     }
-  
+
     render() {
         return (
             <div>
-              <h2 style = {{font: 'bold'}}> Welcome! </h2>
+
+
+              <SideNav
+                    isFixedNav
+                    expanded={true}
+                >
+                    <img className="logo" src="./0.png" alt="First Step Logo" />
+                    <SideNavItems>
+                        <SideNavLink href="/homepage">Home</SideNavLink>
+                        <SideNavLink href="/checkin">Check In</SideNavLink>
+
+                    </SideNavItems>
+
+
+                </SideNav>
+              <h2 style = {{font: 'bold', marginLeft: '150px'}}> Welcome! </h2>
               <br></br>
-              <h4> All changes made here will be reflected in the "Dispatch" Page.</h4>
+              <h4 style = {{marginLeft: '150px'}}> All changes made here will be reflected in the "Dispatch" Page.</h4>
               <br></br>
-              <h4 className = 'title'>Job Location & Availability </h4> 
+              <h4 className = 'title' style = {{marginLeft: '150px'}}>Job Location & Availability </h4>
               <div className = 'header-container'>
                 <h5 className = 'header1'> On/Off </h5>
                 <h5 className = 'header'> Location </h5>
                 <h5> Spots Available </h5>
               </div>
               {this.state.jobLocations.map((jobLoc, i) => (
-                        
-                       
-                          
-                <Tile className = 'body'>         
+                <Tile className = 'body'>
               {/* could put toggle small here but it doesn't toggle*/}
                     <Toggle/>
-                    
+
                     <TextInput
                     className = 'textInput'
                     onBlur = {this.handleChange}
@@ -154,30 +172,26 @@ class HomePage extends React.Component {
                     id={i}
                     />
 
-                    <NumberInput 
-                    style = {{height: '25px', backgroundColor: 'rgb(235, 235, 235)'}} 
+                    <NumberInput
+                    style = {{height: '25px', backgroundColor: 'rgb(235, 235, 235)'}}
                     onChange = {this.handleChangeCapacity} id ={i} className = 'numberinput' value={jobLoc[1]}/>
-                    
                 </Tile>
-                
               ))}
 
- 
+
 
 
               <br></br>
-
-
-              <h4 className = 'title'>Tranportation </h4> 
+              <h4 className = 'title' style = {{marginLeft: '150px'}}>Tranportation </h4>
               <div className = 'header-container'>
                 <h5 className = 'header1'> On/Off </h5>
                 <h5 className = 'header'> Transportation </h5>
-                
+
               </div>
-              {this.state.transportations.map((trans, i) => (                         
-                <Tile className = 'body'>         
+              {this.state.transportations.map((trans, i) => (
+                <Tile className = 'body'>
               {/* could put toggle small here but it doesn't toggle*/}
-                    <Toggle/> 
+                    <Toggle/>
                     <TextInput
                     className = 'transpInput'
                     onBlur = {this.handleTransChange}
@@ -185,9 +199,9 @@ class HomePage extends React.Component {
                     id={i}
                     />
                 </Tile>
-                
+
               ))}
-                
+
             </div>
         );
 

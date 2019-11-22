@@ -15,7 +15,10 @@
     background-color: rgb(235, 235, 235);
     max-width: 950px;
     vertical-align: top;
-    height: 80px;;
+    height: 80px;
+    margin-left: 150px;
+    //padding: 30px;
+    top: -40px;
 }
 .textInput {
     // left: 50px;
@@ -23,19 +26,20 @@
     // float: left;
     width: 600px;
     background-color: rgb(235, 235, 235);
-    
+
 }
 .header-container {
     display: flex;
-    background-color: rgb(235, 235, 235); 
+    background-color: rgb(235, 235, 235);
     max-width: 950px;
-    //padding: 30px;
+    margin-left: 150px;
+    padding: 40px;
 }
 .header {
-    margin-right: 35%;
+    margin-right: 40%;
 }
 .header1 {
-    margin-left: 2%;
+    margin-left: -1.5%;
     margin-right: 34%;
 }
 .title {

@@ -17,26 +17,33 @@ const {
   TableSelectRow
 } = DataTable;
 
-const headers = [
-
-    //ask about this cuz it makes no sense
-  {
-    key: 'location',
-    header: 'Location',
+const icon = <Icon
+className="extra-class"
+fill="grey"
+icon={{
+  height: '10',
+  id: 'icon--add',
+  name: 'icon--add',
+  styles: '',
+  svgData: {
+    paths: [
+      {
+        d: 'M6 4h4v2H6v4H4V6H0V4h4V0h2v4z'
+      }
+    ]
   },
+  tags: 'icon--add',
+  viewBox: '0 0 10 10',
+  width: '10'
+}}
+/>
 
-  // {
-  //   key: 'spotsAvail',
-  //   header: 'Spots Available',
-  // }
-
-];
 class HomePage extends React.Component {
     componentDidMount() {
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0')
-        var mm = String(today.getMonth() + 1).padStart(2, '0')
-        var yyyy = today.getFullYear()
+        let today = new Date();
+        let dd = String(today.getDate()).padStart(2, '0')
+        let mm = String(today.getMonth() + 1).padStart(2, '0')
+        let yyyy = today.getFullYear()
 
         today = mm + '-' + dd + '-' + yyyy;
         today = '10-29-2019'
@@ -53,14 +60,15 @@ class HomePage extends React.Component {
         console.log(this.state.jobLocations)
 
 
-  }
+    }
+   
 
     handleToggle = e => {
         e.preventDefault();
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0')
-        var mm = String(today.getMonth() + 1).padStart(2, '0')
-        var yyyy = today.getFullYear()
+        let today = new Date();
+        let dd = String(today.getDate()).padStart(2, '0')
+        let mm = String(today.getMonth() + 1).padStart(2, '0')
+        let yyyy = today.getFullYear()
 
         today = mm + '-' + dd + '-' + yyyy;
 
@@ -108,14 +116,14 @@ class HomePage extends React.Component {
 
 
     handleChange = e => {
-      var temp = this.state.jobLocations
+      let temp = this.state.jobLocations
       temp[e.target.id][0] = e.target.value
       this.setState({jobLocations: temp})
       console.log(temp);
     }
 
     handleTransChange = e => {
-      var temp = this.state.transportations;
+      let temp = this.state.transportations;
       temp[e.target.id] = e.target.value
       this.setState({transportations: temp})
       console.log(temp);
@@ -125,7 +133,7 @@ class HomePage extends React.Component {
     // having issue with this method. Only updates when they manually
     // change the numbers and not when they increment using the arrows
      handleChangeCapacity = e => {
-      var temp = this.state.jobLocations;
+      let temp = this.state.jobLocations;
       console.log(temp);
       console.log('id:' + e.target.id);
       //console.log(temp[e.target.id - ]);
@@ -150,9 +158,6 @@ class HomePage extends React.Component {
       this.setState({
         jobLocations: temp
       });
-      // console.log('location ' + this.state.newLocation);
-      // console.log('spots ' + this.state.newSpotsAvail);
-      // console.log('transp ' + this.state.newTransp);
       console.log("state " + this.state.jobLocations);
     }
 
@@ -162,9 +167,6 @@ class HomePage extends React.Component {
       this.setState({
         transportations: temp
       });
-      // console.log('location ' + this.state.newLocation);
-      // console.log('spots ' + this.state.newSpotsAvail);
-      // console.log('transp ' + this.state.newTransp);
       console.log("state " + this.state.transportations);
     }
 
@@ -211,15 +213,15 @@ class HomePage extends React.Component {
                     onChange = {this.handleChangeCapacity} id ={i} className = 'numberinput' value={jobLoc[1]}/>
                 </Tile>
               ))}
+
               {/*Don't know how to put icons*/}
+              {/* adds new location and spots available */}
               <Tile className = 'add-new'>
-                <Button onClick = {this.handleClickJob} className = 'add-button'/> 
+                <Button size = 'small' className = 'add-button' hasOnlyIcon={true} onClick = {this.handleClickJob}> + </Button> 
                 <TextInput id = 'newLocation' onBlur = {this.handleNew}style = {{marginLeft: '10px'}} placeholder = 'Add a new location ... ' className = 'textInput'/>
                 <TextInput id = 'newSpotsAvail' onBlur = {this.handleNew} style = {{backgroundColor: 'rgb(235, 235, 235)'}} className = 'numberInput'/> 
               </Tile>
-              
-
-
+          
               <br></br>
               <h4 className = 'title' style = {{marginLeft: '150px'}}>Tranportation </h4>
               <div className = 'header-container'>
@@ -240,8 +242,11 @@ class HomePage extends React.Component {
                 </Tile>
 
               ))}
+              
+              {/* adds new transporation */}
+
               <Tile className = 'add-new'>
-                <Button onClick = {this.handleClickTransp} className = 'add-button'/> 
+                <Button size = 'small' onClick = {this.handleClickTransp} className = 'add-button'> + </Button> 
                 <TextInput onBlur = {this.handleNew} id = 'newTransp' style = {{marginLeft: '10px'}} placeholder = 'Add a new transportation ... ' className = 'transpInput'/>
               </Tile>
 

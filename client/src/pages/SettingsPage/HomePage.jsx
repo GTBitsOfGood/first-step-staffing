@@ -137,7 +137,7 @@ class HomePage extends React.Component {
       console.log(temp);
       console.log('id:' + e.target.id);
       //console.log(temp[e.target.id - ]);
-      // temp[e.target.id][1] = e.target.value
+      temp[e.target.id][1] = e.target.value
       // this.setState({jobLocations: temp})
 
       console.log(temp);

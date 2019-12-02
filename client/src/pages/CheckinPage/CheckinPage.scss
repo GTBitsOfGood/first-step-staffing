@@ -45,7 +45,8 @@
     .row {
         display: flex;
         flex-direction: row;
-        #date-picker, #ssn, .bx--text-input__field-wrapper {
+        width: 300px;
+        #birthday, #ssn, .bx--text-input__field-wrapper {
             width: 140px;
         }
     }

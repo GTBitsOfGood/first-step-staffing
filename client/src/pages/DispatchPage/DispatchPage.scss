@@ -1,0 +1,48 @@
+
+
+.dispatch-header {
+    display: flex;
+    padding: 1%;
+    height: 25%;
+    vertical-align: middle;
+    justify-content: space-between;
+    padding-left: 3%;
+
+    .check-in-button {
+        padding-right: 12px;
+    }
+}
+.dispatch-name{
+
+    padding: 1% 0;
+   
+    font-size: 30px;
+}
+
+.accordion-container {
+    height: auto;
+
+}
+.logo {
+    max-width: 100%;
+    height: auto;
+}
+
+.dispatch-container{
+    width: 90%;
+    float:right;
+  
+}
+
+.bx--side-nav:not(.bx--side-nav--fixed):hover, .bx--side-nav--expanded{
+    width: 10%;
+}
+.sidebar-container{
+    width: 5%;
+    float: left;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid black;
+    height: 100vh;
+}
+

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Tile, Form, TextInput, FormLabel, DatePicker, DatePickerInput, Select, SelectItem } from 'carbon-components-react'
 import "./CheckinPage.scss"
+import DispatchPage from "../DispatchPage/DispatchPage.jsx"
 import SignaturePad from 'react-signature-pad-wrapper'
 
 class CheckinPage extends React.Component {
@@ -53,7 +54,7 @@ class CheckinPage extends React.Component {
     })
     .then(res => res.json().then(dat => {
       this.setState({jobLocations: dat.jobLocations, transportations: dat.transportations})
-      this.setState({jobAssigned: this.state.jobLocations[0], transportation: this.state.transportations[0]})
+      this.setState({jobAssigned: this.state.jobLocations[0][0], transportation: this.state.transportations[0]})
     }))
     
   }
@@ -111,8 +112,7 @@ class CheckinPage extends React.Component {
       var firstNameInvalid = (this.state.firstName.length === 0 && 'Please enter a first name') || (/\d/.test(this.state.firstName) && 'First name can not contain numbers')
       var lastNameInvalid = (this.state.lastName.length === 0 && 'Please enter a last name') || (/\d/.test(this.state.lastName) && 'Last name can not contain numbers')
       var birthdayInvalid = ((this.state.birthday === null || this.state.birthday.length === 0) && 'Please enter a birthday') || (!(/[0-9][0-9]\/[0-9][0-9]\/[0-9][0-9][0-9][0-9]/.test(this.state.birthday)) && 'Please use the format \'mm/dd/yyyy\'')
-      var ssnInvalid = ((this.state.ssn.length === 0) && 'Please enter the last 4 of your SSN') || (!(/[0-9][0-9][0-9][0-9]/.test(this.state.ssn)) && 'Please enter 4 digits')
-      
+      var ssnInvalid = ((this.state.ssn.length === 0) && 'Please enter the last 4 of your SSN') || ((this.state.ssn.length !== 4 || !(/[0-9][0-9][0-9][0-9]/.test(this.state.ssn))) && 'Please enter 4 digits')
       if (!firstNameInvalid && !lastNameInvalid && !birthdayInvalid && !ssnInvalid) {
         // Validate user info
         this.setState({ screen: 2 })
@@ -126,12 +126,13 @@ class CheckinPage extends React.Component {
       })
 
     } else if (this.state.screen === 2) {
-      if (this.state.jobAssigned.length !== 0 && this.state.transportation.length !== 0 ) {  
+
+      if (this.state.jobAssigned.length !== 0 && this.state.transportation.length !== 0 ) {
         this.setState({screen: 3})
       }
     } else if (this.state.screen === 3) {
 
-      if (!this.signaturePad.isEmpty()){       
+      if (!this.signaturePad.isEmpty()) {       
         let user = {
           firstName: this.state.firstName,
           lastName: this.state.lastName,
@@ -155,15 +156,18 @@ class CheckinPage extends React.Component {
           .catch(err => this.setState({ error: err, loading: false }))
           
         this.initializeState()
+        this.setState({screen: 3})
+        this.goToDispatch()
       }
-
     }
   }
 
   handleBack = e => {
-    
+
     if (this.state.screen > 1) {
       this.setState({screen: this.state.screen - 1})
+    } else {
+      this.goToDispatch()
     }
 
   }
@@ -177,6 +181,10 @@ class CheckinPage extends React.Component {
         </h2>
       </div>
     )
+  }
+
+  goToDispatch = () => {
+    window.location.href = "/dispatch"
   }
 
   render() {
@@ -193,31 +201,7 @@ class CheckinPage extends React.Component {
               <TextInput className="text" defaultValue={this.state.firstName} invalid={this.state.firstNameInvalid.length > 0} invalidText={this.state.firstNameInvalid || ''} onChange={this.changeFirstName} labelText={"First Name"} placeholder="First Name" id="f_name" />
               <TextInput className="text" defaultValue={this.state.lastName} invalid={this.state.lastNameInvalid.length > 0} invalidText={this.state.lastNameInvalid || ''} onChange={this.changeLastName} labelText={"Last Name"} placeholder="Last Name" id="l_name" />
               <div className="row">
-                <DatePicker
-                  dateFormat="m/d/Y"
-                  datePickerType="simple"
-                  id="date-picker"
-                  light={false}
-                  locale="en"
-                  onChange={function noRefCheck(){}}
-                  onClose={function noRefCheck(){}}
-                  short={false}
-                  >
-                  <DatePickerInput
-                    className="text"
-                    style={{backgroundColor: 'white'}}
-                    disabled={false}
-                    iconDescription="Icon description"
-                    id="date-picker-input-id"
-                    labelText="Birthday"
-                    onChange={this.changeBirthday}
-                    pattern="d{1,2}/d{4}"
-                    placeholder="mm/dd/yyyy"
-                    type="text"
-                    invalid={this.state.birthdayInvalid.length > 0}
-                    invalidText={this.state.birthdayInvalid || ''}
-                  />
-                </DatePicker>
+                <TextInput className="text" defaultValue={this.state.birthday} invalid={this.state.birthdayInvalid.length > 0} invalidText={this.state.birthdayInvalid || ''} onChange={this.changeBirthday} labelText={"Birthday"} placeholder="mm/dd/yyy" id="birthday" type="text"/>
                 <TextInput className="text" defaultValue={this.state.ssn} invalid={this.state.ssnInvalid.length > 0} invalidText={this.state.ssnInvalid || ''} onChange={this.changeSSN} labelText={"SSN"} placeholder="4 Digits" id="ssn" type="text"/>
               </div>
             </Form>
@@ -242,9 +226,9 @@ class CheckinPage extends React.Component {
               >
                 {this.state.jobLocations.map((jobLoc) =>
                   <SelectItem
-                    text={jobLoc}
-                    value={jobLoc}
-                    key={jobLoc}
+                    text={jobLoc[0]}
+                    value={jobLoc[0]}
+                    key={jobLoc[0]}
                   />
                 )}
               </Select>
@@ -275,12 +259,14 @@ class CheckinPage extends React.Component {
               <FormLabel className="formLabel" style={{"lineHeight" : "24px", "width": "370px"}}>
                 Hi {this.state.firstName}. Here are today's job details. You will be working at {this.state.jobAssigned}. {this.state.transportation} will be your transport.
               </FormLabel>
-              <div style={{"paddingLeft": "10px"}}>Please sign to confirm</div>        
+
+              <div style={{"paddingLeft": "10px"}}>Please sign to confirm</div>
               <div className="signature">
                 <SignaturePad ref={ref => this.signaturePad = ref}></SignaturePad>
               </div>
             </Form>
           )}
+
           <div className="bx--btn-set">
             <Button
               disabled={false}
